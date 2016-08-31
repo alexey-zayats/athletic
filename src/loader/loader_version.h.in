@@ -1,0 +1,33 @@
+
+#ifndef APP_VERSION_H
+#define APP_VERSION_H
+
+namespace Core {
+namespace Constants {
+
+#define STRINGIFY_INTERNAL(x) #x
+#define STRINGIFY(x) STRINGIFY_INTERNAL(x)
+
+#define APP_VERSION $${APP_VERSION}
+#define APP_VERSION_STR STRINGIFY(APP_VERSION)
+#define APP_REVISION $${APP_GIT_REVISION}
+
+#define APP_VERSION_MAJOR $$replace(APP_VERSION, "^(\\d+)\\.\\d+\\.\\d+(-.*)?$", \\1)
+#define APP_VERSION_MINOR $$replace(APP_VERSION, "^\\d+\\.(\\d+)\\.\\d+(-.*)?$", \\1)
+#define APP_VERSION_RELEASE $$replace(APP_VERSION, "^\\d+\\.\\d+\\.(\\d+)(-.*)?$", \\1)
+
+const char * const APP_VERSION_C           = APP_VERSION_STR;
+const char * const APP_AUTHOR_C            = \"Agitum\";
+const char * const APP_YEAR_C              = \"2016\";
+const char * const APP_NAME_C              = \"Athletic.Loader\";
+const char * const PRODUCT_NAME_C              = \"Athletic.cloud\";
+
+#undef APP_VERSION
+#undef APP_VERSION_STR
+#undef STRINGIFY
+#undef STRINGIFY_INTERNAL
+
+} // Constants
+} // Core
+
+#endif //APP_VERSION_H
