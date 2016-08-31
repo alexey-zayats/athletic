@@ -36,13 +36,11 @@ DISTFILES += athletic.rc \
 QMAKE_SUBSTITUTES += $$PWD/app_version.h.in
 
 FORMS += \
-	mainwindow.ui
 
 SOURCES += \
     app.cpp
 
-#RESOURCES += \
-#	app.qrc \
+RESOURCES += \
 
 HEADERS += \
     app.h
