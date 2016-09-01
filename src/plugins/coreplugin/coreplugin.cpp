@@ -13,19 +13,19 @@ Q_LOGGING_CATEGORY(corepluginLog, "athletic.plugins.coreplugin")
 
 CorePlugin::CorePlugin()
 {
-    qCDebug(corepluginLog) << Q_FUNC_INFO;
+    qCDebug(corepluginLog) << "CorePlugin";
     mainWindow = new QMainWindow();
 }
 
 CorePlugin::~CorePlugin()
 {
-    qCDebug(corepluginLog) << "destory coreplugin";
+    qCDebug(corepluginLog) << "~CorePlugin";
     delete mainWindow;
 }
 
 bool CorePlugin::initialize(const QStringList &arguments, QString *errorMessage)
 {
-    qCDebug(corepluginLog) << "init coreplugin";
+    qCDebug(corepluginLog) << "initialize";
 
     Q_UNUSED(arguments);
     Q_UNUSED(errorMessage);
@@ -35,20 +35,20 @@ bool CorePlugin::initialize(const QStringList &arguments, QString *errorMessage)
 
 void CorePlugin::extensionsInitialized()
 {
-    qCDebug(corepluginLog) << "coreplugin initialized";
+    qCDebug(corepluginLog) << "extensionsInitialized";
     mainWindow->show();
     initStyle();
 }
 
 bool CorePlugin::delayedInitialize()
 {
-    qCDebug(corepluginLog) << "coreplugin delaed initialize";
+    qCDebug(corepluginLog) << "delayedInitialize";
     return true;
 }
 
 ExtensionSystem::IPlugin::ShutdownFlag CorePlugin::aboutToShutdown()
 {
-    qCDebug(corepluginLog) << "try to shutdown";
+    qCDebug(corepluginLog) << "aboutToShutdownn";
 
     mainWindow->close();
     return SynchronousShutdown;

@@ -430,7 +430,6 @@ PluginSpecPrivate::PluginSpecPrivate(PluginSpec *spec)
 */
 bool PluginSpecPrivate::read(const QString &fileName)
 {
-    qCDebug(extentionSystemLog) << "\nReading meta data of" << fileName;
     name
         = version
         = compatVersion
@@ -451,7 +450,7 @@ bool PluginSpecPrivate::read(const QString &fileName)
     filePath = fileInfo.absoluteFilePath();
     loader.setFileName(filePath);
     if (loader.fileName().isEmpty()) {
-        qCDebug(extentionSystemLog) << "Cannot open file";
+        qCWarning(extentionSystemLog) << "Cannot open file";
         return false;
     }
 
@@ -559,13 +558,13 @@ static inline bool readMultiLineString(const QJsonValue &value, QString *out)
 */
 bool PluginSpecPrivate::readMetaData(const QJsonObject &metaData)
 {
-    qCDebug(extentionSystemLog) << "MetaData:" << QJsonDocument(metaData).toJson();
     QJsonValue value;
     value = metaData.value(QLatin1String("IID"));
     if (!value.isString()) {
         qCDebug(extentionSystemLog) << "Not a plugin (no string IID found)";
         return false;
     }
+
     if (value.toString() != PluginManager::pluginIID()) {
         qCDebug(extentionSystemLog) << "Plugin ignored (IID does not match)";
         return false;
@@ -579,6 +578,7 @@ bool PluginSpecPrivate::readMetaData(const QJsonObject &metaData)
     value = pluginInfo.value(QLatin1String(PLUGIN_NAME));
     if (value.isUndefined())
         return reportError(msgValueMissing(PLUGIN_NAME));
+
     if (!value.isString())
         return reportError(msgValueIsNotAString(PLUGIN_NAME));
     name = value.toString();
@@ -589,6 +589,7 @@ bool PluginSpecPrivate::readMetaData(const QJsonObject &metaData)
     if (!value.isString())
         return reportError(msgValueIsNotAString(PLUGIN_VERSION));
     version = value.toString();
+
     if (!isValidVersion(version))
         return reportError(msgInvalidFormat(PLUGIN_VERSION, version));
 
@@ -596,6 +597,7 @@ bool PluginSpecPrivate::readMetaData(const QJsonObject &metaData)
     if (!value.isUndefined() && !value.isString())
         return reportError(msgValueIsNotAString(PLUGIN_COMPATVERSION));
     compatVersion = value.toString(version);
+
     if (!value.isUndefined() && !isValidVersion(compatVersion))
         return reportError(msgInvalidFormat(PLUGIN_COMPATVERSION, compatVersion));
 
@@ -603,16 +605,12 @@ bool PluginSpecPrivate::readMetaData(const QJsonObject &metaData)
     if (!value.isUndefined() && !value.isBool())
         return reportError(msgValueIsNotABool(PLUGIN_REQUIRED));
     required = value.toBool(false);
-    qCDebug(extentionSystemLog) << "required =" << required;
 
     value = pluginInfo.value(QLatin1String(PLUGIN_DISABLED_BY_DEFAULT));
     if (!value.isUndefined() && !value.isBool())
         return reportError(msgValueIsNotABool(PLUGIN_DISABLED_BY_DEFAULT));
     enabledByDefault = !value.toBool(false);
-    qCDebug(extentionSystemLog) << "enabledByDefault =" << enabledByDefault;
 
-    if (experimental)
-        enabledByDefault = false;
     enabledBySettings = enabledByDefault;
 
     value = pluginInfo.value(QLatin1String(VENDOR));
@@ -700,6 +698,15 @@ bool PluginSpecPrivate::readMetaData(const QJsonObject &metaData)
             dependencies.append(dep);
         }
     }
+
+    qCDebug(extentionSystemLog) <<
+            QString(QLatin1String("PLUGIN: %1 (%2), category(%3), enabled(%4), required(%5), vendor(%6)"))
+            .arg( name )
+            .arg( version )
+            .arg( category )
+            .arg( enabledByDefault ? tr("true") : tr("false") )
+            .arg( required ? tr("true") : tr("false") )
+            .arg( vendor);
 
     return true;
 }

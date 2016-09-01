@@ -720,25 +720,20 @@ void PluginManagerPrivate::loadPlugins()
 {
     QList<PluginSpec *> queue = loadQueue();
     foreach (PluginSpec *spec, queue) {
-        qCDebug(extentionSystemLog) << "Try to Load: " << spec->name();
         loadPlugin(spec, PluginSpec::Loaded);
     }
     foreach (PluginSpec *spec, queue) {
-        qCDebug(extentionSystemLog) << "Try to Initialize: " << spec->name();
         loadPlugin(spec, PluginSpec::Initialized);
     }
     QListIterator<PluginSpec *> it(queue);
     it.toBack();
     while (it.hasPrevious()) {
         PluginSpec *spec = it.previous();
-        qCDebug(extentionSystemLog) << "Try to Run: " << spec->name();
         loadPlugin(spec, PluginSpec::Running);
         if (spec->state() == PluginSpec::Running) {
-            qCDebug(extentionSystemLog) << "Try to elayedInitialize: " << spec->name();
             delayedInitializeQueue.append(spec);
         } else {
             // Plugin initialization failed, so cleanup after it
-            qCDebug(extentionSystemLog) << "Try to Kill: " << spec->name();
             spec->d->kill();
         }
     }

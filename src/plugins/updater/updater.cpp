@@ -32,12 +32,12 @@ Q_LOGGING_CATEGORY(updaterLog, "athletic.plugins.updater")
 
 UpdaterPlugin::UpdaterPlugin()
 {
-    qCDebug(updaterLog) << Q_FUNC_INFO;
+    qCDebug(updaterLog) << "UpdaterPlugin";
 }
 
 UpdaterPlugin::~UpdaterPlugin()
 {
-    qCDebug(updaterLog) << Q_FUNC_INFO;
+    qCDebug(updaterLog) << "~UpdaterPlugin";
 }
 
 bool UpdaterPlugin::initialize(const QStringList &arguments, QString *errorMessage)
@@ -45,23 +45,23 @@ bool UpdaterPlugin::initialize(const QStringList &arguments, QString *errorMessa
     Q_UNUSED(arguments);
     Q_UNUSED(errorMessage);
 
-    qCDebug(updaterLog) << Q_FUNC_INFO;
+    qCDebug(updaterLog) << "initialize";
     return true;
 }
 
 void UpdaterPlugin::extensionsInitialized()
 {
-    qCDebug(updaterLog) << Q_FUNC_INFO;
+    qCDebug(updaterLog) << "extensionsInitialized";
 }
 
 bool UpdaterPlugin::delayedInitialize()
 {
-    qCDebug(updaterLog) << Q_FUNC_INFO;
+    qCDebug(updaterLog) << "delayedInitialize";
     return true;
 }
 
 ExtensionSystem::IPlugin::ShutdownFlag UpdaterPlugin::aboutToShutdown()
 {
-    qCDebug(updaterLog) << Q_FUNC_INFO;
+    qCDebug(updaterLog) << "aboutToShutdown";
     return SynchronousShutdown;
 }
