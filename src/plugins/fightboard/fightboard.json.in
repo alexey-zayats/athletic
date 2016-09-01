@@ -1,0 +1,15 @@
+{
+	\"Name\" : \"FightBoard\",
+	\"Version\" : \"$$APP_VERSION\",
+	\"CompatVersion\" : \"$$APP_COMPAT_VERSION\",
+	\"Required\" : true,
+	\"DisabledByDefault\": false,
+	\"Vendor\" : \"Alexey Zayats\",
+        \"Copyright\" : \"(C) 2016 Agitum\",
+	\"License\" : [ \"\"],
+        \"Category\" : \"Wrestling\",
+	\"Description\" : \"The fightboard plugin for the Athletic.\",
+        \"Url\" : \"https://athletic.cloud/\",
+	\"Platform\": \"\",
+	$$dependencyList
+}
