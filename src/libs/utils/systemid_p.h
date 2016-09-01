@@ -16,7 +16,9 @@ public:
     unsigned short getMacHash();
 
 private:
+#ifndef Q_OS_WIN
     unsigned short hashMacAddress( unsigned char* mac );
+#endif
 #ifndef Q_OS_MACX
     void getCpuid( unsigned int* p, unsigned int ax );
 #endif

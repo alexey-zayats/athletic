@@ -1,8 +1,10 @@
+#include <QtGlobal>
+
 #ifdef Q_OS_WIN
-#  include <windows.h>
+#include <windows.h>
 #else
-#  include <unistd.h>
-#  include <sys/stat.h>
+#include <unistd.h>
+#include <sys/stat.h>
 #endif
 
 #include "savefile.h"
@@ -68,7 +70,7 @@ bool SaveFile::commit()
         return false;
     }
 #ifdef Q_OS_WIN
-    FlushFileBuffers(reinterpret_cast<HANDLE>(handle()));
+    FlushFileBuffers( (HANDLE)handle() );
 #elif _POSIX_SYNCHRONIZED_IO > 0
     fdatasync(handle());
 #else

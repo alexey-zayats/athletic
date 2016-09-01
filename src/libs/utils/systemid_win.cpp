@@ -7,12 +7,22 @@
 
 namespace Utils {
 
+inline unsigned short hashMacAddress( PIP_ADAPTER_INFO info )
+{
+   unsigned short hash = 0;
+   for ( unsigned int i = 0; i < info->AddressLength; i++ )
+   {
+      hash += ( info->Address[i] << (( i & 1 ) * 8 ));
+   }
+   return hash;
+}
+
 const QString SystemIdPrivate::getMachineName()
 {
-   static char computerName[1024];
+   TCHAR computerName[1024];
    DWORD size = 1024;
    GetComputerName( computerName, &size );
-   return QLatin1String(&(computerName[0]));
+   return QLatin1String( (const char*)(computerName[0]) );
 }
 
 
@@ -23,20 +33,10 @@ unsigned short SystemIdPrivate::getMacHash()
 
     DWORD dwStatus = GetAdaptersInfo( AdapterInfo, &dwBufLen );
     if ( dwStatus != ERROR_SUCCESS )
-        return; // no adapters.
+        return 0; // no adapters.
 
     PIP_ADAPTER_INFO pAdapterInfo = AdapterInfo;
     return hashMacAddress( pAdapterInfo );
-}
-
-unsigned short SystemIdPrivate::hashMacAddress( PIP_ADAPTER_INFO info )
-{
-   unsigned short hash = 0;
-   for ( u32 i = 0; i < info->AddressLength; i++ )
-   {
-      hash += ( info->Address[i] << (( i & 1 ) * 8 ));
-   }
-   return hash;
 }
 
 unsigned short SystemIdPrivate::getVolumeHash()
@@ -44,7 +44,7 @@ unsigned short SystemIdPrivate::getVolumeHash()
    DWORD serialNum = 0;
 
    // Determine if this volume uses an NTFS file system.
-   GetVolumeInformation( "c:\\", NULL, 0, &serialNum, NULL, NULL, NULL, 0 );
+   GetVolumeInformation( TEXT("C:\\"), NULL, 0, &serialNum, NULL, NULL, NULL, 0 );
 
    return (unsigned short)(( serialNum + ( serialNum >> 16 )) & 0xFFFF );
 }
@@ -55,7 +55,7 @@ unsigned short SystemIdPrivate::getCpuHash()
    __cpuid( cpuinfo, 0 );
    unsigned short hash = 0;
    unsigned short* ptr = (unsigned short*)(&cpuinfo[0]);
-   for ( u32 i = 0; i < 8; i++ )
+   for ( int i = 0; i < 8; i++ )
       hash += ptr[i];
 
    return hash;
