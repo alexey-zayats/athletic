@@ -7,14 +7,6 @@
 
 namespace Utils {
 
-const QString SystemIdPrivate::getMachineName()
-{
-   TCHAR computerName[1024];
-   DWORD size = 1024;
-   GetComputerName( computerName, &size );
-   return QLatin1String( (const char*)(computerName[0]) );
-}
-
 inline unsigned short hashMacAddress( PIP_ADAPTER_INFO info )
 {
    unsigned short hash = 0;
@@ -23,6 +15,16 @@ inline unsigned short hashMacAddress( PIP_ADAPTER_INFO info )
       hash += ( info->Address[i] << (( i & 1 ) * 8 ));
    }
    return hash;
+}
+
+const QString SystemIdPrivate::getMachineName()
+{
+    DWORD name_length = 1024;
+    wchar_t name[1024];
+    QString ret = QLatin1String("unknown");
+    if (GetComputerName(name, &name_length))
+        ret = QString::fromWCharArray(name);
+    return ret;
 }
 
 unsigned short SystemIdPrivate::getMacHash()

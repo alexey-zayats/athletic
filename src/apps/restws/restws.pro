@@ -14,14 +14,15 @@ LIBS *= -l$$qtLibraryName(extensionsystem) -l$$qtLibraryName(utils)
 APP_GIT_REVISION = $$system(git --git-dir $$APP_SOURCE_TREE/.git --work-tree $$APP_BUILD_TREE describe --always --tags)
 
 win32 {
-        target.path = $$APP_BIN_PATH
-        INSTALLS += target
+#        RC_FILE = restws.rc
+		target.path = $$APP_BIN_PATH
+		INSTALLS += target
 } else:macx {
-        CONFIG -= app_bundle
-        LIBS += -framework CoreFoundation
+		CONFIG -= app_bundle
+		LIBS += -framework CoreFoundation
 } else {
-        target.path  = $$APP_BIN_PATH
-        INSTALLS    += target
+		target.path  = $$APP_BIN_PATH
+		INSTALLS    += target
 }
 
 QMAKE_SUBSTITUTES += $$PWD/restws_version.h.in
@@ -29,7 +30,7 @@ QMAKE_SUBSTITUTES += $$PWD/restws_version.h.in
 CONFIG += no_batch
 
 SOURCES += \
-    restws.cpp
+	restws.cpp
 
 FORMS += \
 
