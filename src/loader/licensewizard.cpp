@@ -39,7 +39,7 @@ LicenseWizard::LicenseWizard(QWidget *parent)
 void LicenseWizard::currentIdChanged(int id)
 {
     if ( id == Page_Conclusion ) {
-        Utils::SystemID sysId;
+        SystemId sysId;
         qCDebug(loaderLog) << "System(name): " << sysId.getMachineName();
         qCDebug(loaderLog) << "System(cpu): "<< sysId.getCpuHash();
         qCDebug(loaderLog) << "System(volume): "<< sysId.getVolumeHash();

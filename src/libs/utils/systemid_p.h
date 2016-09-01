@@ -1,0 +1,27 @@
+#ifndef SYSTEMID_P_H
+#define SYSTEMID_P_H
+
+#include "systemid.h"
+
+namespace Utils {
+
+class ATHLETIC_UTILS_EXPORT SystemIdPrivate
+{
+public:
+    SystemIdPrivate();
+
+    const QString getMachineName();
+    unsigned short getCpuHash();
+    unsigned short getVolumeHash();
+    unsigned short getMacHash();
+
+private:
+    unsigned short hashMacAddress( unsigned char* mac );
+#ifndef Q_OS_MACX
+    void getCpuid( unsigned int* p, unsigned int ax );
+#endif
+};
+
+}
+
+#endif // SYSTEMID_P_H

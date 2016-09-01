@@ -7,24 +7,29 @@
 
 namespace Utils {
 
-class ATHLETIC_UTILS_EXPORT SystemID : public QObject
+class SystemIdPrivate;
+
+class ATHLETIC_UTILS_EXPORT SystemId : public QObject
 {
     Q_OBJECT
 public:
-    explicit SystemID(QObject *parent = 0);
+    explicit SystemId(QObject *parent = 0);
 
     const QString getMachineName();
     unsigned short getCpuHash();
     unsigned short getVolumeHash();
     unsigned short getMacHash();
-signals:
 
-public slots:
 private:
+#ifdef Q_OSW_WIN
+    unsigned short hashMacAddress( PIP_ADAPTER_INFO info )
+#else
     unsigned short hashMacAddress( unsigned char* mac );
+#endif
 #ifndef Q_OS_MACX
     void getCpuid( unsigned int* p, unsigned int ax );
 #endif
+    SystemIdPrivate *d;
 };
 
 }
