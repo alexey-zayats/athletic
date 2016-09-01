@@ -1,0 +1,7 @@
+*.stash
+*.user
+.obj
+.uic
+.rcc
+build
+Makefile
