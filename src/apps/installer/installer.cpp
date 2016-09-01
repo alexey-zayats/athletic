@@ -3,14 +3,14 @@
 #include <QLocale>
 #include <QLibraryInfo>
 
-#include <loader/loader_version.h>
+#include <installer/installer_version.h>
 
-#include "loader_global.h"
-#include "licensewizard.h"
+#include "installer_global.h"
+#include "installwizard.h"
 
 int main(int argc, char *argv[])
 {
-    Q_INIT_RESOURCE(loader);
+    Q_INIT_RESOURCE(installer);
     QLoggingCategory::setFilterRules( QLatin1String("athletic.*.debug=true") );
 
     QApplication app(argc, argv);
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
         app.installTranslator(translator);
 #endif
 
-    LicenseWizard wizard;
+    InstallWizard wizard;
     wizard.show();
     return app.exec();
 }

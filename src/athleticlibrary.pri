@@ -8,7 +8,6 @@ win32 {
 }
 
 DESTDIR = $$APP_LIBRARY_PATH
-#CONFIG += plugin plugin_with_soname
 QMAKE_LFLAGS_SONAME = -Wl,-install_name,@rpath/../$$APP_LIBRARY_BASENAME/
 
 include(rpath.pri)

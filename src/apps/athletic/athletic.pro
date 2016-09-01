@@ -1,6 +1,6 @@
 APP_NAME   = "App"
 
-include(../../athletic.pri)
+include(../../../athletic.pri)
 
 TEMPLATE = app
 VERSION = $$APP_VERSION
@@ -9,7 +9,7 @@ DESTDIR = $$APP_BIN_PATH
 
 QT += network
 
-include(../rpath.pri)
+include(../../rpath.pri)
 
 LIBS *= -l$$qtLibraryName(extensionsystem) \
 	-l$$qtLibraryName(utils) \
@@ -29,18 +29,14 @@ win32 {
 	INSTALLS    += target
 }
 
-DISTFILES += athletic.rc \
-	$$PWD/app_version.h.in \
-	Info.plist \
-
-QMAKE_SUBSTITUTES += $$PWD/app_version.h.in
+QMAKE_SUBSTITUTES += $$PWD/athletic_version.h.in
 
 FORMS += \
 
 SOURCES += \
-    app.cpp
+    athletic.cpp
 
 RESOURCES += \
 
 HEADERS += \
-    app.h
+    athletic.h

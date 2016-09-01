@@ -1,6 +1,6 @@
-APP_NAME   = "Loader"
+APP_NAME   = "Installer"
 
-include(../../athletic.pri)
+include(../../../athletic.pri)
 
 TEMPLATE = app
 VERSION = $$APP_VERSION
@@ -9,7 +9,7 @@ DESTDIR = $$APP_BIN_PATH
 
 QT += network widgets printsupport
 
-include(../rpath.pri)
+include(../../rpath.pri)
 
 LIBS *= -l$$qtLibraryName(extensionsystem) \
     -l$$qtLibraryName(utils) \
@@ -29,19 +29,17 @@ win32 {
         INSTALLS    += target
 }
 
-DISTFILES += loader.rc \
-        $$PWD/loader_version.h.in \
-        Info.plist \
-
-QMAKE_SUBSTITUTES += $$PWD/loader_version.h.in
+QMAKE_SUBSTITUTES += $$PWD/installer_version.h.in
 
 CONFIG += no_batch
 
-HEADERS = licensewizard.h \
-    loader_global.h \
+HEADERS = \
+    installer_global.h \
+    installwizard.h
 
-SOURCES = licensewizard.cpp \
-    loader.cpp \
+SOURCES = \
+    installer.cpp \
+    installwizard.cpp
 
-RESOURCES = loader.qrc
+RESOURCES = installer.qrc
 

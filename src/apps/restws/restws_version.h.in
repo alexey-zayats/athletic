@@ -19,7 +19,7 @@ namespace Constants {
 const char * const APP_VERSION_C           = APP_VERSION_STR;
 const char * const APP_AUTHOR_C            = \"Agitum\";
 const char * const APP_YEAR_C              = \"2016\";
-const char * const APP_NAME_C              = \"Athletic.Loader\";
+const char * const APP_NAME_C              = \"Athletic.Rest\";
 
 #undef APP_VERSION
 #undef APP_VERSION_STR

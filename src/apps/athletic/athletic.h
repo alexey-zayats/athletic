@@ -1,5 +1,5 @@
-#ifndef APP_H
-#define APP_H
+#ifndef ATHLETIC_APP_H
+#define ATHLETIC_APP_H
 
 #include <QLoggingCategory>
 

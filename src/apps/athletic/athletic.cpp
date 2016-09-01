@@ -20,8 +20,8 @@
 
 #include <QtCrypto>
 
-#include "app.h"
-#include <app/app_version.h>
+#include "athletic.h"
+#include <athletic/athletic_version.h>
 #include <extensionsystem/iplugin.h>
 #include <extensionsystem/pluginmanager.h>
 #include <extensionsystem/pluginspec.h>
@@ -59,25 +59,13 @@ static inline QStringList getPluginPaths()
     const QString rootDirPath = rootDir.canonicalPath();
 
     QString pluginPath;
-    if (Utils::HostOsInfo::isMacHost()) {
-        // 1) "PlugIns" (OS X)
-        pluginPath = rootDirPath + QLatin1String("/PlugIns");
-        rc.push_back(pluginPath);
-    } else {
-        // 2) "plugins" (Win/Linux)
-        pluginPath = rootDirPath + QLatin1String("/plugins");
-        rc.push_back(pluginPath);
-    }
+    pluginPath = rootDirPath + QLatin1String("/plugins");
+    rc.push_back(pluginPath);
 
     pluginPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    pluginPath += "/share";
-#endif
     pluginPath += QLatin1String("/Athletic");
     pluginPath += QLatin1String("/plugins");
-    pluginPath += QLatin1String("/");
-    pluginPath += QLatin1String(Core::Constants::APP_VERSION_LONG);
 
     rc.push_back(pluginPath);
 

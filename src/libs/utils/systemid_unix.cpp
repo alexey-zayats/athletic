@@ -55,7 +55,7 @@ unsigned short SystemIdPrivate::getCpuHash()
     getCpuid( cpuinfo, 0 );
     unsigned short hash = 0;
     unsigned int* ptr = (&cpuinfo[0]);
-    for ( unsigned int i = 0; i < 4; i++ )
+    for ( int i = 0; i < 4; i++ )
         hash += (ptr[i] & 0xFFFF) + ( ptr[i] >> 16 );
 
     return hash;

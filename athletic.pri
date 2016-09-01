@@ -92,7 +92,7 @@ LINK_PLUGIN_PATH  = $$APP_PLUGIN_PATH
 CONFIG -= app_bundle
 
 INCLUDEPATH += \
-	$$APP_BUILD_TREE/src \ # for <app/app_version.h>
+	$$APP_BUILD_TREE/src/apps \ # for <app/app_version.h>
 	$$APP_SOURCE_TREE/src/libs \
 	$$APP_SOURCE_TREE/tools
 
@@ -135,7 +135,7 @@ msvc {
 }
 
 qt {
-    CONFIG += crypto debug
+    CONFIG += crypto 
 	QT += network \
 		widgets \
 		gui \
