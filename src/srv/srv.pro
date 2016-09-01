@@ -14,7 +14,7 @@ LIBS *= -l$$qtLibraryName(extensionsystem) -l$$qtLibraryName(utils)
 APP_GIT_REVISION = $$system(git --git-dir $$APP_SOURCE_TREE/.git --work-tree $$APP_BUILD_TREE describe --always --tags)
 
 win32 {
-        RC_FILE = srv.rc
+#        RC_FILE = srv.rc
         target.path = $$APP_BIN_PATH
         INSTALLS += target
 } else:macx {
