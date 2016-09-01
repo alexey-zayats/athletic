@@ -22,10 +22,10 @@ contains(QT_CONFIG, reduce_exports):CONFIG += hide_symbols
 
 !macx {
 	win32 {
-		dlltarget.path = $$INSTALL_BIN_PATH
+                dlltarget.path = $$APP_BIN_PATH
 		INSTALLS += dlltarget
 	} else {
-		target.path = $$INSTALL_LIBRARY_PATH
+                target.path = $$APP_LIBRARY_PATH
 		INSTALLS += target
 	}
 }

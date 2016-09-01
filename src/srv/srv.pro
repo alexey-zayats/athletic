@@ -15,13 +15,13 @@ APP_GIT_REVISION = $$system(git --git-dir $$APP_SOURCE_TREE/.git --work-tree $$A
 
 win32 {
         RC_FILE = srv.rc
-        target.path = $$INSTALL_BIN_PATH
+        target.path = $$APP_BIN_PATH
         INSTALLS += target
 } else:macx {
         CONFIG -= app_bundle
         LIBS += -framework CoreFoundation
 } else {
-        target.path  = $$INSTALL_BIN_PATH
+        target.path  = $$APP_BIN_PATH
         INSTALLS    += target
 }
 

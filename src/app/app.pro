@@ -18,14 +18,14 @@ LIBS *= -l$$qtLibraryName(extensionsystem) \
 APP_GIT_REVISION = $$system(git --git-dir $$APP_SOURCE_TREE/.git --work-tree $$APP_BUILD_TREE describe --always --tags)
 
 win32 {
-	RC_FILE = athletic.rc
-	target.path = $$INSTALL_BIN_PATH
+#	RC_FILE = athletic.rc
+        target.path = $$APP_BIN_PATH
 	INSTALLS += target
 } else:macx {
 	CONFIG -= app_bundle
 	LIBS += -framework CoreFoundation
 } else {
-	target.path  = $$INSTALL_BIN_PATH
+        target.path  = $$APP_BIN_PATH
 	INSTALLS    += target
 }
 

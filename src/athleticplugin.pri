@@ -92,7 +92,7 @@ CONFIG += plugin plugin_with_soname
 linux*:QMAKE_LFLAGS += $$QMAKE_LFLAGS_NOUNDEF
 
 !macx {
-    target.path = $$INSTALL_PLUGIN_PATH
+    target.path = $$APP_PLUGIN_PATH
     INSTALLS += target
 }
 
