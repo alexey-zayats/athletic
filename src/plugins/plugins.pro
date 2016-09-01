@@ -1,4 +1,7 @@
 TEMPLATE = subdirs
-SUBDIRS  = coreplugin \
-    updater \
-    scoreboard
+SUBDIRS  = \
+	coreplugin \
+	updater \
+	scoreboard \
+	fightcontrol \
+	fightboard
