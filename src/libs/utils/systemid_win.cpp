@@ -19,10 +19,12 @@ inline unsigned short hashMacAddress( PIP_ADAPTER_INFO info )
 
 const QString SystemIdPrivate::getMachineName()
 {
-   TCHAR computerName[1024];
-   DWORD size = 1024;
-   GetComputerName( computerName, &size );
-   return QLatin1String( (const char*)(computerName[0]) );
+    DWORD name_length = 1024;
+    wchar_t name[1024];
+    QString ret = QLatin1String("unknown");
+    if (GetComputerName(name, &name_length))
+        ret = QString::fromWCharArray(name);
+    return ret;
 }
 
 
