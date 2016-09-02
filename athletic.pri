@@ -135,7 +135,6 @@ msvc {
 }
 
 qt {
-    CONFIG += crypto 
 	QT += network \
 		widgets \
 		gui \

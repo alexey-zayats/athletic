@@ -27,7 +27,7 @@ win32 {
 
 QMAKE_SUBSTITUTES += $$PWD/restws_version.h.in
 
-CONFIG += no_batch
+CONFIG += no_batch crypto
 
 SOURCES += \
 	restws.cpp
