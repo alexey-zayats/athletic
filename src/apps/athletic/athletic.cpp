@@ -18,8 +18,6 @@
 #include <QNetworkProxy>
 #include <QtMsgHandler>
 
-#include <QtCrypto>
-
 #include "athletic.h"
 #include <athletic/athletic_version.h>
 #include <extensionsystem/iplugin.h>
@@ -68,8 +66,6 @@ static inline QStringList getPluginPaths()
     pluginPath += QLatin1String("/plugins");
 
     rc.push_back(pluginPath);
-
-    qCDebug(appLog) << rc;
 
     return rc;
 }
