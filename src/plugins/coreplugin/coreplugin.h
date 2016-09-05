@@ -18,9 +18,14 @@ class Theme;
 
 namespace Core {
 
+class FindPlugin;
+
 namespace Internal {
 
 using namespace ExtensionSystem;
+
+class MainWindow;
+
 
 class CorePlugin : public ExtensionSystem::IPlugin
 {
@@ -40,7 +45,8 @@ private slots:
 
 private:
     void initStyle();
-    QMainWindow *mainWindow;
+    MainWindow *m_mainWindow;
+    FindPlugin *m_findPlugin;
 };
 
 } // namespace Internal
