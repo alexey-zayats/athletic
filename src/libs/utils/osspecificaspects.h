@@ -5,7 +5,7 @@
 
 #include <QString>
 
-#define QTC_WIN_EXE_SUFFIX ".exe"
+#define WIN_EXE_SUFFIX ".exe"
 
 namespace Utils {
 
@@ -20,7 +20,7 @@ public:
     QString withExecutableSuffix(const QString &executable) const {
         QString finalName = executable;
         if (m_osType == OsTypeWindows)
-            finalName += QLatin1String(QTC_WIN_EXE_SUFFIX);
+            finalName += QLatin1String(WIN_EXE_SUFFIX);
         return finalName;
     }
 
