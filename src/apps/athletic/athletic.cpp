@@ -103,12 +103,17 @@ static void messageOutput(QtMsgType type, const QMessageLogContext &context, con
             .arg( context.line )
             .arg( QLatin1String(context.function) );
 
+    QTextStream cout(stdout);
+
     date = QDateTime::currentDateTime().toString (QLatin1Literal("yyyy-MM-dd-HH-mm-ss"));
-    QFile file( qApp->applicationDirPath () + QLatin1Literal("../logs/") + QLatin1String(appName) + QLatin1Literal(".log") );
+    QString logFile = qApp->applicationDirPath () + QLatin1Literal("/../logs/") + QLatin1String(appName) + QLatin1Literal(".log");
+    QFile file( logFile );
     if (file.open(QIODevice::WriteOnly | QIODevice::Append))
         QTextStream(&file) << output;
+    else
+        cout << file.errorString() << logFile;
 
-    QTextStream cout(stdout);
+
     cout << output;
 }
 
