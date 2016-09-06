@@ -84,7 +84,8 @@ MainWindow::MainWindow() :
     m_systemSettings(new SystemSettings),
     m_shortcutSettings(new ShortcutSettings),
     m_toggleSideBarAction(0),
-    m_toggleSideBarButton(new QToolButton)
+    m_toggleSideBarButton(new QToolButton),
+    m_versionDialog(0)
 {
     OutputPaneManager::create();
     HistoryCompleter::setSettings(PluginManager::settings());
@@ -750,8 +751,8 @@ void MainWindow::aboutAthletic()
 {
     if (!m_versionDialog) {
         m_versionDialog = new VersionDialog(this);
-        connect(m_versionDialog, &QDialog::finished,
-                this, &MainWindow::destroyVersionDialog);
+//        connect(m_versionDialog, &QDialog::finished,
+//                this, &MainWindow::destroyVersionDialog);
     }
     m_versionDialog->show();
 }
