@@ -32,6 +32,7 @@ RightPanePlaceHolder::RightPanePlaceHolder(IMode *mode, QWidget *parent)
 RightPanePlaceHolder::~RightPanePlaceHolder()
 {
     if (m_current == this) {
+        m_current = 0;
         RightPaneWidget::instance()->setParent(0);
         RightPaneWidget::instance()->hide();
     }
