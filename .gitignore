@@ -1,5 +1,5 @@
 *.stash
-*.user
+*.user*
 .obj
 .uic
 .rcc
