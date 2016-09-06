@@ -28,6 +28,7 @@
 
 #include <athletic/athletic_version.h>
 #include <extensionsystem/pluginmanager.h>
+#include "windowsupport.h"
 
 #include <QSysInfo>
 #include <QApplication>
@@ -339,6 +340,10 @@ QSettings *ICore::settings(QSettings::Scope scope)
         return PluginManager::globalSettings();
 }
 
+SettingsDatabase *ICore::settingsDatabase()
+{
+    return m_mainwindow->settingsDatabase();
+}
 
 QPrinter *ICore::printer()
 {
@@ -534,6 +539,11 @@ void ICore::addContextObject(IContext *context)
 void ICore::removeContextObject(IContext *context)
 {
     m_mainwindow->removeContextObject(context);
+}
+
+void ICore::registerWindow(QWidget *window, const Context &context)
+{
+    new WindowSupport(window, context); // deletes itself when widget is destroyed
 }
 
 } // namespace Core

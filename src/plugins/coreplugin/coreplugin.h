@@ -25,7 +25,7 @@ namespace Internal {
 using namespace ExtensionSystem;
 
 class MainWindow;
-
+class EditMode;
 
 class CorePlugin : public ExtensionSystem::IPlugin
 {
@@ -46,7 +46,7 @@ private slots:
 private:
     void initStyle();
     MainWindow *m_mainWindow;
-    FindPlugin *m_findPlugin;
+    EditMode *m_editMode;
 };
 
 } // namespace Internal

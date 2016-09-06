@@ -7,11 +7,16 @@
 #include "coreconstants.h"
 #include "actionmanager/actionmanager.h"
 #include "find/findplugin.h"
+#include "editmode.h"
+#include "modemanager.h"
 
 #include <utils/algorithm.h>
 #include <utils/stringutils.h>
 #include <utils/theme/theme.h>
 #include <utils/theme/theme_p.h>
+
+#include <extensionsystem/pluginmanager.h>
+#include <extensionsystem/pluginerroroverview.h>
 
 #include <QMainWindow>
 #include <QFile>
@@ -49,8 +54,9 @@ bool CorePlugin::initialize(const QStringList &arguments, QString *errorMessage)
 
 
 
-    const Id settingsThemeId = Id::fromSetting(ICore::settings()->value(
-                                                    QLatin1String(Constants::SETTINGS_THEME), QLatin1String(Constants::DEFAULT_THEME)));
+    const Id settingsThemeId = Id::fromSetting(
+                ICore::settings()->value(QLatin1String(Constants::SETTINGS_THEME),
+                                         QLatin1String(Constants::DEFAULT_THEME)));
      Id themeId = settingsThemeId;
      QColor overrideColor;
      bool presentationMode = false;
@@ -93,22 +99,34 @@ bool CorePlugin::initialize(const QStringList &arguments, QString *errorMessage)
      // because they need a valid theme set
      m_mainWindow = new MainWindow;
 
-     ActionManager::setPresentationModeEnabled(presentationMode);
-     m_findPlugin = new FindPlugin;
+     ActionManager::setPresentationModeEnabled(false);
 
-     m_mainWindow->init(errorMessage);
+     const bool success = m_mainWindow->init(errorMessage);
+     if (success) {
+         m_editMode = new EditMode;
+         addObject(m_editMode);
+         ModeManager::activateMode(m_editMode->id());
+//         m_designMode = new DesignMode;
+//         InfoBar::initializeGloballySuppressed();
+     }
 
      if (overrideColor.isValid())
          m_mainWindow->setOverrideColor(overrideColor);
 
-
-
-    return true;
+    return success;
 }
 
 void CorePlugin::extensionsInitialized()
 {
-    m_mainWindow->activateWindow ();
+//    if (m_designMode->designModeIsRequired())
+//        addObject(m_designMode);
+    m_mainWindow->extensionsInitialized();
+    if (ExtensionSystem::PluginManager::hasError()) {
+        auto errorOverview = new ExtensionSystem::PluginErrorOverview(m_mainWindow);
+        errorOverview->setAttribute(Qt::WA_DeleteOnClose);
+        errorOverview->setModal(true);
+        errorOverview->show();
+    }
 }
 
 bool CorePlugin::delayedInitialize()

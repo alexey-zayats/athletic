@@ -1,27 +1,3 @@
-/****************************************************************************
-**
-** Copyright (C) 2016 The Qt Company Ltd.
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of Qt Creator.
-**
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3 as published by the Free Software
-** Foundation with exceptions as appearing in the file LICENSE.GPL3-EXCEPT
-** included in the packaging of this file. Please review the following
-** information to ensure the GNU General Public License requirements will
-** be met: https://www.gnu.org/licenses/gpl-3.0.html.
-**
-****************************************************************************/
 
 #include "tabwidget.h"
 #include "actionbar.h"
@@ -286,74 +262,76 @@ static void paintSelectedTabBackground(QPainter *painter, const QRect &spanRect)
 void TabBar::paintTab(QPainter *painter, int tabIndex) const
 {
     if (!validIndex(tabIndex)) {
-        qWarning("invalid index");
-        return;
-    }
-    painter->save();
-
-    QRect rect = tabRect(tabIndex);
-    bool selected = (tabIndex == m_currentIndex);
-    bool enabled = isTabEnabled(tabIndex);
-
-    if (selected) {
-        if (creatorTheme()->widgetStyle() == Theme::StyleFlat) {
-          // background color of a fancy tab that is active
-          painter->fillRect(rect, creatorTheme()->color(Theme::ToolButtonSelectedColor));
-        } else {
-            paintSelectedTabBackground(painter, rect);
+            qWarning("invalid index");
+            return;
         }
-    }
-    QString tabText(this->tabText(tabIndex));
-    QRect tabTextRect(rect);
-    const bool drawIcon = rect.height() > 36;
-    QRect tabIconRect(tabTextRect);
-    tabTextRect.translate(0, drawIcon ? -2 : 1);
-    QFont boldFont(painter->font());
-    boldFont.setPointSizeF(StyleHelper::sidebarFontSize());
-    boldFont.setBold(true);
-    painter->setFont(boldFont);
-    painter->setPen(selected ? QColor(255, 255, 255, 160) : QColor(0, 0, 0, 110));
-    const int textFlags = Qt::AlignCenter | (drawIcon ? Qt::AlignBottom : Qt::AlignVCenter) | Qt::TextWordWrap;
-
-    const float fader = m_tabs[tabIndex]->fader();
-    if (fader > 0 && !HostOsInfo::isMacHost() && !selected && enabled) {
         painter->save();
-        painter->setOpacity(fader);
-        if (creatorTheme()->widgetStyle() == Theme::StyleFlat)
-            painter->fillRect(rect, creatorTheme()->color(Theme::ToolButtonHoverColor));
-        else
-            ToolButton::hoverOverlay(painter, rect);
+
+        QRect rect = tabRect(tabIndex);
+        bool selected = (tabIndex == m_currentIndex);
+        bool enabled = isTabEnabled(tabIndex);
+
+        if (selected) {
+            if (creatorTheme()->widgetStyle() == Theme::StyleFlat) {
+              // background color of a fancy tab that is active
+              painter->fillRect(rect, creatorTheme()->color(Theme::ToolButtonSelectedColor));
+            } else {
+                paintSelectedTabBackground(painter, rect);
+            }
+        }
+
+        QString tabText(this->tabText(tabIndex));
+        QRect tabTextRect(rect);
+        const bool drawIcon = rect.height() > 36;
+        QRect tabIconRect(tabTextRect);
+        tabTextRect.translate(0, drawIcon ? -2 : 1);
+        QFont boldFont(painter->font());
+        boldFont.setPointSizeF(StyleHelper::sidebarFontSize());
+        boldFont.setBold(true);
+        painter->setFont(boldFont);
+        painter->setPen(selected ? QColor(255, 255, 255, 160) : QColor(0, 0, 0, 110));
+        const int textFlags = Qt::AlignCenter | (drawIcon ? Qt::AlignBottom : Qt::AlignVCenter) | Qt::TextWordWrap;
+
+        const float fader = m_tabs[tabIndex]->fader();
+        if (fader > 0 && !HostOsInfo::isMacHost() && !selected && enabled) {
+            painter->save();
+            painter->setOpacity(fader);
+            if (creatorTheme()->widgetStyle() == Theme::StyleFlat)
+                painter->fillRect(rect, creatorTheme()->color(Theme::ToolButtonHoverColor));
+            else
+                ToolButton::hoverOverlay(painter, rect);
+            painter->restore();
+        }
+
+        if (!enabled && creatorTheme()->widgetStyle() == Theme::StyleDefault)
+            painter->setOpacity(0.7);
+
+        if (drawIcon) {
+            int textHeight = painter->fontMetrics().boundingRect(QRect(0, 0, width(), height()), Qt::TextWordWrap, tabText).height();
+            tabIconRect.adjust(0, 4, 0, -textHeight);
+            const QIcon::Mode iconMode = enabled ? (selected ? QIcon::Active : QIcon::Normal)
+                                                 : QIcon::Disabled;
+            StyleHelper::drawIconWithShadow(tabIcon(tabIndex), tabIconRect, painter, iconMode);
+        }
+
+        painter->setOpacity(1.0); //FIXME: was 0.7 before?
+        if (enabled) {
+            painter->setPen(selected
+              ? creatorTheme()->color(Theme::TabWidgetEnabledSelectedTextColor)
+              : creatorTheme()->color(Theme::TabWidgetEnabledUnselectedTextColor));
+        } else {
+            painter->setPen(selected
+              ? creatorTheme()->color(Theme::TabWidgetDisabledSelectedTextColor)
+              : creatorTheme()->color(Theme::TabWidgetDisabledUnselectedTextColor));
+        }
+        painter->translate(0, -1);
+        painter->drawText(tabTextRect, textFlags, tabText);
+
         painter->restore();
-    }
-
-    if (!enabled && creatorTheme()->widgetStyle() == Theme::StyleDefault)
-        painter->setOpacity(0.7);
-
-    if (drawIcon) {
-        int textHeight = painter->fontMetrics().boundingRect(QRect(0, 0, width(), height()), Qt::TextWordWrap, tabText).height();
-        tabIconRect.adjust(0, 4, 0, -textHeight);
-        const QIcon::Mode iconMode = enabled ? (selected ? QIcon::Active : QIcon::Normal)
-                                             : QIcon::Disabled;
-        StyleHelper::drawIconWithShadow(tabIcon(tabIndex), tabIconRect, painter, iconMode);
-    }
-
-    painter->setOpacity(1.0); //FIXME: was 0.7 before?
-    if (enabled) {
-        painter->setPen(selected
-          ? creatorTheme()->color(Theme::TabWidgetEnabledSelectedTextColor)
-          : creatorTheme()->color(Theme::TabWidgetEnabledUnselectedTextColor));
-    } else {
-        painter->setPen(selected
-          ? creatorTheme()->color(Theme::TabWidgetDisabledSelectedTextColor)
-          : creatorTheme()->color(Theme::TabWidgetDisabledUnselectedTextColor));
-    }
-    painter->translate(0, -1);
-    painter->drawText(tabTextRect, textFlags, tabText);
-
-    painter->restore();
 }
 
-void TabBar::setCurrentIndex(int index) {
+void TabBar::setCurrentIndex(int index)
+{
     if (isTabEnabled(index)) {
         m_currentIndex = index;
         update();
@@ -400,7 +378,7 @@ void ColorButton::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
 
     // Some Themes do not want highlights and shadows in the toolbars.
-    // But we definitely want a separator between ColorButton and TabBar
+    // But we definitely want a separator between FancyColorButton and FancyTabBar
     if (!creatorTheme()->flag(Theme::DrawToolBarHighlights)) {
         QPainter p(this);
         p.setPen(StyleHelper::borderColor());

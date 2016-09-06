@@ -35,6 +35,8 @@
 #include <coreplugin/actionmanager/actionmanager.h>
 #include <coreplugin/actionmanager/actionmanager_p.h>
 
+#include <coreplugin/editormanager/editormanager_p.h>
+
 #include "modemanager.h"
 #include "helpmanager.h"
 
@@ -136,12 +138,14 @@ MainWindow::MainWindow() :
     m_rightPaneWidget = new RightPaneWidget();
 
     m_statusBarManager = new StatusBarManager(this);
+    m_editorManager = new EditorManager(this);
+
     setCentralWidget(m_modeStack);
 
     // Add a small Toolbutton for toggling the navigation widget
     statusBar()->insertPermanentWidget(0, m_toggleSideBarButton);
 
-    setUnifiedTitleAndToolBarOnMac(true);
+     setUnifiedTitleAndToolBarOnMac(true);
 
     statusBar()->setProperty("p_styled", true);
 }
@@ -249,9 +253,9 @@ void MainWindow::registerDefaultActions()
 //    connect(m_newAction, &QAction::triggered, this, [this]() {
         // TODO: show new item dialog );
 //    });
-//    connect(ICore::instance(), &ICore::newItemDialogRunningChanged, m_newAction, [this]() {
-//        m_newAction->setEnabled(!ICore::isNewItemDialogRunning());
-//    });
+    connect(ICore::instance(), &ICore::newItemDialogRunningChanged, m_newAction, [this]() {
+        m_newAction->setEnabled(true);
+    });
 
     // Open Action
     icon = QIcon::fromTheme(QLatin1String("document-open"), Icons::OPENFILE.icon());
@@ -260,7 +264,7 @@ void MainWindow::registerDefaultActions()
     cmd->setDefaultKeySequence(QKeySequence::Open);
     mfile->addAction(cmd, Constants::G_FILE_OPEN);
     //TODO: open dialog
-//    connect(m_openAction, &QAction::triggered, this, &MainWindow::openFile);
+    connect(m_openAction, &QAction::triggered, this, &MainWindow::aboutPlugins);
 
     // Save Action
 //    icon = QIcon::fromTheme(QLatin1String("document-save"), Icons::SAVEFILE.icon());
@@ -284,6 +288,7 @@ void MainWindow::registerDefaultActions()
     icon = QIcon::fromTheme(QLatin1String("application-exit"));
     m_exitAction = new QAction(icon, tr("E&xit"), this);
     m_exitAction->setMenuRole(QAction::QuitRole);
+    m_exitAction->setEnabled (true);
     cmd = ActionManager::registerAction(m_exitAction, Constants::EXIT);
     cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Q")));
     mfile->addAction(cmd, Constants::G_FILE_OTHER);
@@ -295,6 +300,7 @@ void MainWindow::registerDefaultActions()
 
     m_optionsAction = new QAction(tr("&Options..."), this);
     m_optionsAction->setMenuRole(QAction::PreferencesRole);
+    m_optionsAction->setEnabled (true);
     cmd = ActionManager::registerAction(m_optionsAction, Constants::OPTIONS);
     cmd->setDefaultKeySequence(QKeySequence::Preferences);
     mtools->addAction(cmd, Constants::G_TOOLS_OPTIONS);
@@ -350,7 +356,7 @@ void MainWindow::registerDefaultActions()
     connect(m_toggleSideBarAction, &QAction::triggered, this, &MainWindow::setSidebarVisible);
     m_toggleSideBarButton->setDefaultAction(cmd->action());
     mwindow->addAction(cmd, Constants::G_WINDOW_VIEWS);
-    m_toggleSideBarAction->setEnabled(false);
+    m_toggleSideBarAction->setEnabled(true);
 
     // Show Mode Selector Action
     m_toggleModeSelectorAction = new QAction(tr("Show Mode Selector"), this);
@@ -372,10 +378,7 @@ void MainWindow::registerDefaultActions()
 
     // About IDE Action
     icon = QIcon::fromTheme(QLatin1String("help-about"));
-    if (HostOsInfo::isMacHost())
-        tmpaction = new QAction(icon, tr("About &Qt Creator"), this); // it's convention not to add dots to the about menu
-    else
-        tmpaction = new QAction(icon, tr("About &Qt Creator..."), this);
+    tmpaction = new QAction(icon, tr("About &Athletic"), this);
     tmpaction->setMenuRole(QAction::AboutRole);
     cmd = ActionManager::registerAction(tmpaction, Constants::ABOUT_QTCREATOR);
     mhelp->addAction(cmd, Constants::G_HELP_ABOUT);
@@ -401,7 +404,6 @@ void MainWindow::registerDefaultActions()
 
 void MainWindow::setSidebarVisible(bool visible)
 {
-    Q_UNUSED(visible)
     if (NavigationWidgetPlaceHolder::current()) {
         if (m_navigationWidget->isSuppressed() && visible) {
             m_navigationWidget->setShown(true);
@@ -456,12 +458,15 @@ MainWindow::~MainWindow()
     delete m_printer;
     m_printer = 0;
 
+    delete m_editorManager;
+    m_editorManager = 0;
+
     // All modes are now gone
-//    OutputPaneManager::destroy();
+    OutputPaneManager::destroy();
 
     // Now that the OutputPaneManager is gone, is a good time to delete the view
-//    PluginManager::removeObject(m_outputView);
-//    delete m_outputView;
+    PluginManager::removeObject(m_outputView);
+    delete m_outputView;
 
     delete m_statusBarManager;
     m_statusBarManager = 0;
@@ -481,8 +486,6 @@ MainWindow::~MainWindow()
 
 bool MainWindow::init(QString *errorMessage)
 {
-    qCDebug(corepluginLog) << "init";
-
     Q_UNUSED(errorMessage)
 
     PluginManager::addObject(m_coreImpl);
@@ -504,6 +507,7 @@ bool MainWindow::init(QString *errorMessage)
 
 void MainWindow::extensionsInitialized()
 {
+    EditorManagerPrivate::extensionsInitialized();
     m_windowSupport = new WindowSupport(this, Context("Core.MainWindow"));
     m_windowSupport->setCloseActionEnabled(false);
     m_statusBarManager->extensionsInitalized();
@@ -517,6 +521,11 @@ void MainWindow::extensionsInitialized()
     // Delay restoreWindowState, since it is overridden by LayoutRequest event
     QTimer::singleShot(0, this, &MainWindow::restoreWindowState);
     QTimer::singleShot(0, m_coreImpl, &ICore::coreOpened);
+}
+
+void MainWindow::setFocusToEditor()
+{
+    EditorManagerPrivate::doEscapeKeyFocusMoveMagic();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -557,6 +566,7 @@ void MainWindow::exit()
 void MainWindow::updateAdditionalContexts(const Context &remove, const Context &add,
                                           ICore::ContextPriority priority)
 {
+    qCInfo(corepluginLog) <<  "updateAdditionalContexts";
     foreach (const Id id, remove) {
         if (!id.isValid())
             continue;
@@ -582,6 +592,7 @@ void MainWindow::updateAdditionalContexts(const Context &remove, const Context &
 
 void MainWindow::updateContext()
 {
+    qCInfo(corepluginLog) <<  "updateContext";
     Context contexts = m_highPrioAdditionalContexts;
 
     foreach (IContext *context, m_activeContext)
@@ -607,6 +618,7 @@ IContext *MainWindow::contextObject(QWidget *widget)
 
 void MainWindow::addContextObject(IContext *context)
 {
+    qCInfo(corepluginLog) <<  "addContextObject";
     if (!context)
         return;
     QWidget *widget = context->widget();
@@ -618,6 +630,7 @@ void MainWindow::addContextObject(IContext *context)
 
 void MainWindow::removeContextObject(IContext *context)
 {
+    qCInfo(corepluginLog) <<  "removeContextObject";
     if (!context)
         return;
 
@@ -633,6 +646,7 @@ void MainWindow::removeContextObject(IContext *context)
 
 void MainWindow::updateContextObject(const QList<IContext *> &context)
 {
+    qCInfo(corepluginLog) <<  "updateContextObject";
     emit m_coreImpl->contextAboutToChange(context);
     m_activeContext = context;
     updateContext();
@@ -645,6 +659,7 @@ void MainWindow::updateContextObject(const QList<IContext *> &context)
 
 void MainWindow::updateFocusWidget(QWidget *old, QWidget *now)
 {
+    qCInfo(corepluginLog) <<  "updateFocusWidget";
     Q_UNUSED(old)
 
     // Prevent changing the context object just because the menu or a menu item is activated
@@ -702,6 +717,8 @@ void MainWindow::readSettings()
 
     m_navigationWidget->restoreSettings(settings);
     m_rightPaneWidget->readSettings(settings);
+
+     EditorManagerPrivate::readSettings();
 }
 
 void MainWindow::writeSettings()
@@ -725,6 +742,7 @@ void MainWindow::writeSettings()
     settings->endGroup();
 
     ActionManager::saveSettings();
+    EditorManagerPrivate::saveSettings();
     m_navigationWidget->saveSettings(settings);
 }
 

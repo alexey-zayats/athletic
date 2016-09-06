@@ -26,6 +26,7 @@ SOURCES += \
 	icore.cpp \
 	icontext.cpp \
 	imode.cpp \
+	idocument.cpp \
 	modemanager.cpp \
 	actionmanager/actionmanager.cpp \
 	actionmanager/actioncontainer.cpp \
@@ -68,6 +69,20 @@ SOURCES += \
 	find/searchresulttreeview.cpp \
 	plugindialog.cpp \
 	find/itemviewfind.cpp \
+	editmode.cpp \
+	editormanager/ieditor.cpp \
+	editormanager/ieditorfactory.cpp \
+	editormanager/editorview.cpp \
+	editormanager/editorwindow.cpp \
+	editormanager/editormanager.cpp \
+	editormanager/editorarea.cpp \
+	editormanager/openeditorswindow.cpp \
+	editormanager/openeditorsview.cpp \
+	editormanager/documentmodel.cpp \
+	opendocumentstreeview.cpp \
+	documentmanager.cpp \
+	editortoolbar.cpp \
+	fileiconprovider.cpp \
 
 HEADERS += \
 	actionbar.h \
@@ -84,6 +99,7 @@ HEADERS += \
 	icore.h \
 	icontext.h \
 	imode.h \
+	idocument.h \
 	modemanager.h \
 	actionmanager/actionmanager.h \
 	actionmanager/actionmanager_p.h \
@@ -132,6 +148,21 @@ HEADERS += \
 	find/searchresultcolor.h \
 	find/itemviewfind.h \
 	plugindialog.h \
+	editmode.h \
+	editormanager/ieditor.h \
+	editormanager/ieditorfactory.h \
+	editormanager/editorview.h \
+	editormanager/editorwindow.h \
+	editormanager/editormanager.h \
+	editormanager/editormanager_p.h \
+	editormanager/editorarea.h \
+	editormanager/openeditorswindow.h \
+	editormanager/openeditorsview.h \
+	editormanager/documentmodel.h \
+	opendocumentstreeview.h \
+	documentmanager.h \
+	editortoolbar.h \
+	fileiconprovider.h \
 
 FORMS = \
 	systemsettings.ui \

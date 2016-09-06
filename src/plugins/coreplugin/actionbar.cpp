@@ -15,6 +15,8 @@
 #include <utils/stylehelper.h>
 #include <utils/theme/theme.h>
 
+#include "coreconstants.h"
+
 #include "actionbar.h"
 
 using namespace Utils;
@@ -26,7 +28,6 @@ ToolButton::ToolButton(QAction *action, QWidget *parent)
     : QToolButton(parent), m_fader(0)
 {
     setDefaultAction(action);
-
     connect(action, &QAction::changed, this, &ToolButton::actionChanged);
     actionChanged();
 
@@ -38,27 +39,27 @@ bool ToolButton::event(QEvent *e)
 {
     switch (e->type()) {
     case QEvent::Enter:
-        {
-            QPropertyAnimation *animation = new QPropertyAnimation(this, "fader");
-            animation->setDuration(125);
-            animation->setEndValue(1.0);
-            animation->start(QAbstractAnimation::DeleteWhenStopped);
-        }
+    {
+        QPropertyAnimation *animation = new QPropertyAnimation(this, "fader");
+        animation->setDuration(125);
+        animation->setEndValue(1.0);
+        animation->start(QAbstractAnimation::DeleteWhenStopped);
+    }
         break;
     case QEvent::Leave:
-        {
-            QPropertyAnimation *animation = new QPropertyAnimation(this, "fader");
-            animation->setDuration(125);
-            animation->setEndValue(0.0);
-            animation->start(QAbstractAnimation::DeleteWhenStopped);
-        }
+    {
+        QPropertyAnimation *animation = new QPropertyAnimation(this, "fader");
+        animation->setDuration(125);
+        animation->setEndValue(0.0);
+        animation->start(QAbstractAnimation::DeleteWhenStopped);
+    }
         break;
     case QEvent::ToolTip:
-        {
-//            QHelpEvent *he = static_cast<QHelpEvent *>(e);
-//            ToolTip::show(mapToGlobal(he->pos()), toolTip(), this);
-            return true;
-        }
+    {
+        //                QHelpEvent *he = static_cast<QHelpEvent *>(e);
+        //                ToolTip::show(mapToGlobal(he->pos()), toolTip(), this);
+        return true;
+    }
     default:
         return QToolButton::event(e);
     }
@@ -90,7 +91,7 @@ static QVector<QString> splitInTwoLines(const QString &text, const QFontMetrics 
     // check if we could split at white space at all
     if (splitPos < 0) {
         splitLines[0] = fontMetrics.elidedText(text, Qt::ElideRight,
-                                                       availableWidth);
+                                               availableWidth);
         QString common = Utils::commonPrefix(QStringList()
                                              << splitLines[0] << text);
         splitLines[1] = text.mid(common.length());
@@ -119,6 +120,7 @@ void ToolButton::paintEvent(QPaintEvent *event)
 
     // draw borders
     bool isTitledAction = defaultAction()->property("titledAction").toBool();
+
 
     if (!HostOsInfo::isMacHost() // Mac UIs usually don't hover
             && m_fader > 0 && isEnabled() && !isDown() && !isChecked()) {
@@ -157,13 +159,13 @@ void ToolButton::paintEvent(QPaintEvent *event)
 
     const QIcon::Mode iconMode = isEnabled() ? ((isDown() || isChecked()) ? QIcon::Active : QIcon::Normal)
                                              : QIcon::Disabled;
-    QRect iconRect(0, 0, 32, 32);
+    QRect iconRect(0, 0, Constants::TARGET_ICON_SIZE, Constants::TARGET_ICON_SIZE);
     // draw popup texts
     if (isTitledAction) {
 
         QFont normalFont(painter.font());
         QRect centerRect = rect();
-        normalFont.setPointSizeF(sidebarFontSize());
+        normalFont.setPointSizeF(StyleHelper::sidebarFontSize());
         QFont boldFont(normalFont);
         boldFont.setBold(true);
         QFontMetrics fm(normalFont);

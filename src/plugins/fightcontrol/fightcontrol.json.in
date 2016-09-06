@@ -2,14 +2,14 @@
 	\"Name\" : \"FightControl\",
 	\"Version\" : \"$$APP_VERSION\",
 	\"CompatVersion\" : \"$$APP_COMPAT_VERSION\",
-	\"Required\" : true,
+	\"Required\" : false,
 	\"DisabledByDefault\": false,
 	\"Vendor\" : \"Alexey Zayats\",
-        \"Copyright\" : \"(C) 2016 Agitum\",
+		\"Copyright\" : \"(C) 2016 Agitum\",
 	\"License\" : [ \"\"],
-        \"Category\" : \"wrestling\",
+		\"Category\" : \"Wrestling\",
 	\"Description\" : \"The fightcontrol plugin for the Athletic.\",
-        \"Url\" : \"https://athletic.cloud/\",
+		\"Url\" : \"https://athletic.cloud/\",
 	\"Platform\": \"\",
 	$$dependencyList
 }

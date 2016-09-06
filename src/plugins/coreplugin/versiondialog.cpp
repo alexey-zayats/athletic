@@ -24,18 +24,17 @@ VersionDialog::VersionDialog(QWidget *parent)
     if (Utils::HostOsInfo::isLinuxHost())
         setWindowIcon(Icons::QTLOGO_128.icon());
 
-    setWindowTitle(tr("About Qt Creator"));
+    setWindowTitle(tr("About Athletic"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     QGridLayout *layout = new QGridLayout(this);
     layout->setSizeConstraint(QLayout::SetFixedSize);
 
     QString ideRev;
-#ifdef IDE_REVISION
-     //: This gets conditionally inserted as argument %8 into the description string.
-     ideRev = tr("<br/>From revision %1<br/>").arg(QString::fromLatin1(Constants::IDE_REVISION_STR).left(10));
+#ifdef APP_REVISION
+     ideRev = tr("<br/>From revision %1<br/>").arg(QString::fromLatin1(Constants::APP_REVISION_STR));
 #endif
      QString buildDateInfo;
-#ifdef QTC_SHOW_BUILD_DATE
+#ifdef APP_SHOW_BUILD_DATE
      buildDateInfo = tr("<br/>Built on %1 %2<br/>").arg(QLatin1String(__DATE__), QLatin1String(__TIME__));
 #endif
 
@@ -53,9 +52,7 @@ VersionDialog::VersionDialog(QWidget *parent)
         "<br/>"
         "Copyright 2008-%6 %7. All rights reserved.<br/>"
         "<br/>"
-        "The program is provided AS IS with NO WARRANTY OF ANY KIND, "
-        "INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A "
-        "PARTICULAR PURPOSE.<br/>")
+        )
         .arg(ICore::versionString(),
              ICore::buildCompatibilityString(),
              buildDateInfo,

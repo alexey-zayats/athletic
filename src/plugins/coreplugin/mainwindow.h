@@ -50,6 +50,7 @@ class ModeManager;
 class NavigationWidget;
 class RightPaneWidget;
 class SettingsDatabase;
+class EditorManager;
 
 namespace Internal {
 
@@ -79,7 +80,7 @@ public:
 
     void updateAdditionalContexts(const Context &remove, const Context &add,
                                       ICore::ContextPriority priority);
-
+    inline SettingsDatabase *settingsDatabase() const { return m_settingsDatabase; }
     virtual QPrinter *printer() const;
 
     IContext * currentContextObject() const;
@@ -93,6 +94,8 @@ public:
 
     void addPreCloseListener(const std::function<bool()> &listener);
     void setSuppressNavigationWidget(bool suppress);
+
+
 
 public slots:
     void exit();
@@ -108,6 +111,8 @@ private:
     void setSidebarVisible(bool visible);
     void destroyVersionDialog();
     void restoreWindowState();
+
+    void setFocusToEditor();
 
     void updateContextObject(const QList<IContext *> &context);
     void updateContext();
@@ -145,6 +150,7 @@ private:
     VersionDialog *m_versionDialog;
 
     StatusBarWidget *m_outputView;
+    EditorManager *m_editorManager;
 
     QList<IContext *> m_activeContext;
 

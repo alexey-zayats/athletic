@@ -30,6 +30,7 @@ SOURCES += \
 	categorysortfiltermodel.cpp \
 	itemviews.cpp \
 	treemodel.cpp \
+	overridecursor.cpp \
 
 HEADERS += \
 	hostosinfo.h \
@@ -62,6 +63,7 @@ HEADERS += \
 	categorysortfiltermodel.h \
 	itemviews.h \
 	treemodel.h \
+	overridecursor.h \
 
 !macx {
 	win32 {
