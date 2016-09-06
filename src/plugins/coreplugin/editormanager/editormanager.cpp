@@ -310,8 +310,8 @@ void EditorManagerPrivate::init()
     connect(m_closeAllEditorsExceptVisibleContextAction, &QAction::triggered,
             this, &EditorManagerPrivate::closeAllEditorsExceptVisible);
 
-    connect(m_findInDirectoryAction, &QAction::triggered,
-            this, &EditorManagerPrivate::findInDirectory);
+//    connect(m_findInDirectoryAction, &QAction::triggered,
+//            this, &EditorManagerPrivate::findInDirectory);
 
     // Goto Previous In History Action
     cmd = ActionManager::registerAction(m_gotoPreviousDocHistoryAction, Constants::GOTOPREVINHISTORY, editDesignContext);
