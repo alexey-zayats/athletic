@@ -70,6 +70,7 @@ SOURCES += \
 	find/searchresulttreeview.cpp \
 	plugindialog.cpp \
 	find/itemviewfind.cpp \
+	find/basetextfind.cpp \
 	editmode.cpp \
 	editormanager/ieditor.cpp \
 	editormanager/ieditorfactory.cpp \
@@ -84,6 +85,14 @@ SOURCES += \
 	documentmanager.cpp \
 	editortoolbar.cpp \
 	fileiconprovider.cpp \
+	progressmanager/progressmanager.cpp \
+	progressmanager/progressview.cpp \
+	progressmanager/progressbar.cpp \
+	progressmanager/futureprogress.cpp \
+	messagemanager.cpp \
+	messageoutputwindow.cpp \
+	outputwindow.cpp \
+	iwelcomepage.cpp \
 
 HEADERS += \
 	actionbar.h \
@@ -148,6 +157,7 @@ HEADERS += \
 	find/searchresulttreeview.h \
 	find/searchresultcolor.h \
 	find/itemviewfind.h \
+	find/basetextfind.h \
 	plugindialog.h \
 	editmode.h \
 	editormanager/ieditor.h \
@@ -164,6 +174,15 @@ HEADERS += \
 	documentmanager.h \
 	editortoolbar.h \
 	fileiconprovider.h \
+	progressmanager/progressmanager_p.h \
+	progressmanager/progressview.h \
+	progressmanager/progressbar.h \
+	progressmanager/futureprogress.h \
+	progressmanager/progressmanager.h \
+	messagemanager.h \
+	messageoutputwindow.h \
+	outputwindow.h \
+	iwelcomepage.h \
 
 FORMS = \
 	systemsettings.ui \
@@ -175,3 +194,25 @@ RESOURCES += \
 	coreplugin.qrc \
 	core.qrc \
 	actionbar.qrc \
+
+win32 {
+	SOURCES += progressmanager/progressmanager_win.cpp
+	QT += gui-private # Uses QPlatformNativeInterface.
+	LIBS += -lole32 -luser32
+}
+else:macx {
+	OBJECTIVE_SOURCES += \
+		progressmanager/progressmanager_mac.mm
+	LIBS += -framework AppKit
+}
+else:unix {
+	SOURCES += progressmanager/progressmanager_x11.cpp
+
+#    IMAGE_SIZE_LIST = 16 24 32 48 64 128 256 512
+
+#    for(imagesize, IMAGE_SIZE_LIST) {
+#        eval(image$${imagesize}.files = images/logo/$${imagesize}/QtProject-qtcreator.png)
+#        eval(image$${imagesize}.path = $$QTC_PREFIX/share/icons/hicolor/$${imagesize}x$${imagesize}/apps)
+#        INSTALLS += image$${imagesize}
+#    }
+}

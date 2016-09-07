@@ -6,6 +6,8 @@
 namespace Core {
 namespace Constants {
 
+const char FOUNDED_AT[]          = "2015";
+
 // Modes
 const char MODE_WELCOME[]          = "Welcome";
 const char MODE_EDIT[]             = "Edit";

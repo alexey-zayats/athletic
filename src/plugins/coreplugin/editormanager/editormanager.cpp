@@ -1995,7 +1995,7 @@ void EditorManager::addSaveAndCloseEditorActions(QMenu *contextMenu, DocumentMod
 
     contextMenu->addAction(d->m_saveCurrentEditorContextAction);
     contextMenu->addAction(d->m_saveAsCurrentEditorContextAction);
-    contextMenu->addAction(ActionManager::command(Constants::SAVEALL)->action());
+    // contextMenu->addAction(ActionManager::command(Constants::SAVEALL)->action());
     contextMenu->addAction(d->m_revertToSavedCurrentEditorContextAction);
 
     contextMenu->addSeparator();
@@ -2015,22 +2015,6 @@ void EditorManager::addSaveAndCloseEditorActions(QMenu *contextMenu, DocumentMod
     contextMenu->addAction(d->m_closeAllEditorsContextAction);
     contextMenu->addAction(d->m_closeOtherDocumentsContextAction);
     contextMenu->addAction(d->m_closeAllEditorsExceptVisibleContextAction);
-}
-
-void EditorManager::addNativeDirAndOpenWithActions(QMenu *contextMenu, DocumentModel::Entry *entry)
-{
-    d->m_contextMenuEntry = entry;
-    bool enabled = entry && !entry->fileName().isEmpty();
-    d->m_openGraphicalShellAction->setEnabled(enabled);
-    d->m_openTerminalAction->setEnabled(enabled);
-    d->m_findInDirectoryAction->setEnabled(enabled);
-    contextMenu->addAction(d->m_openGraphicalShellAction);
-    contextMenu->addAction(d->m_openTerminalAction);
-    contextMenu->addAction(d->m_findInDirectoryAction);
-    QMenu *openWith = contextMenu->addMenu(tr("Open With"));
-    openWith->setEnabled(enabled);
-    if (enabled)
-        populateOpenWithMenu(openWith, entry->fileName().toString());
 }
 
 void EditorManager::populateOpenWithMenu(QMenu *menu, const QString &fileName)

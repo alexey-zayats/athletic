@@ -31,6 +31,11 @@ SOURCES += \
 	itemviews.cpp \
 	treemodel.cpp \
 	overridecursor.cpp \
+	filesearch.cpp \
+	runextensions.cpp \
+	outputformatter.cpp \
+	synchronousprocess.cpp \
+	ansiescapecodehandler.cpp \
 
 HEADERS += \
 	hostosinfo.h \
@@ -64,6 +69,14 @@ HEADERS += \
 	itemviews.h \
 	treemodel.h \
 	overridecursor.h \
+	filesearch.h \
+	mapreduce.h \
+	runextensions.h \
+	functiontraits.h \
+	outputformat.h \
+	outputformatter.h \
+	synchronousprocess.h \
+	ansiescapecodehandler.h \
 
 !macx {
 	win32 {

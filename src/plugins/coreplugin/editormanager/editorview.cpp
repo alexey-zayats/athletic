@@ -321,8 +321,6 @@ void EditorView::fillListContextMenu(QMenu *menu)
     DocumentModel::Entry *entry = editor ? DocumentModel::entryForDocument(editor->document())
                                          : 0;
     EditorManager::addSaveAndCloseEditorActions(menu, entry, editor);
-    menu->addSeparator();
-    EditorManager::addNativeDirAndOpenWithActions(menu, entry);
 }
 
 void EditorView::splitHorizontally()

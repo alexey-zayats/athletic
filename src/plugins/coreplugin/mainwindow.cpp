@@ -35,7 +35,14 @@
 #include <coreplugin/actionmanager/actionmanager.h>
 #include <coreplugin/actionmanager/actionmanager_p.h>
 
+#include <coreplugin/editormanager/editormanager.h>
 #include <coreplugin/editormanager/editormanager_p.h>
+#include <coreplugin/progressmanager/progressmanager.h>
+#include <coreplugin/progressmanager/progressmanager_p.h>
+#include <coreplugin/progressmanager/progressview.h>
+
+#include <coreplugin/messagemanager.h>
+#include <coreplugin/documentmanager.h>
 
 #include "modemanager.h"
 #include "helpmanager.h"
@@ -70,30 +77,42 @@ enum { debugMainWindow = 0 };
 
 MainWindow::MainWindow() :
     AppMainWindow(),
-    m_printer(0),
     m_coreImpl(new ICore(this)),
     m_lowPrioAdditionalContexts(Constants::C_GLOBAL),
-    m_statusBarManager(0),
-    m_helpManager(new HelpManager),
-    m_modeManager(0),
-    m_modeStack(new TabWidget(this)),
     m_settingsDatabase(new SettingsDatabase(QFileInfo(PluginManager::settings()->fileName()).path(),
                                                QLatin1String("QtCreator"),
                                                this)),
+    m_windowSupport(0),
+    m_editorManager(0),
+    m_progressManager(new ProgressManagerPrivate),
+    m_statusBarManager(0),
+    m_modeManager(0),
+    m_helpManager(new HelpManager),
+    m_modeStack(new TabWidget(this)),
+    m_navigationWidget(0),
+    m_rightPaneWidget(0),
+    m_versionDialog(0),
+    m_printer(0),
     m_generalSettings(new GeneralSettings),
     m_systemSettings(new SystemSettings),
     m_shortcutSettings(new ShortcutSettings),
-    m_versionDialog(0),
+    m_focusToEditor(0),
+    m_newAction(0),
+    m_openAction(0),
+    m_exitAction(0),
+    m_optionsAction(0),
     m_toggleSideBarAction(0),
-    m_toggleSideBarButton(new QToolButton)
+    m_toggleSideBarButton(new QToolButton),
+    m_toggleModeSelectorAction(0)
 {
+    (void) new DocumentManager(this);
     OutputPaneManager::create();
     HistoryCompleter::setSettings(PluginManager::settings());
 
     setWindowTitle(tr("Athletic"));
 
-//    if (HostOsInfo::isLinuxHost())
-//        QApplication::setWindowIcon();
+    if (HostOsInfo::isLinuxHost())
+        QApplication::setWindowIcon(Icons::QTLOGO_128.icon());
 
     QCoreApplication::setApplicationName(QLatin1String("Athletic"));
     QCoreApplication::setApplicationVersion(QLatin1String(Constants::APP_VERSION_LONG));
@@ -139,30 +158,200 @@ MainWindow::MainWindow() :
     m_rightPaneWidget = new RightPaneWidget();
 
     m_statusBarManager = new StatusBarManager(this);
+    m_messageManager = new MessageManager;
     m_editorManager = new EditorManager(this);
 
     setCentralWidget(m_modeStack);
+
+    m_progressManager->progressView()->setParent(this);
+    m_progressManager->progressView()->setReferenceWidget(m_modeStack->statusBar());
+
+    connect(qApp, &QApplication::focusChanged, this, &MainWindow::updateFocusWidget);
 
     // Add a small Toolbutton for toggling the navigation widget
     statusBar()->insertPermanentWidget(0, m_toggleSideBarButton);
     statusBar()->setProperty("p_styled", true);
 }
 
-bool MainWindow::showOptionsDialog(Id page, QWidget *parent)
+void MainWindow::setSidebarVisible(bool visible)
 {
-    emit m_coreImpl->optionsDialogRequested();
-    if (!parent)
-        parent = ICore::dialogParent();
-    SettingsDialog *dialog = SettingsDialog::getSettingsDialog(parent, page);
-    return dialog->execDialog();
+    if (NavigationWidgetPlaceHolder::current()) {
+        if (m_navigationWidget->isSuppressed() && visible) {
+            m_navigationWidget->setShown(true);
+            m_navigationWidget->setSuppressed(false);
+        } else {
+            m_navigationWidget->setShown(visible);
+        }
+    }
 }
+
+void MainWindow::setSuppressNavigationWidget(bool suppress)
+{
+    if (NavigationWidgetPlaceHolder::current())
+        m_navigationWidget->setSuppressed(suppress);
+}
+
+void MainWindow::setOverrideColor(const QColor &color)
+{
+    m_overrideColor = color;
+}
+
+QStringList MainWindow::additionalAboutInformation() const
+{
+    return m_aboutInformation;
+}
+
+void MainWindow::appendAboutInformation(const QString &line)
+{
+    m_aboutInformation.append(line);
+}
+
+void MainWindow::addPreCloseListener(const std::function<bool ()> &listener)
+{
+    m_preCloseListeners.append(listener);
+}
+
+MainWindow::~MainWindow()
+{
+    delete m_windowSupport;
+    m_windowSupport = 0;
+
+    PluginManager::removeObject(m_shortcutSettings);
+    PluginManager::removeObject(m_generalSettings);
+    PluginManager::removeObject(m_systemSettings);
+
+    delete m_messageManager;
+    m_messageManager = 0;
+
+    delete m_shortcutSettings;
+    m_shortcutSettings = 0;
+    delete m_generalSettings;
+    m_generalSettings = 0;
+    delete m_systemSettings;
+    m_systemSettings = 0;
+    delete m_printer;
+    m_printer = 0;
+
+    // All modes are now gone
+    OutputPaneManager::destroy();
+
+    // Now that the OutputPaneManager is gone, is a good time to delete the view
+    PluginManager::removeObject(m_outputView);
+    delete m_outputView;
+
+    delete m_editorManager;
+    m_editorManager = 0;
+
+    delete m_progressManager;
+    m_progressManager = 0;
+    delete m_statusBarManager;
+    m_statusBarManager = 0;
+    PluginManager::removeObject(m_coreImpl);
+    delete m_coreImpl;
+    m_coreImpl = 0;
+
+    delete m_rightPaneWidget;
+    m_rightPaneWidget = 0;
+
+    delete m_modeManager;
+    m_modeManager = 0;
+
+    delete m_helpManager;
+    m_helpManager = 0;
+}
+
+bool MainWindow::init(QString *errorMessage)
+{
+    Q_UNUSED(errorMessage)
+
+    PluginManager::addObject(m_coreImpl);
+
+    m_statusBarManager->init();
+    m_modeManager->init();
+    m_progressManager->init();
+
+    PluginManager::addObject(m_generalSettings);
+    PluginManager::addObject(m_systemSettings);
+    PluginManager::addObject(m_shortcutSettings);
+
+    m_outputView = new StatusBarWidget;
+    m_outputView->setWidget(OutputPaneManager::instance()->buttonsWidget());
+    m_outputView->setPosition(StatusBarWidget::Second);
+
+    PluginManager::addObject(m_outputView);
+
+    MessageManager::init();
+
+    return true;
+}
+
+void MainWindow::extensionsInitialized()
+{
+    EditorManagerPrivate::extensionsInitialized();
+
+    m_windowSupport = new WindowSupport(this, Context("Core.MainWindow"));
+    m_windowSupport->setCloseActionEnabled(false);
+
+    m_statusBarManager->extensionsInitalized();
+
+    OutputPaneManager::instance()->init();
+
+    m_navigationWidget->setFactories(PluginManager::getObjects<INavigationWidgetFactory>());
+
+    readSettings();
+    updateContext();
+
+    emit m_coreImpl->coreAboutToOpen();
+    // Delay restoreWindowState, since it is overridden by LayoutRequest event
+    QTimer::singleShot(0, this, &MainWindow::restoreWindowState);
+    QTimer::singleShot(0, m_coreImpl, &ICore::coreOpened);
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    ICore::saveSettings();
+
+    // Save opened files
+    if (!DocumentManager::saveAllModifiedDocuments()) {
+        event->ignore();
+        return;
+    }
+
+    foreach (const std::function<bool()> &listener, m_preCloseListeners) {
+        if (!listener()) {
+            event->ignore();
+            return;
+        }
+    }
+
+    emit m_coreImpl->coreAboutToClose();
+
+    writeSettings();
+
+    m_navigationWidget->closeSubWidgets();
+
+    event->accept();
+}
+
+IContext *MainWindow::currentContextObject() const
+{
+    return m_activeContext.isEmpty() ? 0 : m_activeContext.first();
+}
+
+QStatusBar *MainWindow::statusBar() const
+{
+    return m_modeStack->statusBar();
+}
+
+
 
 void MainWindow::registerDefaultContainers()
 {
     ActionContainer *menubar = ActionManager::createMenuBar(Constants::MENU_BAR);
 
-    if (!HostOsInfo::isMacHost()) // System menu bar on Mac
-        setMenuBar(menubar->menuBar());
+//    if (!HostOsInfo::isMacHost()) // System menu bar on Mac
+    setMenuBar(menubar->menuBar());
+
     menubar->appendGroup(Constants::G_FILE);
     menubar->appendGroup(Constants::G_EDIT);
     menubar->appendGroup(Constants::G_VIEW);
@@ -400,213 +589,23 @@ void MainWindow::registerDefaultActions()
     }
 }
 
-void MainWindow::setSidebarVisible(bool visible)
-{
-    if (NavigationWidgetPlaceHolder::current()) {
-        if (m_navigationWidget->isSuppressed() && visible) {
-            m_navigationWidget->setShown(true);
-            m_navigationWidget->setSuppressed(false);
-        } else {
-            m_navigationWidget->setShown(visible);
-        }
-    }
-}
-
-void MainWindow::setSuppressNavigationWidget(bool suppress)
-{
-    if (NavigationWidgetPlaceHolder::current())
-        m_navigationWidget->setSuppressed(suppress);
-}
-
-void MainWindow::setOverrideColor(const QColor &color)
-{
-    m_overrideColor = color;
-}
-
-QStringList MainWindow::additionalAboutInformation() const
-{
-    return m_aboutInformation;
-}
-
-void MainWindow::appendAboutInformation(const QString &line)
-{
-    m_aboutInformation.append(line);
-}
-
-void MainWindow::addPreCloseListener(const std::function<bool ()> &listener)
-{
-    m_preCloseListeners.append(listener);
-}
-
-MainWindow::~MainWindow()
-{
-    delete m_windowSupport;
-    m_windowSupport = 0;
-
-    PluginManager::removeObject(m_shortcutSettings);
-    PluginManager::removeObject(m_generalSettings);
-    PluginManager::removeObject(m_systemSettings);
-
-    delete m_shortcutSettings;
-    m_shortcutSettings = 0;
-    delete m_generalSettings;
-    m_generalSettings = 0;
-    delete m_systemSettings;
-    m_systemSettings = 0;
-    delete m_printer;
-    m_printer = 0;
-
-    delete m_editorManager;
-    m_editorManager = 0;
-
-    // All modes are now gone
-    OutputPaneManager::destroy();
-
-    // Now that the OutputPaneManager is gone, is a good time to delete the view
-    PluginManager::removeObject(m_outputView);
-    delete m_outputView;
-
-    delete m_statusBarManager;
-    m_statusBarManager = 0;
-    PluginManager::removeObject(m_coreImpl);
-    delete m_coreImpl;
-    m_coreImpl = 0;
-
-    delete m_rightPaneWidget;
-    m_rightPaneWidget = 0;
-
-    delete m_modeManager;
-    m_modeManager = 0;
-
-    delete m_helpManager;
-    m_helpManager = 0;
-}
-
-bool MainWindow::init(QString *errorMessage)
-{
-    Q_UNUSED(errorMessage)
-
-    PluginManager::addObject(m_coreImpl);
-
-    m_statusBarManager->init();
-    m_modeManager->init();
-
-    PluginManager::addObject(m_generalSettings);
-    PluginManager::addObject(m_systemSettings);
-    PluginManager::addObject(m_shortcutSettings);
-
-    m_outputView = new StatusBarWidget;
-    m_outputView->setWidget(OutputPaneManager::instance()->buttonsWidget());
-    m_outputView->setPosition(StatusBarWidget::Second);
-    PluginManager::addObject(m_outputView);
-
-    return true;
-}
-
-void MainWindow::extensionsInitialized()
-{
-    EditorManagerPrivate::extensionsInitialized();
-    m_windowSupport = new WindowSupport(this, Context("Core.MainWindow"));
-    m_windowSupport->setCloseActionEnabled(false);
-    m_statusBarManager->extensionsInitalized();
-    OutputPaneManager::instance()->init();
-    m_navigationWidget->setFactories(PluginManager::getObjects<INavigationWidgetFactory>());
-
-    readSettings();
-    updateContext();
-
-    emit m_coreImpl->coreAboutToOpen();
-    // Delay restoreWindowState, since it is overridden by LayoutRequest event
-    QTimer::singleShot(0, this, &MainWindow::restoreWindowState);
-    QTimer::singleShot(0, m_coreImpl, &ICore::coreOpened);
-}
-
 void MainWindow::setFocusToEditor()
 {
     EditorManagerPrivate::doEscapeKeyFocusMoveMagic();
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
+bool MainWindow::showOptionsDialog(Id page, QWidget *parent)
 {
-    ICore::saveSettings();
-
-    foreach (const std::function<bool()> &listener, m_preCloseListeners) {
-        if (!listener()) {
-            event->ignore();
-            return;
-        }
-    }
-
-    emit m_coreImpl->coreAboutToClose();
-
-    writeSettings();
-
-    m_navigationWidget->closeSubWidgets();
-
-    event->accept();
-}
-
-IContext *MainWindow::currentContextObject() const
-{
-    return m_activeContext.isEmpty() ? 0 : m_activeContext.first();
-}
-
-QStatusBar *MainWindow::statusBar() const
-{
-    return m_modeStack->statusBar();
+    emit m_coreImpl->optionsDialogRequested();
+    if (!parent)
+        parent = ICore::dialogParent();
+    SettingsDialog *dialog = SettingsDialog::getSettingsDialog(parent, page);
+    return dialog->execDialog();
 }
 
 void MainWindow::exit()
 {
     QTimer::singleShot(0, this,  &QWidget::close);
-}
-
-void MainWindow::updateAdditionalContexts(const Context &remove, const Context &add,
-                                          ICore::ContextPriority priority)
-{
-    qCInfo(corepluginLog) <<  "updateAdditionalContexts";
-    foreach (const Id id, remove) {
-        if (!id.isValid())
-            continue;
-        int index = m_lowPrioAdditionalContexts.indexOf(id);
-        if (index != -1)
-            m_lowPrioAdditionalContexts.removeAt(index);
-        index = m_highPrioAdditionalContexts.indexOf(id);
-        if (index != -1)
-            m_highPrioAdditionalContexts.removeAt(index);
-    }
-
-    foreach (const Id id, add) {
-        if (!id.isValid())
-            continue;
-        Context &cref = (priority == ICore::ContextPriority::High ? m_highPrioAdditionalContexts
-                                                                  : m_lowPrioAdditionalContexts);
-        if (!cref.contains(id))
-            cref.prepend(id);
-    }
-
-    updateContext();
-}
-
-void MainWindow::updateContext()
-{
-    qCInfo(corepluginLog) <<  "updateContext";
-    Context contexts = m_highPrioAdditionalContexts;
-
-    foreach (IContext *context, m_activeContext)
-        contexts.add(context->context());
-
-    contexts.add(m_lowPrioAdditionalContexts);
-
-    Context uniquecontexts;
-    for (int i = 0; i < contexts.size(); ++i) {
-        const Id id = contexts.at(i);
-        if (!uniquecontexts.contains(id))
-            uniquecontexts.add(id);
-    }
-
-    ActionManager::setContext(uniquecontexts);
-    emit m_coreImpl->contextChanged(uniquecontexts);
 }
 
 IContext *MainWindow::contextObject(QWidget *widget)
@@ -641,20 +640,6 @@ void MainWindow::removeContextObject(IContext *context)
         updateContextObject(m_activeContext);
 }
 
-
-void MainWindow::updateContextObject(const QList<IContext *> &context)
-{
-    qCInfo(corepluginLog) <<  "updateContextObject";
-    emit m_coreImpl->contextAboutToChange(context);
-    m_activeContext = context;
-    updateContext();
-    if (debugMainWindow) {
-        qDebug() << "new context objects =" << context;
-        foreach (IContext *c, context)
-            qDebug() << (c ? c->widget() : 0) << (c ? c->widget()->metaObject()->className() : 0);
-    }
-}
-
 void MainWindow::updateFocusWidget(QWidget *old, QWidget *now)
 {
     qCInfo(corepluginLog) <<  "updateFocusWidget";
@@ -678,6 +663,46 @@ void MainWindow::updateFocusWidget(QWidget *old, QWidget *now)
     // ignore toplevels that define no context, like popups without parent
     if (!newContext.isEmpty() || qApp->focusWidget() == focusWidget())
         updateContextObject(newContext);
+}
+
+void MainWindow::updateContextObject(const QList<IContext *> &context)
+{
+    qCInfo(corepluginLog) <<  "updateContextObject";
+    emit m_coreImpl->contextAboutToChange(context);
+    m_activeContext = context;
+    updateContext();
+    if (debugMainWindow) {
+        qDebug() << "new context objects =" << context;
+        foreach (IContext *c, context)
+            qDebug() << (c ? c->widget() : 0) << (c ? c->widget()->metaObject()->className() : 0);
+    }
+}
+
+void MainWindow::updateAdditionalContexts(const Context &remove, const Context &add,
+                                          ICore::ContextPriority priority)
+{
+    qCInfo(corepluginLog) <<  "updateAdditionalContexts";
+    foreach (const Id id, remove) {
+        if (!id.isValid())
+            continue;
+        int index = m_lowPrioAdditionalContexts.indexOf(id);
+        if (index != -1)
+            m_lowPrioAdditionalContexts.removeAt(index);
+        index = m_highPrioAdditionalContexts.indexOf(id);
+        if (index != -1)
+            m_highPrioAdditionalContexts.removeAt(index);
+    }
+
+    foreach (const Id id, add) {
+        if (!id.isValid())
+            continue;
+        Context &cref = (priority == ICore::ContextPriority::High ? m_highPrioAdditionalContexts
+                                                                  : m_lowPrioAdditionalContexts);
+        if (!cref.contains(id))
+            cref.prepend(id);
+    }
+
+    updateContext();
 }
 
 void MainWindow::aboutToShutdown()
@@ -744,6 +769,28 @@ void MainWindow::writeSettings()
     m_navigationWidget->saveSettings(settings);
 }
 
+void MainWindow::updateContext()
+{
+    qCInfo(corepluginLog) <<  "updateContext";
+    Context contexts = m_highPrioAdditionalContexts;
+
+    foreach (IContext *context, m_activeContext)
+        contexts.add(context->context());
+
+    contexts.add(m_lowPrioAdditionalContexts);
+
+    Context uniquecontexts;
+    for (int i = 0; i < contexts.size(); ++i) {
+        const Id id = contexts.at(i);
+        if (!uniquecontexts.contains(id))
+            uniquecontexts.add(id);
+    }
+
+    ActionManager::setContext(uniquecontexts);
+    emit m_coreImpl->contextChanged(uniquecontexts);
+}
+
+
 void MainWindow::aboutAthletic()
 {
     if (!m_versionDialog) {
@@ -775,6 +822,26 @@ QPrinter *MainWindow::printer() const
     return m_printer;
 }
 
+bool MainWindow::showWarningWithOptions(const QString &title,
+                                        const QString &text,
+                                        const QString &details,
+                                        Id settingsId,
+                                        QWidget *parent)
+{
+    if (parent == 0)
+        parent = this;
+    QMessageBox msgBox(QMessageBox::Warning, title, text,
+                       QMessageBox::Ok, parent);
+    if (!details.isEmpty())
+        msgBox.setDetailedText(details);
+    QAbstractButton *settingsButton = 0;
+    if (settingsId.isValid())
+        settingsButton = msgBox.addButton(tr("Settings..."), QMessageBox::AcceptRole);
+    msgBox.exec();
+    if (settingsButton && msgBox.clickedButton() == settingsButton)
+        return showOptionsDialog(settingsId);
+    return false;
+}
 
 void MainWindow::restoreWindowState()
 {

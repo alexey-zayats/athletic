@@ -4,6 +4,7 @@
 #include <athletic/athletic_version.h>
 #include <coreplugin/coreicons.h>
 #include <coreplugin/icore.h>
+#include <coreplugin/coreconstants.h>
 #include <utils/algorithm.h>
 #include <utils/hostosinfo.h>
 
@@ -63,9 +64,9 @@ VersionDialog::VersionDialog(QWidget *parent)
              additionalInfo.isEmpty() ? QString() : br + additionalInfo + br,
              (
                  QString::compare (QDate::currentDate().toString(QLatin1String("yyyy")),
-                                   QLatin1String(Constants::APP_YEAR)) == 0 ?
+                                   QLatin1String(Constants::FOUNDED_AT)) == 0 ?
                      QLatin1String(Constants::APP_YEAR) :
-                     QString( QLatin1String("2016-%1") ).arg( QLatin1String(Constants::APP_YEAR) )
+                     QString( QLatin1String("%1-%2") ).arg(QLatin1String(Constants::FOUNDED_AT)).arg( QLatin1String(Constants::APP_YEAR) )
              ),
              QLatin1String(Constants::APP_AUTHOR));
 

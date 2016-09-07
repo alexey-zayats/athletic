@@ -26,6 +26,7 @@ class NavigationWidget;
 class RightPaneWidget;
 class SettingsDatabase;
 class EditorManager;
+class MessageManager;
 
 namespace Internal {
 
@@ -36,6 +37,7 @@ class StatusBarManager;
 class VersionDialog;
 class WindowSupport;
 class SystemSettings;
+class ProgressManagerPrivate;
 
 class MainWindow : public Utils::AppMainWindow
 {
@@ -75,6 +77,10 @@ public:
 public slots:
     void exit();
     bool showOptionsDialog(Id page = Id(), QWidget *parent = 0);
+    bool showWarningWithOptions(const QString &title, const QString &text,
+                                    const QString &details = QString(),
+                                    Id settingsId = Id(),
+                                    QWidget *parent = 0);
     void aboutAthletic();
 
 protected:
@@ -98,48 +104,50 @@ private:
     void registerDefaultContainers();
     void registerDefaultActions();
 
-    QStringList m_aboutInformation;
-    mutable QPrinter *m_printer;
-
     ICore *m_coreImpl;
 
     Context m_highPrioAdditionalContexts;
     Context m_lowPrioAdditionalContexts;
 
+    SettingsDatabase *m_settingsDatabase;
+    WindowSupport *m_windowSupport;
+
+    ProgressManagerPrivate *m_progressManager;
     StatusBarManager *m_statusBarManager;
+    ModeManager *m_modeManager;
     HelpManager *m_helpManager;
+    TabWidget *m_modeStack;
 
     NavigationWidget *m_navigationWidget;
     RightPaneWidget *m_rightPaneWidget;
 
-    ModeManager *m_modeManager;
-    TabWidget *m_modeStack;
-
-    SettingsDatabase *m_settingsDatabase;
     GeneralSettings *m_generalSettings;
     SystemSettings *m_systemSettings;
     ShortcutSettings *m_shortcutSettings;
 
-    WindowSupport *m_windowSupport;
+    QStringList m_aboutInformation;
+    mutable QPrinter *m_printer;
 
     VersionDialog *m_versionDialog;
 
     StatusBarWidget *m_outputView;
     EditorManager *m_editorManager;
+    MessageManager *m_messageManager;
 
     QList<IContext *> m_activeContext;
 
     QMap<QWidget *, IContext *> m_contextWidgets;
 
+    QAction *m_focusToEditor;
     QAction *m_newAction;
     QAction *m_openAction;
     QAction *m_exitAction;
     QAction *m_optionsAction;
+    QAction *m_toggleSideBarAction;
+    QToolButton *m_toggleSideBarButton;
+
     QAction *m_toggleModeSelectorAction;
 
-    QAction *m_toggleSideBarAction;
-
-    QToolButton *m_toggleSideBarButton;
     QColor m_overrideColor;
     QList<std::function<bool()>> m_preCloseListeners;
 };

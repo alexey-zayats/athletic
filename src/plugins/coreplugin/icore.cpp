@@ -1,8 +1,8 @@
 #include "icore.h"
+#include "windowsupport.h"
 
 #include <athletic/athletic_version.h>
 #include <extensionsystem/pluginmanager.h>
-#include "windowsupport.h"
 
 #include <QSysInfo>
 #include <QApplication>
@@ -290,6 +290,11 @@ ICore::~ICore()
     m_mainwindow = 0;
 }
 
+bool ICore::showOptionsDialog(const Id page, QWidget *parent)
+{
+    return m_mainwindow->showOptionsDialog(page, parent);
+}
+
 QString ICore::msgShowOptionsDialog()
 {
     return QCoreApplication::translate("Core", "Configure...", "msgShowOptionsDialog");
@@ -305,6 +310,11 @@ QString ICore::msgShowOptionsDialogToolTip()
                                            "msgShowOptionsDialogToolTip (non-mac version)");
 }
 
+bool ICore::showWarningWithOptions(const QString &title, const QString &text,
+                                   const QString &details, Id settingsId, QWidget *parent)
+{
+    return m_mainwindow->showWarningWithOptions(title, text, details, settingsId, parent);
+}
 
 QSettings *ICore::settings(QSettings::Scope scope)
 {
@@ -420,6 +430,10 @@ QString ICore::buildCompatibilityString()
                                                  QString::number(QSysInfo::WordSize));
 }
 
+IContext *ICore::currentContextObject()
+{
+    return m_mainwindow->currentContextObject();
+}
 
 QWidget *ICore::mainWindow()
 {
@@ -454,6 +468,36 @@ void ICore::raiseWindow(QWidget *widget)
     }
 }
 
+void ICore::updateAdditionalContexts(const Context &remove, const Context &add,
+                                     ContextPriority priority)
+{
+    m_mainwindow->updateAdditionalContexts(remove, add, priority);
+}
+
+void ICore::addAdditionalContext(const Context &context, ContextPriority priority)
+{
+    m_mainwindow->updateAdditionalContexts(Context(), context, priority);
+}
+
+void ICore::removeAdditionalContext(const Context &context)
+{
+    m_mainwindow->updateAdditionalContexts(context, Context(), ContextPriority::Low);
+}
+
+void ICore::addContextObject(IContext *context)
+{
+    m_mainwindow->addContextObject(context);
+}
+
+void ICore::removeContextObject(IContext *context)
+{
+    m_mainwindow->removeContextObject(context);
+}
+
+void ICore::registerWindow(QWidget *window, const Context &context)
+{
+    new WindowSupport(window, context); // deletes itself when widget is destroyed
+}
 
 /*!
     \fn ICore::addCloseCoreListener
@@ -487,37 +531,6 @@ QStringList ICore::additionalAboutInformation()
 void ICore::appendAboutInformation(const QString &line)
 {
     m_mainwindow->appendAboutInformation(line);
-}
-
-void ICore::updateAdditionalContexts(const Context &remove, const Context &add,
-                                     ContextPriority priority)
-{
-    m_mainwindow->updateAdditionalContexts(remove, add, priority);
-}
-
-void ICore::addAdditionalContext(const Context &context, ContextPriority priority)
-{
-    m_mainwindow->updateAdditionalContexts(Context(), context, priority);
-}
-
-void ICore::removeAdditionalContext(const Context &context)
-{
-    m_mainwindow->updateAdditionalContexts(context, Context(), ContextPriority::Low);
-}
-
-void ICore::addContextObject(IContext *context)
-{
-    m_mainwindow->addContextObject(context);
-}
-
-void ICore::removeContextObject(IContext *context)
-{
-    m_mainwindow->removeContextObject(context);
-}
-
-void ICore::registerWindow(QWidget *window, const Context &context)
-{
-    new WindowSupport(window, context); // deletes itself when widget is destroyed
 }
 
 } // namespace Core

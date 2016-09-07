@@ -30,7 +30,7 @@ class EditMode;
 class CorePlugin : public ExtensionSystem::IPlugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "cloud.athletic.app.plugin" FILE "Core.json")
+    Q_PLUGIN_METADATA(IID "cloud.athletic.app.plugin" FILE "core.json")
 
 public:
     CorePlugin();
@@ -44,7 +44,7 @@ public:
 private slots:
 
 private:
-    void initStyle();
+    void parseArguments(const QStringList & arguments);
     MainWindow *m_mainWindow;
     EditMode *m_editMode;
 };

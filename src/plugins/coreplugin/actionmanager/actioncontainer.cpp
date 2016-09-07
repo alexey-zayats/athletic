@@ -491,6 +491,7 @@ void MenuBarActionContainer::removeMenu(QMenu *menu)
 
 bool MenuBarActionContainer::updateInternal()
 {
+    qCInfo(corepluginLog) << "updateInternal" << onAllDisabledBehavior();
     if (onAllDisabledBehavior() == Show)
         return true;
 

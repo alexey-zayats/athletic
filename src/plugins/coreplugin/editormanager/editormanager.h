@@ -140,7 +140,6 @@ public:
 
     static void addSaveAndCloseEditorActions(QMenu *contextMenu, DocumentModel::Entry *entry,
                                              IEditor *editor = 0);
-    static void addNativeDirAndOpenWithActions(QMenu *contextMenu, DocumentModel::Entry *entry);
     static void populateOpenWithMenu(QMenu *menu, const QString &fileName);
 
 public: // for tests
