@@ -16,7 +16,7 @@ namespace Utils {
 
 class LineEditPrivate;
 
-class ATHLETIC_UTILS_EXPORT IconButton: public QAbstractButton
+class UTILS_EXPORT IconButton: public QAbstractButton
 {
     Q_OBJECT
     Q_PROPERTY(float iconOpacity READ iconOpacity WRITE setIconOpacity)
@@ -46,7 +46,7 @@ private:
     QPixmap m_pixmap;
 };
 
-class ATHLETIC_UTILS_EXPORT LineEdit : public CompletingLineEdit
+class UTILS_EXPORT LineEdit : public CompletingLineEdit
 {
     Q_OBJECT
     Q_ENUMS(Side)

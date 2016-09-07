@@ -9,7 +9,7 @@ namespace Utils {
 
 class SystemIdPrivate;
 
-class ATHLETIC_UTILS_EXPORT SystemId : public QObject
+class UTILS_EXPORT SystemId : public QObject
 {
     Q_OBJECT
 public:

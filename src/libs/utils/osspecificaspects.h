@@ -12,7 +12,7 @@ namespace Utils {
 // Add more as needed.
 enum OsType { OsTypeWindows, OsTypeLinux, OsTypeMac, OsTypeOtherUnix, OsTypeOther };
 
-class ATHLETIC_UTILS_EXPORT OsSpecificAspects
+class UTILS_EXPORT OsSpecificAspects
 {
 public:
     OsSpecificAspects(OsType osType) : m_osType(osType) { }

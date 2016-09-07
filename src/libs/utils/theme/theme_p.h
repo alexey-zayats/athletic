@@ -9,7 +9,7 @@
 
 namespace Utils {
 
-class ATHLETIC_UTILS_EXPORT ThemePrivate
+class UTILS_EXPORT ThemePrivate
 {
 public:
     ThemePrivate();
@@ -27,7 +27,7 @@ public:
     QMap<QString, QColor> palette;
 };
 
-ATHLETIC_UTILS_EXPORT void setCreatorTheme(Theme *theme);
+UTILS_EXPORT void setCreatorTheme(Theme *theme);
 
 } // namespace Utils
 

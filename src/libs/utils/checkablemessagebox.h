@@ -14,7 +14,7 @@ namespace Utils {
 
 class CheckableMessageBoxPrivate;
 
-class ATHLETIC_UTILS_EXPORT CheckableMessageBox : public QDialog
+class UTILS_EXPORT CheckableMessageBox : public QDialog
 {
     Q_OBJECT
     Q_PROPERTY(QString text READ text WRITE setText)

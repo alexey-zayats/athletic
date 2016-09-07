@@ -16,7 +16,7 @@ namespace Utils {
 class TreeItem;
 class TreeModel;
 
-class ATHLETIC_UTILS_EXPORT TreeItemVisitor
+class UTILS_EXPORT TreeItemVisitor
 {
 public:
     TreeItemVisitor() : m_level(0) {}
@@ -33,7 +33,7 @@ private:
     int m_level;
 };
 
-class ATHLETIC_UTILS_EXPORT TreeItem
+class UTILS_EXPORT TreeItem
 {
 public:
     TreeItem();
@@ -91,7 +91,7 @@ private:
     friend class TreeModel;
 };
 
-class ATHLETIC_UTILS_EXPORT UntypedTreeLevelItems
+class UTILS_EXPORT UntypedTreeLevelItems
 {
 public:
     enum { MaxSearchDepth = 12 }; // FIXME.
@@ -211,7 +211,7 @@ private:
     UntypedTreeLevelItems m_items;
 };
 
-class ATHLETIC_UTILS_EXPORT TreeModel : public QAbstractItemModel
+class UTILS_EXPORT TreeModel : public QAbstractItemModel
 {
     Q_OBJECT
 

@@ -8,7 +8,7 @@
 
 namespace Utils {
 
-class ATHLETIC_UTILS_EXPORT CategorySortFilterModel : public QSortFilterProxyModel
+class UTILS_EXPORT CategorySortFilterModel : public QSortFilterProxyModel
 {
 public:
     CategorySortFilterModel(QObject *parent = 0);

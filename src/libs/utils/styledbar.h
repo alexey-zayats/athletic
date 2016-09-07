@@ -8,7 +8,7 @@
 
 namespace Utils {
 
-class ATHLETIC_UTILS_EXPORT StyledBar : public QWidget
+class UTILS_EXPORT StyledBar : public QWidget
 {
     Q_OBJECT
 public:
@@ -23,7 +23,7 @@ protected:
     void paintEvent(QPaintEvent *event);
 };
 
-class ATHLETIC_UTILS_EXPORT StyledSeparator : public QWidget
+class UTILS_EXPORT StyledSeparator : public QWidget
 {
     Q_OBJECT
 public:

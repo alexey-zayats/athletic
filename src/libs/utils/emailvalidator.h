@@ -10,7 +10,7 @@ QT_END_NAMESPACE
 
 namespace Utils {
 
-class ATHLETIC_UTILS_EXPORT EmailValidator : public QValidator
+class UTILS_EXPORT EmailValidator : public QValidator
 {
     Q_OBJECT
 public:

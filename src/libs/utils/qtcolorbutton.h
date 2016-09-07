@@ -8,7 +8,7 @@
 
 namespace Utils {
 
-class ATHLETIC_UTILS_EXPORT QtColorButton : public QToolButton
+class UTILS_EXPORT QtColorButton : public QToolButton
 {
     Q_OBJECT
     Q_PROPERTY(bool backgroundCheckered READ isBackgroundCheckered WRITE setBackgroundCheckered)

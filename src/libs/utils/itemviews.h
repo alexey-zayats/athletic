@@ -62,7 +62,7 @@ public:
 
 };
 
-class ATHLETIC_UTILS_EXPORT TreeView : public View<QTreeView>
+class UTILS_EXPORT TreeView : public View<QTreeView>
 {
     Q_OBJECT
 public:
@@ -71,7 +71,7 @@ public:
     {}
 };
 
-class ATHLETIC_UTILS_EXPORT TreeWidget : public View<QTreeWidget>
+class UTILS_EXPORT TreeWidget : public View<QTreeWidget>
 {
     Q_OBJECT
 public:
@@ -80,7 +80,7 @@ public:
     {}
 };
 
-class ATHLETIC_UTILS_EXPORT ListView : public View<QListView>
+class UTILS_EXPORT ListView : public View<QListView>
 {
     Q_OBJECT
 public:
@@ -89,7 +89,7 @@ public:
     {}
 };
 
-class ATHLETIC_UTILS_EXPORT ListWidget : public View<QListWidget>
+class UTILS_EXPORT ListWidget : public View<QListWidget>
 {
     Q_OBJECT
 public:

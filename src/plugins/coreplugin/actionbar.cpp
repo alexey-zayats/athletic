@@ -109,10 +109,6 @@ static QVector<QString> splitInTwoLines(const QString &text, const QFontMetrics 
     return splitLines;
 }
 
-inline static qreal sidebarFontSize () {
-    return HostOsInfo::isMacHost() ? 10 : 7.5;
-}
-
 void ToolButton::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)

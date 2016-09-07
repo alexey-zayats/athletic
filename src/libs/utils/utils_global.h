@@ -5,9 +5,9 @@
 #include <qglobal.h>
 
 #if defined(APP_UTILS_LIB)
-#  define ATHLETIC_UTILS_EXPORT Q_DECL_EXPORT
+#  define UTILS_EXPORT Q_DECL_EXPORT
 #else
-#  define ATHLETIC_UTILS_EXPORT Q_DECL_IMPORT
+#  define UTILS_EXPORT Q_DECL_IMPORT
 #endif
 
 Q_DECLARE_LOGGING_CATEGORY(utilsLog)

@@ -12,22 +12,22 @@ namespace Utils {
 
 // Create a usable settings key from a category,
 // for example Editor|C++ -> Editor_C__
-ATHLETIC_UTILS_EXPORT QString settingsKey(const QString &category);
+UTILS_EXPORT QString settingsKey(const QString &category);
 
 // Return the common prefix part of a string list:
 // "C:\foo\bar1" "C:\foo\bar2"  -> "C:\foo\bar"
-ATHLETIC_UTILS_EXPORT QString commonPrefix(const QStringList &strings);
+UTILS_EXPORT QString commonPrefix(const QStringList &strings);
 
 // Return the common path of a list of files:
 // "C:\foo\bar1" "C:\foo\bar2"  -> "C:\foo"
-ATHLETIC_UTILS_EXPORT QString commonPath(const QStringList &files);
+UTILS_EXPORT QString commonPath(const QStringList &files);
 
 // On Linux/Mac replace user's home path with ~
 // Uses cleaned path and tries to use absolute path of "path" if possible
 // If path is not sub of home path, or when running on Windows, returns the input
-ATHLETIC_UTILS_EXPORT QString withTildeHomePath(const QString &path);
+UTILS_EXPORT QString withTildeHomePath(const QString &path);
 
-class ATHLETIC_UTILS_EXPORT AbstractMacroExpander
+class UTILS_EXPORT AbstractMacroExpander
 {
 public:
     virtual ~AbstractMacroExpander() {}
@@ -47,8 +47,8 @@ private:
     bool expandNestedMacros(const QString &str, int *pos, QString *ret);
 };
 
-ATHLETIC_UTILS_EXPORT void expandMacros(QString *str, AbstractMacroExpander *mx);
-ATHLETIC_UTILS_EXPORT QString expandMacros(const QString &str, AbstractMacroExpander *mx);
+UTILS_EXPORT void expandMacros(QString *str, AbstractMacroExpander *mx);
+UTILS_EXPORT QString expandMacros(const QString &str, AbstractMacroExpander *mx);
 
 } // namespace Utils
 

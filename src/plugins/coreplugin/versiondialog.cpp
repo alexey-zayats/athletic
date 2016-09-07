@@ -12,6 +12,7 @@
 #include <QKeyEvent>
 #include <QLabel>
 #include <QPushButton>
+#include <QDate>
 
 using namespace Core;
 using namespace Core::Internal;
@@ -31,17 +32,19 @@ VersionDialog::VersionDialog(QWidget *parent)
 
     QString ideRev;
 #ifdef APP_REVISION
-     ideRev = tr("<br/>From revision %1<br/>").arg(QString::fromLatin1(Constants::APP_REVISION_STR));
+     ideRev = tr("From revision %1<br/>").arg(QString::fromLatin1(Constants::APP_REVISION_STR));
 #endif
      QString buildDateInfo;
+
 #ifdef APP_SHOW_BUILD_DATE
-     buildDateInfo = tr("<br/>Built on %1 %2<br/>").arg(QLatin1String(__DATE__), QLatin1String(__TIME__));
+     buildDateInfo = tr("Built on %1 %2<br/>").arg(QLatin1String(__DATE__), QLatin1String(__TIME__));
 #endif
 
     const QString br = QLatin1String("<br/>");
     const QStringList additionalInfoLines = ICore::additionalAboutInformation();
     const QString additionalInfo =
             QStringList(Utils::transform(additionalInfoLines, &QString::toHtmlEscaped)).join(br);
+
 
     const QString description = tr(
         "<h3>%1</h3>"
@@ -50,7 +53,7 @@ VersionDialog::VersionDialog(QWidget *parent)
         "%4"
         "%5"
         "<br/>"
-        "Copyright 2008-%6 %7. All rights reserved.<br/>"
+        "&copy; %6 %7. All rights reserved.<br/>"
         "<br/>"
         )
         .arg(ICore::versionString(),
@@ -58,7 +61,12 @@ VersionDialog::VersionDialog(QWidget *parent)
              buildDateInfo,
              ideRev,
              additionalInfo.isEmpty() ? QString() : br + additionalInfo + br,
-             QLatin1String(Constants::APP_YEAR),
+             (
+                 QString::compare (QDate::currentDate().toString(QLatin1String("yyyy")),
+                                   QLatin1String(Constants::APP_YEAR)) == 0 ?
+                     QLatin1String(Constants::APP_YEAR) :
+                     QString( QLatin1String("2016-%1") ).arg( QLatin1String(Constants::APP_YEAR) )
+             ),
              QLatin1String(Constants::APP_AUTHOR));
 
     QLabel *copyRightLabel = new QLabel(description);

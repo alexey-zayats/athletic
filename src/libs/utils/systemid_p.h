@@ -5,7 +5,7 @@
 
 namespace Utils {
 
-class ATHLETIC_UTILS_EXPORT SystemIdPrivate
+class UTILS_EXPORT SystemIdPrivate
 {
 public:
     SystemIdPrivate();

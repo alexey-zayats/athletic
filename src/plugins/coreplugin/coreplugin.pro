@@ -1,4 +1,5 @@
 DEFINES += CORE_LIBRARY
+DEFINES += APP_SHOW_BUILD_DATE
 QT += \
 	help \
 	network \

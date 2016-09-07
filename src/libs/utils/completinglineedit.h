@@ -6,7 +6,7 @@
 
 namespace Utils {
 
-class ATHLETIC_UTILS_EXPORT CompletingLineEdit : public QLineEdit
+class UTILS_EXPORT CompletingLineEdit : public QLineEdit
 {
     Q_OBJECT
 

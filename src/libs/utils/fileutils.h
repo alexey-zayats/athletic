@@ -23,13 +23,13 @@ class QTemporaryFile;
 class QTextStream;
 class QWidget;
 
-ATHLETIC_UTILS_EXPORT QDebug operator<<(QDebug dbg, const Utils::FileName &c);
+UTILS_EXPORT QDebug operator<<(QDebug dbg, const Utils::FileName &c);
 
 QT_END_NAMESPACE
 
 namespace Utils {
 
-class ATHLETIC_UTILS_EXPORT FileName : private QString
+class UTILS_EXPORT FileName : private QString
 {
 public:
     FileName();
@@ -73,11 +73,11 @@ private:
     FileName(const QString &string);
 };
 
-ATHLETIC_UTILS_EXPORT QTextStream &operator<<(QTextStream &s, const FileName &fn);
+UTILS_EXPORT QTextStream &operator<<(QTextStream &s, const FileName &fn);
 
 using FileNameList = QList<FileName>;
 
-class ATHLETIC_UTILS_EXPORT FileUtils {
+class UTILS_EXPORT FileUtils {
 public:
     static bool removeRecursively(const FileName &filePath, QString *error = 0);
     static bool copyRecursively(const FileName &srcFilePath, const FileName &tgtFilePath,
@@ -97,7 +97,7 @@ public:
     static QString resolvePath(const QString &baseDir, const QString &fileName);
 };
 
-class ATHLETIC_UTILS_EXPORT FileReader
+class UTILS_EXPORT FileReader
 {
     Q_DECLARE_TR_FUNCTIONS(Utils::FileUtils) // sic!
 public:
@@ -116,7 +116,7 @@ private:
     QString m_errorString;
 };
 
-class ATHLETIC_UTILS_EXPORT FileSaverBase
+class UTILS_EXPORT FileSaverBase
 {
     Q_DECLARE_TR_FUNCTIONS(Utils::FileUtils) // sic!
 public:
@@ -147,7 +147,7 @@ private:
     Q_DISABLE_COPY(FileSaverBase)
 };
 
-class ATHLETIC_UTILS_EXPORT FileSaver : public FileSaverBase
+class UTILS_EXPORT FileSaver : public FileSaverBase
 {
     Q_DECLARE_TR_FUNCTIONS(Utils::FileUtils) // sic!
 public:
@@ -161,7 +161,7 @@ private:
     bool m_isSafe;
 };
 
-class ATHLETIC_UTILS_EXPORT TempFileSaver : public FileSaverBase
+class UTILS_EXPORT TempFileSaver : public FileSaverBase
 {
     Q_DECLARE_TR_FUNCTIONS(Utils::FileUtils) // sic!
 public:
@@ -179,7 +179,7 @@ private:
 } // namespace Utils
 
 QT_BEGIN_NAMESPACE
-ATHLETIC_UTILS_EXPORT uint qHash(const Utils::FileName &a);
+UTILS_EXPORT uint qHash(const Utils::FileName &a);
 QT_END_NAMESPACE
 
 Q_DECLARE_METATYPE(Utils::FileName)

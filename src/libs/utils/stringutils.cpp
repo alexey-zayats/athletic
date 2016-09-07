@@ -8,7 +8,7 @@
 
 namespace Utils {
 
-ATHLETIC_UTILS_EXPORT QString settingsKey(const QString &category)
+UTILS_EXPORT QString settingsKey(const QString &category)
 {
     QString rc(category);
     const QChar underscore = QLatin1Char('_');
@@ -35,7 +35,7 @@ static inline int commonPartSize(const QString &s1, const QString &s2)
     return size;
 }
 
-ATHLETIC_UTILS_EXPORT QString commonPrefix(const QStringList &strings)
+UTILS_EXPORT QString commonPrefix(const QStringList &strings)
 {
     switch (strings.size()) {
     case 0:
@@ -55,7 +55,7 @@ ATHLETIC_UTILS_EXPORT QString commonPrefix(const QStringList &strings)
     return strings.at(0).left(commonLength);
 }
 
-ATHLETIC_UTILS_EXPORT QString commonPath(const QStringList &files)
+UTILS_EXPORT QString commonPath(const QStringList &files)
 {
     QStringList appendedSlashes = Utils::transform(files, [](const QString &file) -> QString {
         if (!file.endsWith(QLatin1Char('/')))
@@ -75,7 +75,7 @@ ATHLETIC_UTILS_EXPORT QString commonPath(const QStringList &files)
     return common;
 }
 
-ATHLETIC_UTILS_EXPORT QString withTildeHomePath(const QString &path)
+UTILS_EXPORT QString withTildeHomePath(const QString &path)
 {
     if (HostOsInfo::isWindowsHost())
         return path;
@@ -142,7 +142,7 @@ int AbstractMacroExpander::findMacro(const QString &str, int *pos, QString *ret)
     }
 }
 
-ATHLETIC_UTILS_EXPORT void expandMacros(QString *str, AbstractMacroExpander *mx)
+UTILS_EXPORT void expandMacros(QString *str, AbstractMacroExpander *mx)
 {
     QString rsts;
 
@@ -152,7 +152,7 @@ ATHLETIC_UTILS_EXPORT void expandMacros(QString *str, AbstractMacroExpander *mx)
     }
 }
 
-ATHLETIC_UTILS_EXPORT QString expandMacros(const QString &str, AbstractMacroExpander *mx)
+UTILS_EXPORT QString expandMacros(const QString &str, AbstractMacroExpander *mx)
 {
     QString ret = str;
     expandMacros(&ret, mx);

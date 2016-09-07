@@ -1,4 +1,3 @@
-
 #include "actionmanager.h"
 #include "actionmanager_p.h"
 #include "actioncontainer_p.h"

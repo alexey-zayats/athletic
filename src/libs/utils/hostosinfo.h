@@ -16,7 +16,7 @@
 
 namespace Utils {
 
-class ATHLETIC_UTILS_EXPORT HostOsInfo
+class UTILS_EXPORT HostOsInfo
 {
 public:
     static inline OsType hostOs();

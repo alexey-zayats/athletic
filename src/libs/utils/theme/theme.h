@@ -14,7 +14,7 @@ namespace Utils {
 
 class ThemePrivate;
 
-class ATHLETIC_UTILS_EXPORT Theme : public QObject
+class UTILS_EXPORT Theme : public QObject
 {
     Q_OBJECT
 
@@ -284,7 +284,7 @@ private:
     QPair<QColor, QString> readNamedColor(const QString &color) const;
 };
 
-ATHLETIC_UTILS_EXPORT Theme *creatorTheme();
+UTILS_EXPORT Theme *creatorTheme();
 
 } // namespace Utils
 

@@ -14,7 +14,7 @@ namespace Utils {
 
 struct MainWindowPrivate;
 
-class ATHLETIC_UTILS_EXPORT MainWindow : public QMainWindow
+class UTILS_EXPORT MainWindow : public QMainWindow
 {
     Q_OBJECT
 

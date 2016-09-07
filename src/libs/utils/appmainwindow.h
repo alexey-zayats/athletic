@@ -1,4 +1,3 @@
-
 #ifndef APPMAINWINDOW_H
 #define APPMAINWINDOW_H
 
@@ -7,7 +6,7 @@
 
 namespace Utils {
 
-class ATHLETIC_UTILS_EXPORT AppMainWindow : public QMainWindow
+class UTILS_EXPORT AppMainWindow : public QMainWindow
 {
     Q_OBJECT
 public:

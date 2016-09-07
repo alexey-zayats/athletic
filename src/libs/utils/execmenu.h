@@ -12,7 +12,7 @@ QT_END_NAMESPACE
 
 namespace Utils {
 
-ATHLETIC_UTILS_EXPORT QAction *execMenuAtWidget(QMenu *menu, QWidget *widget);
+UTILS_EXPORT QAction *execMenuAtWidget(QMenu *menu, QWidget *widget);
 
 } // namespace Utils
 

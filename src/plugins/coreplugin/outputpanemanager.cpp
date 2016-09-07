@@ -234,7 +234,7 @@ void OutputPaneManager::init()
     const Id baseId = "QtCreator.Pane.";
     for (int i = 0; i != n; ++i) {
         IOutputPane *outPane = m_panes.at(i);
-        const int idx = m_outputWidgetPane->addWidget(outPane->outputWidget(this));
+        /*const int idx = */m_outputWidgetPane->addWidget(outPane->outputWidget(this));
 
         connect(outPane, &IOutputPane::showPage, this, [this, outPane](int flags) {
             showPage(findIndexForPage(outPane), flags);

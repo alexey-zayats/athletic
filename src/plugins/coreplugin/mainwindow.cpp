@@ -83,9 +83,9 @@ MainWindow::MainWindow() :
     m_generalSettings(new GeneralSettings),
     m_systemSettings(new SystemSettings),
     m_shortcutSettings(new ShortcutSettings),
+    m_versionDialog(0),
     m_toggleSideBarAction(0),
-    m_toggleSideBarButton(new QToolButton),
-    m_versionDialog(0)
+    m_toggleSideBarButton(new QToolButton)
 {
     OutputPaneManager::create();
     HistoryCompleter::setSettings(PluginManager::settings());
@@ -97,7 +97,7 @@ MainWindow::MainWindow() :
 
     QCoreApplication::setApplicationName(QLatin1String("Athletic"));
     QCoreApplication::setApplicationVersion(QLatin1String(Constants::APP_VERSION_LONG));
-//    QCoreApplication::setOrganizationName(QLatin1String(Constants::APP_SETTINGSVARIANT_STR));
+    QCoreApplication::setOrganizationName(QLatin1String(Constants::APP_AUTHOR));
 
     QString baseName = QApplication::style()->objectName();
     // Sometimes we get the standard windows 95 style as a fallback
@@ -145,9 +145,6 @@ MainWindow::MainWindow() :
 
     // Add a small Toolbutton for toggling the navigation widget
     statusBar()->insertPermanentWidget(0, m_toggleSideBarButton);
-
-     setUnifiedTitleAndToolBarOnMac(true);
-
     statusBar()->setProperty("p_styled", true);
 }
 

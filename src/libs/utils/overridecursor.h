@@ -8,7 +8,7 @@
 
 namespace Utils {
 
-class ATHLETIC_UTILS_EXPORT OverrideCursor
+class UTILS_EXPORT OverrideCursor
 {
 public:
     OverrideCursor(const QCursor &cursor);

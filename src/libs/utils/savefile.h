@@ -7,7 +7,7 @@
 
 namespace Utils {
 
-class ATHLETIC_UTILS_EXPORT SaveFile : public QTemporaryFile
+class UTILS_EXPORT SaveFile : public QTemporaryFile
 {
 public:
     explicit SaveFile(const QString &filename);

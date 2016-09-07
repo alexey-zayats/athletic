@@ -127,7 +127,7 @@ namespace Internal {
 */
 
 ActionContainerPrivate::ActionContainerPrivate(Id id)
-    : m_onAllDisabledBehavior(Disable), m_id(id), m_updateRequested(false)
+    : m_onAllDisabledBehavior(Show), m_id(id), m_updateRequested(false)
 {
     appendGroup(Constants::G_DEFAULT_ONE);
     appendGroup(Constants::G_DEFAULT_TWO);
@@ -352,7 +352,7 @@ MenuActionContainer::MenuActionContainer(Id id)
       m_menu(new QMenu)
 {
     m_menu->setObjectName(id.toString());
-    setOnAllDisabledBehavior(Disable);
+    setOnAllDisabledBehavior(Show);
 }
 
 MenuActionContainer::~MenuActionContainer()

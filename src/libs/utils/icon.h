@@ -19,7 +19,7 @@ typedef QPair<QString, Theme::Color> IconMaskAndColor;
 
 // Returns a recolored icon with shadow and custom disabled state for a
 // series of grayscalemask|Theme::Color mask pairs
-class ATHLETIC_UTILS_EXPORT Icon : public QVector<IconMaskAndColor>
+class UTILS_EXPORT Icon : public QVector<IconMaskAndColor>
 {
 public:
     enum IconStyleOption {

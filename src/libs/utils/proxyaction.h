@@ -9,7 +9,7 @@
 
 namespace Utils {
 
-class ATHLETIC_UTILS_EXPORT ProxyAction : public QAction
+class UTILS_EXPORT ProxyAction : public QAction
 {
     Q_OBJECT
 public:

@@ -152,9 +152,10 @@ int main(int argc, char **argv)
                                         QLatin1String(Core::Constants::APP_SETTINGS_STR),
                                         QLatin1String("Athletic"));
 
-    QSettings *globalSettings = new QSettings(QSettings::IniFormat, QSettings::SystemScope,
+    QSettings *globalSettings = new QSettings(QSettings::IniFormat,
+                                              QSettings::SystemScope,
                                               QLatin1String(Core::Constants::APP_SETTINGS_STR),
-                                              QLatin1String("athletic"));
+                                              QLatin1String("Athletic"));
 
     PluginManager pluginManager;
     PluginManager::setPluginIID( QLatin1String("cloud.athletic.app.plugin") );
