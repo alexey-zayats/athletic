@@ -349,8 +349,11 @@ void MainWindow::registerDefaultContainers()
 {
     ActionContainer *menubar = ActionManager::createMenuBar(Constants::MENU_BAR);
 
-//    if (!HostOsInfo::isMacHost()) // System menu bar on Mac
-    setMenuBar(menubar->menuBar());
+    if (!HostOsInfo::isMacHost()) // System menu bar on Mac
+    {
+        menubar->menuBar()->setNativeMenuBar(false);
+        setMenuBar(menubar->menuBar());
+    }
 
     menubar->appendGroup(Constants::G_FILE);
     menubar->appendGroup(Constants::G_EDIT);

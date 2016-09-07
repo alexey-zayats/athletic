@@ -12,6 +12,9 @@ DATA_DIRS = \
 macx: DATA_DIRS += scripts
 
 
+#CONTACT = /firstname/middlename/surname/phone
+#  message($$section(CONTACT, /, -2, -1))
+
 for(data_dir, DATA_DIRS) {
 	files = $$files($$PWD/$$data_dir/*, true)
 	# Info.plist.in are handled below
@@ -19,4 +22,5 @@ for(data_dir, DATA_DIRS) {
 		STATIC_FILES += $$file
 }
 
+message($$STATIC_FILES)
 include(../athleticdata.pri)

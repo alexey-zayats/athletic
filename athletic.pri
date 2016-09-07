@@ -62,18 +62,18 @@ isEmpty(APP_BUILD_TREE) {
 
 APP_TARGET   = "Athletic"
 
-#osx {
-#	APP_BUNDLE = $$APP_BUILD_TREE/$${APP_TARGET}.app
+osx {
+	APP_BUNDLE = $$APP_BUILD_TREE/$${APP_TARGET}.app
 
 #	# set output path if not set manually
-#	APP_OUTPUT_PATH = $$APP_BUNDLE/Contents
+	APP_OUTPUT_PATH = $$APP_BUNDLE/Contents
 
-#	APP_LIBRARY_PATH = $$APP_OUTPUT_PATH/Frameworks
-#	APP_PLUGIN_PATH  = $$APP_OUTPUT_PATH/PlugIns
-#	APP_LIBEXEC_PATH = $$APP_OUTPUT_PATH/Resources
-#	APP_DATA_PATH    = $$APP_OUTPUT_PATH/Resources
-#	APP_BIN_PATH     = $$APP_OUTPUT_PATH/MacOS
-#} else {
+	APP_LIBRARY_PATH = $$APP_OUTPUT_PATH/Frameworks
+	APP_PLUGIN_PATH  = $$APP_OUTPUT_PATH/PlugIns
+	APP_LIBEXEC_PATH = $$APP_OUTPUT_PATH/Resources
+	APP_DATA_PATH    = $$APP_OUTPUT_PATH/Resources
+	APP_BIN_PATH     = $$APP_OUTPUT_PATH/MacOS
+} else {
 	# target output path if not set manually
 	APP_OUTPUT_PATH = $$APP_BUILD_TREE
 
@@ -85,11 +85,10 @@ APP_TARGET   = "Athletic"
 		APP_LIBEXEC_PATH = $$APP_OUTPUT_PATH/bin
 	else: \
 		APP_LIBEXEC_PATH = $$APP_OUTPUT_PATH/lib
-#}
+}
 
 LINK_LIBRARY_PATH = $$APP_LIBRARY_PATH
 LINK_PLUGIN_PATH  = $$APP_PLUGIN_PATH
-CONFIG -= app_bundle
 
 INCLUDEPATH += \
 	$$APP_BUILD_TREE/src/apps \ # for <app/app_version.h>

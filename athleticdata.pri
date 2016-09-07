@@ -7,7 +7,9 @@
 
 # used in custom compilers which just copy files
 defineReplace(stripStaticBase) {
-	return($$relative_path($$absolute_path($$1, $$STATIC_OUTPUT_BASE), $$STATIC_BASE))
+	return( $$section(1, /, -2, -1))
+#	return($$relative_path($$1, $$STATIC_BASE))
+#	return($$relative_path($$absolute_path($$1, $$STATIC_OUTPUT_BASE), $$STATIC_BASE))
 }
 
 # handle conditional copying based on STATIC_BASE compared to STATIC_OUTPUT_BASE
@@ -20,9 +22,10 @@ defineReplace(stripStaticBase) {
 		error("Using STATIC_FILES without having STATIC_INSTALL_BASE set")
 
 	!isEqual(STATIC_BASE, $$STATIC_OUTPUT_BASE) {
+message(" --- " $$STATIC_FILES)
 		copy2build.input += STATIC_FILES
-#		copy2build.output = $$STATIC_OUTPUT_BASE/${QMAKE_FUNC_FILE_IN_stripStaticBase}
-		copy2build.output = ${QMAKE_FUNC_FILE_IN_stripStaticBase}
+		copy2build.output = $$STATIC_OUTPUT_BASE/${QMAKE_FUNC_FILE_IN_stripStaticBase}
+#		copy2build.output = ${QMAKE_FUNC_FILE_IN_stripStaticBase}
 		isEmpty(vcproj):copy2build.variable_out = PRE_TARGETDEPS
 		win32:copy2build.commands = $$QMAKE_COPY \"${QMAKE_FILE_IN}\" \"${QMAKE_FILE_OUT}\"
 		unix:copy2build.commands = $$QMAKE_COPY ${QMAKE_FILE_IN} ${QMAKE_FILE_OUT}

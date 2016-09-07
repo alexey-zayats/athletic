@@ -19,6 +19,7 @@
 #include <extensionsystem/pluginmanager.h>
 #include <extensionsystem/pluginerroroverview.h>
 
+#include <QMenuBar>
 #include <QMainWindow>
 #include <QFile>
 #include <QApplication>
@@ -126,6 +127,9 @@ void CorePlugin::extensionsInitialized()
 bool CorePlugin::delayedInitialize()
 {
     HelpManager::setupHelpManager();
+//    m_mainWindow->menuBar()->update();
+    m_mainWindow->raiseWindow ();
+    m_mainWindow->menuBar()->setFocus(Qt::MenuBarFocusReason);
     return true;
 }
 
