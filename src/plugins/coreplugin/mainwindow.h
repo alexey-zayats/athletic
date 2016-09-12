@@ -109,30 +109,28 @@ private:
     Context m_highPrioAdditionalContexts;
     Context m_lowPrioAdditionalContexts;
 
-    SettingsDatabase *m_settingsDatabase;
-    WindowSupport *m_windowSupport;
+    QStringList m_aboutInformation;
 
+    SettingsDatabase *m_settingsDatabase;
+
+    StatusBarWidget *m_outputView;
+    WindowSupport *m_windowSupport;
+    EditorManager *m_editorManager;
+    MessageManager *m_messageManager;
     ProgressManagerPrivate *m_progressManager;
     StatusBarManager *m_statusBarManager;
     ModeManager *m_modeManager;
     HelpManager *m_helpManager;
     TabWidget *m_modeStack;
-
     NavigationWidget *m_navigationWidget;
+
     RightPaneWidget *m_rightPaneWidget;
+    VersionDialog *m_versionDialog;
+    mutable QPrinter *m_printer;
 
     GeneralSettings *m_generalSettings;
     SystemSettings *m_systemSettings;
     ShortcutSettings *m_shortcutSettings;
-
-    QStringList m_aboutInformation;
-    mutable QPrinter *m_printer;
-
-    VersionDialog *m_versionDialog;
-
-    StatusBarWidget *m_outputView;
-    EditorManager *m_editorManager;
-    MessageManager *m_messageManager;
 
     QList<IContext *> m_activeContext;
 

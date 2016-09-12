@@ -101,7 +101,7 @@ bool CorePlugin::initialize(const QStringList &arguments, QString *errorMessage)
         return false;
     }
     new ActionManager(this);
-    Theme::initialPalette(); // Initialize palette before setting it
+    Theme::initialPalette();
     parseArguments(arguments);
     const bool success = m_mainWindow->init(errorMessage);
     if (success) {
@@ -127,9 +127,6 @@ void CorePlugin::extensionsInitialized()
 bool CorePlugin::delayedInitialize()
 {
     HelpManager::setupHelpManager();
-//    m_mainWindow->menuBar()->update();
-    m_mainWindow->raiseWindow ();
-    m_mainWindow->menuBar()->setFocus(Qt::MenuBarFocusReason);
     return true;
 }
 

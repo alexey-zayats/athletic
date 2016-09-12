@@ -341,7 +341,10 @@ QString ICore::userInterfaceLanguage()
 
 QString ICore::resourcePath()
 {
-    const QString sharePath = QLatin1String("/../share");
+    const QString sharePath = Utils::HostOsInfo::isMacHost ()
+            ? QLatin1String("/../Resources")
+            : QLatin1String("/../share");
+
     return QDir::cleanPath(QCoreApplication::applicationDirPath() + sharePath);
 }
 
@@ -349,7 +352,7 @@ QString ICore::userResourcePath()
 {
     // Create qtcreator dir if it doesn't yet exist
     const QString configDir = QFileInfo(settings(QSettings::UserScope)->fileName()).path();
-    const QString urp = configDir + QLatin1String("/qtcreator");
+    const QString urp = configDir + QLatin1String("/Athletic");
 
     if (!QFileInfo::exists(urp + QLatin1Char('/'))) {
         QDir dir;
@@ -362,7 +365,9 @@ QString ICore::userResourcePath()
 
 QString ICore::documentationPath()
 {
-    const QString docPath = QLatin1String("/../share/doc");
+    const QString docPath = Utils::HostOsInfo::isMacHost ()
+            ? QLatin1String("/../Resources/doc")
+            : QLatin1String("/../share/doc");
     return QDir::cleanPath(QCoreApplication::applicationDirPath() + docPath);
 }
 

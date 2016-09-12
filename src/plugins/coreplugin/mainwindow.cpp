@@ -350,10 +350,7 @@ void MainWindow::registerDefaultContainers()
     ActionContainer *menubar = ActionManager::createMenuBar(Constants::MENU_BAR);
 
     if (!HostOsInfo::isMacHost()) // System menu bar on Mac
-    {
-        menubar->menuBar()->setNativeMenuBar(false);
         setMenuBar(menubar->menuBar());
-    }
 
     menubar->appendGroup(Constants::G_FILE);
     menubar->appendGroup(Constants::G_EDIT);
@@ -618,7 +615,6 @@ IContext *MainWindow::contextObject(QWidget *widget)
 
 void MainWindow::addContextObject(IContext *context)
 {
-    qCInfo(corepluginLog) <<  "addContextObject";
     if (!context)
         return;
     QWidget *widget = context->widget();
@@ -630,7 +626,6 @@ void MainWindow::addContextObject(IContext *context)
 
 void MainWindow::removeContextObject(IContext *context)
 {
-    qCInfo(corepluginLog) <<  "removeContextObject";
     if (!context)
         return;
 
@@ -645,7 +640,6 @@ void MainWindow::removeContextObject(IContext *context)
 
 void MainWindow::updateFocusWidget(QWidget *old, QWidget *now)
 {
-    qCInfo(corepluginLog) <<  "updateFocusWidget";
     Q_UNUSED(old)
 
     // Prevent changing the context object just because the menu or a menu item is activated
@@ -670,7 +664,6 @@ void MainWindow::updateFocusWidget(QWidget *old, QWidget *now)
 
 void MainWindow::updateContextObject(const QList<IContext *> &context)
 {
-    qCInfo(corepluginLog) <<  "updateContextObject";
     emit m_coreImpl->contextAboutToChange(context);
     m_activeContext = context;
     updateContext();
@@ -684,7 +677,6 @@ void MainWindow::updateContextObject(const QList<IContext *> &context)
 void MainWindow::updateAdditionalContexts(const Context &remove, const Context &add,
                                           ICore::ContextPriority priority)
 {
-    qCInfo(corepluginLog) <<  "updateAdditionalContexts";
     foreach (const Id id, remove) {
         if (!id.isValid())
             continue;
@@ -774,7 +766,6 @@ void MainWindow::writeSettings()
 
 void MainWindow::updateContext()
 {
-    qCInfo(corepluginLog) <<  "updateContext";
     Context contexts = m_highPrioAdditionalContexts;
 
     foreach (IContext *context, m_activeContext)
