@@ -8,7 +8,12 @@ win32 {
 }
 
 DESTDIR = $$APP_LIBRARY_PATH
-QMAKE_LFLAGS_SONAME = -Wl,-install_name,@rpath/../$$APP_LIBRARY_BASENAME/
+macx{
+	QMAKE_LFLAGS_SONAME = -Wl,-install_name,@rpath/../Frameworks/
+} else {
+	QMAKE_LFLAGS_SONAME = -Wl,-install_name,@rpath/../$$APP_LIBRARY_BASENAME/
+}
+
 
 include(rpath.pri)
 
@@ -21,10 +26,10 @@ contains(QT_CONFIG, reduce_exports):CONFIG += hide_symbols
 
 !macx {
 	win32 {
-                dlltarget.path = $$APP_BIN_PATH
+				dlltarget.path = $$APP_BIN_PATH
 		INSTALLS += dlltarget
 	} else {
-                target.path = $$APP_LIBRARY_PATH
+				target.path = $$APP_LIBRARY_PATH
 		INSTALLS += target
 	}
 }

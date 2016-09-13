@@ -24,9 +24,6 @@ const Icon FIND_CASE_INSENSITIVELY(QLatin1String(":/find/images/casesensitively.
 const Icon FIND_WHOLE_WORD(QLatin1String(":/find/images/wholewords.png"));
 const Icon FIND_REGEXP(QLatin1String(":/find/images/regexp.png"));
 const Icon FIND_PRESERVE_CASE(QLatin1String(":/find/images/preservecase.png"));
-const Icon QTLOGO_32(QLatin1String(":/core/images/logo/32/QtProject-qtcreator.png"));
-const Icon QTLOGO_64(QLatin1String(":/core/images/logo/64/QtProject-qtcreator.png"));
-const Icon QTLOGO_128(QLatin1String(":/core/images/logo/128/QtProject-qtcreator.png"));
 
 const Icon ARROW_UP({{QLatin1String(":/core/images/arrowup.png"), Theme::IconsBaseColor}});
 const Icon ARROW_DOWN({{QLatin1String(":/core/images/arrowdown.png"), Theme::IconsBaseColor}});
@@ -76,13 +73,14 @@ const Icon BOUNDING_RECT({{QLatin1String(":/core/images/boundingrect.png"), Them
 const Icon EYE_OPEN_TOOLBAR({{QLatin1String(":/core/images/eye_open.png"), Theme::IconsBaseColor}});
 const Icon EYE_CLOSED_TOOLBAR({{QLatin1String(":/core/images/eye_closed.png"), Theme::IconsBaseColor}});
 
-const Icon MODE_EDIT_CLASSIC(QLatin1String(":/actionbar/images/mode_Edit.png"));
-const Icon MODE_EDIT_FLAT({{QLatin1String(":/actionbar/images/mode_edit_mask.png"), Theme::IconsBaseColor}});
-const Icon MODE_EDIT_FLAT_ACTIVE({{QLatin1String(":/actionbar/images/mode_edit_mask.png"), Theme::IconsModeEditActiveColor}});
+const Icon MODE_COMPETITION_CLASSIC(QLatin1String(":/actionbar/images/mode_competition.png"));
+const Icon MODE_COMPETITION_FLAT({{QLatin1String(":/actionbar/images/mode_competition_mask.png"), Theme::IconsBaseColor}});
+const Icon MODE_COMPETITION_FLAT_ACTIVE({{QLatin1String(":/actionbar/images/mode_competition_mask.png"), Theme::IconsModeCompetitionActiveColor}});
 
-const Icon MODE_DESIGN_CLASSIC(QLatin1String(":/actionbar/images/mode_Design.png"));
-const Icon MODE_DESIGN_FLAT({{QLatin1String(":/actionbar/images/mode_design_mask.png"), Theme::IconsBaseColor}});
-const Icon MODE_DESIGN_FLAT_ACTIVE({{QLatin1String(":/actionbar/images/mode_design_mask.png"), Theme::IconsModeDesignActiveColor}});
+const Icon LOGO_32(QLatin1String(":/core/images/logo/icon_32x32.png"));
+const Icon LOGO_64(QLatin1String(":/core/images/logo/icon_64x64.png"));
+const Icon LOGO_128(QLatin1String(":/core/images/logo/icon_128x128.png"));
+const Icon LOGO_256(QLatin1String(":/core/images/logo/icon_256x256.png"));
 
 } // namespace Icons
 } // namespace Core

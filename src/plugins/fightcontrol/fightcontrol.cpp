@@ -1,5 +1,8 @@
 
 #include "fightcontrol.h"
+#include "fightcontrolmode.h"
+
+#include <coreplugin/modemanager.h>
 
 using namespace FightControl;
 using namespace FightControl::Internal;
@@ -18,11 +21,16 @@ bool FightControlPLugin::initialize(const QStringList &arguments, QString *error
 {
     Q_UNUSED(arguments);
     Q_UNUSED(errorMessage);
+
+    m_fightControlMode = new FightControlMode;
+    addAutoReleasedObject(m_fightControlMode);
+
     return true;
 }
 
 void FightControlPLugin::extensionsInitialized()
 {
+    m_fightControlMode->initPlugins();
 }
 
 bool FightControlPLugin::delayedInitialize()

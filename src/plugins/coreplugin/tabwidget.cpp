@@ -92,7 +92,7 @@ QSize TabBar::tabSizeHint(bool minimum) const
 void TabBar::paintEvent(QPaintEvent *event)
 {
     QPainter p(this);
-    if (creatorTheme()->widgetStyle() == Theme::StyleFlat) {
+    if (athleticTheme()->widgetStyle() == Theme::StyleFlat) {
         // draw background of upper part of left tab widget
         // (Welcome, ... Help)
         p.fillRect(event->rect(), StyleHelper::baseColor());
@@ -272,9 +272,9 @@ void TabBar::paintTab(QPainter *painter, int tabIndex) const
         bool enabled = isTabEnabled(tabIndex);
 
         if (selected) {
-            if (creatorTheme()->widgetStyle() == Theme::StyleFlat) {
+            if (athleticTheme()->widgetStyle() == Theme::StyleFlat) {
               // background color of a fancy tab that is active
-              painter->fillRect(rect, creatorTheme()->color(Theme::ToolButtonSelectedColor));
+              painter->fillRect(rect, athleticTheme()->color(Theme::ToolButtonSelectedColor));
             } else {
                 paintSelectedTabBackground(painter, rect);
             }
@@ -296,14 +296,14 @@ void TabBar::paintTab(QPainter *painter, int tabIndex) const
         if (fader > 0 && !HostOsInfo::isMacHost() && !selected && enabled) {
             painter->save();
             painter->setOpacity(fader);
-            if (creatorTheme()->widgetStyle() == Theme::StyleFlat)
-                painter->fillRect(rect, creatorTheme()->color(Theme::ToolButtonHoverColor));
+            if (athleticTheme()->widgetStyle() == Theme::StyleFlat)
+                painter->fillRect(rect, athleticTheme()->color(Theme::ToolButtonHoverColor));
             else
                 ToolButton::hoverOverlay(painter, rect);
             painter->restore();
         }
 
-        if (!enabled && creatorTheme()->widgetStyle() == Theme::StyleDefault)
+        if (!enabled && athleticTheme()->widgetStyle() == Theme::StyleDefault)
             painter->setOpacity(0.7);
 
         if (drawIcon) {
@@ -317,12 +317,12 @@ void TabBar::paintTab(QPainter *painter, int tabIndex) const
         painter->setOpacity(1.0); //FIXME: was 0.7 before?
         if (enabled) {
             painter->setPen(selected
-              ? creatorTheme()->color(Theme::TabWidgetEnabledSelectedTextColor)
-              : creatorTheme()->color(Theme::TabWidgetEnabledUnselectedTextColor));
+              ? athleticTheme()->color(Theme::TabWidgetEnabledSelectedTextColor)
+              : athleticTheme()->color(Theme::TabWidgetEnabledUnselectedTextColor));
         } else {
             painter->setPen(selected
-              ? creatorTheme()->color(Theme::TabWidgetDisabledSelectedTextColor)
-              : creatorTheme()->color(Theme::TabWidgetDisabledUnselectedTextColor));
+              ? athleticTheme()->color(Theme::TabWidgetDisabledSelectedTextColor)
+              : athleticTheme()->color(Theme::TabWidgetDisabledUnselectedTextColor));
         }
         painter->translate(0, -1);
         painter->drawText(tabTextRect, textFlags, tabText);
@@ -379,7 +379,7 @@ void ColorButton::paintEvent(QPaintEvent *event)
 
     // Some Themes do not want highlights and shadows in the toolbars.
     // But we definitely want a separator between FancyColorButton and FancyTabBar
-    if (!creatorTheme()->flag(Theme::DrawToolBarHighlights)) {
+    if (!athleticTheme()->flag(Theme::DrawToolBarHighlights)) {
         QPainter p(this);
         p.setPen(StyleHelper::borderColor());
         const QRectF innerRect = QRectF(rect()).adjusted(0.5, 0.5, -0.5, -0.5);

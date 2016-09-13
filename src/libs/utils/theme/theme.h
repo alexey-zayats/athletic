@@ -122,12 +122,10 @@ public:
         IconsNavigationArrowsColor,
         IconsBuildHammerHandleColor,
         IconsBuildHammerHeadColor,
-        IconsModeWelcomeActiveColor,
-        IconsModeEditActiveColor,
-        IconsModeDesignActiveColor,
-        IconsModeDebugActiveColor,
-        IconsModeProjetcsActiveColor,
-        IconsModeAnalyzeActiveColor,
+        IconsModeScheduleActiveColor,
+        IconsModeCompetitionActiveColor,
+        IconsModeMatchActiveColor,
+        IconsModeAthleteActiveColor,
         IconsModeHelpActiveColor,
 
         /* Code model Icons */
@@ -284,7 +282,7 @@ private:
     QPair<QColor, QString> readNamedColor(const QString &color) const;
 };
 
-UTILS_EXPORT Theme *creatorTheme();
+UTILS_EXPORT Theme *athleticTheme();
 
 } // namespace Utils
 

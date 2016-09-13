@@ -9,153 +9,153 @@ namespace Constants {
 const char FOUNDED_AT[]          = "2015";
 
 // Modes
-const char MODE_WELCOME[]          = "Welcome";
-const char MODE_EDIT[]             = "Edit";
-const char MODE_DESIGN[]           = "Design";
-const int  P_MODE_WELCOME          = 100;
-const int  P_MODE_EDIT             = 90;
-const int  P_MODE_DESIGN           = 89;
+const char MODE_SCHEDULE[]          = "Schedule";
+const char MODE_COMPETITION[]      = "Competition";
+const char MODE_MATCH[]            = "Match";
+const int  P_MODE_SCHEDULE         = 100;
+const int  P_MODE_COMPETITION      = 90;
+const int  P_MODE_MATCH            = 80;
 
 // Menubar
-const char MENU_BAR[]              = "QtCreator.MenuBar";
+const char MENU_BAR[]              = "Athletic.MenuBar";
 
 // Menus
-const char M_FILE[]                = "QtCreator.Menu.File";
-const char M_FILE_RECENTFILES[]    = "QtCreator.Menu.File.RecentFiles";
-const char M_EDIT[]                = "QtCreator.Menu.Edit";
-const char M_EDIT_ADVANCED[]       = "QtCreator.Menu.Edit.Advanced";
-const char M_TOOLS[]               = "QtCreator.Menu.Tools";
-const char M_TOOLS_EXTERNAL[]      = "QtCreator.Menu.Tools.External";
-const char M_WINDOW[]              = "QtCreator.Menu.Window";
-const char M_WINDOW_PANES[]        = "QtCreator.Menu.Window.Panes";
-const char M_WINDOW_VIEWS[]        = "QtCreator.Menu.Window.Views";
-const char M_HELP[]                = "QtCreator.Menu.Help";
+const char M_FILE[]                = "Athletic.Menu.File";
+const char M_FILE_RECENTFILES[]    = "Athletic.Menu.File.RecentFiles";
+const char M_EDIT[]                = "Athletic.Menu.Edit";
+const char M_EDIT_ADVANCED[]       = "Athletic.Menu.Edit.Advanced";
+const char M_TOOLS[]               = "Athletic.Menu.Tools";
+const char M_TOOLS_EXTERNAL[]      = "Athletic.Menu.Tools.External";
+const char M_WINDOW[]              = "Athletic.Menu.Window";
+const char M_WINDOW_PANES[]        = "Athletic.Menu.Window.Panes";
+const char M_WINDOW_VIEWS[]        = "Athletic.Menu.Window.Views";
+const char M_HELP[]                = "Athletic.Menu.Help";
 
 // Contexts
 const char C_GLOBAL[]              = "Global Context";
-const char C_WELCOME_MODE[]        = "Core.WelcomeMode";
-const char C_EDIT_MODE[]           = "Core.EditMode";
-const char C_DESIGN_MODE[]         = "Core.DesignMode";
+const char C_SCHEDULE_MODE[]    = "Core.ScheduleMode";
+const char C_COMPETITION_MODE[]    = "Core.CompetitionMode";
+const char C_MATCH_MODE[]          = "Core.MatchMode";
 const char C_EDITORMANAGER[]       = "Core.EditorManager";
 const char C_NAVIGATION_PANE[]     = "Core.NavigationPane";
 const char C_PROBLEM_PANE[]        = "Core.ProblemPane";
 const char C_GENERAL_OUTPUT_PANE[] = "Core.GeneralOutputPane";
 
 // Default editor kind
-const char K_DEFAULT_TEXT_EDITOR_DISPLAY_NAME[] = QT_TRANSLATE_NOOP("OpenWith::Editors", "Plain Text Editor");
-const char K_DEFAULT_TEXT_EDITOR_ID[] = "Core.PlainTextEditor";
-const char K_DEFAULT_BINARY_EDITOR_ID[] = "Core.BinaryEditor";
+//const char K_DEFAULT_TEXT_EDITOR_DISPLAY_NAME[] = QT_TRANSLATE_NOOP("OpenWith::Editors", "Plain Text Editor");
+//const char K_DEFAULT_TEXT_EDITOR_ID[] = "Core.PlainTextEditor";
+//const char K_DEFAULT_BINARY_EDITOR_ID[] = "Core.BinaryEditor";
 
 //actions
-const char UNDO[]                  = "QtCreator.Undo";
-const char REDO[]                  = "QtCreator.Redo";
-const char COPY[]                  = "QtCreator.Copy";
-const char PASTE[]                 = "QtCreator.Paste";
-const char CUT[]                   = "QtCreator.Cut";
-const char SELECTALL[]             = "QtCreator.SelectAll";
+//const char UNDO[]                  = "Athletic.Undo";
+//const char REDO[]                  = "Athletic.Redo";
+//const char COPY[]                  = "Athletic.Copy";
+//const char PASTE[]                 = "Athletic.Paste";
+//const char CUT[]                   = "Athletic.Cut";
+//const char SELECTALL[]             = "Athletic.SelectAll";
 
-const char GOTO[]                  = "QtCreator.Goto";
+const char GOTO[]                  = "Athletic.Goto";
 
-const char NEW[]                   = "QtCreator.New";
-const char OPEN[]                  = "QtCreator.Open";
-const char OPEN_WITH[]             = "QtCreator.OpenWith";
-const char REVERTTOSAVED[]         = "QtCreator.RevertToSaved";
-const char SAVE[]                  = "QtCreator.Save";
-const char SAVEAS[]                = "QtCreator.SaveAs";
-const char SAVEALL[]               = "QtCreator.SaveAll";
-const char PRINT[]                 = "QtCreator.Print";
-const char EXIT[]                  = "QtCreator.Exit";
+const char NEW[]                   = "Athletic.New";
+const char OPEN[]                  = "Athletic.Open";
+//const char OPEN_WITH[]             = "Athletic.OpenWith";
+//const char REVERTTOSAVED[]         = "Athletic.RevertToSaved";
+const char SAVE[]                  = "Athletic.Save";
+//const char SAVEAS[]                = "Athletic.SaveAs";
+//const char SAVEALL[]               = "Athletic.SaveAll";
+const char PRINT[]                 = "Athletic.Print";
+const char EXIT[]                  = "Athletic.Exit";
 
-const char OPTIONS[]               = "QtCreator.Options";
-const char TOGGLE_SIDEBAR[]        = "QtCreator.ToggleSidebar";
-const char TOGGLE_MODE_SELECTOR[]  = "QtCreator.ToggleModeSelector";
-const char TOGGLE_FULLSCREEN[]     = "QtCreator.ToggleFullScreen";
-const char THEMEOPTIONS[]          = "QtCreator.ThemeOptions";
+const char OPTIONS[]               = "Athletic.Options";
+const char TOGGLE_SIDEBAR[]        = "Athletic.ToggleSidebar";
+const char TOGGLE_MODE_SELECTOR[]  = "Athletic.ToggleModeSelector";
+const char TOGGLE_FULLSCREEN[]     = "Athletic.ToggleFullScreen";
+const char THEMEOPTIONS[]          = "Athletic.ThemeOptions";
 
 const char TR_SHOW_SIDEBAR[]       = QT_TRANSLATE_NOOP("Core", "Show Sidebar");
 const char TR_HIDE_SIDEBAR[]       = QT_TRANSLATE_NOOP("Core", "Hide Sidebar");
 
-const char MINIMIZE_WINDOW[]       = "QtCreator.MinimizeWindow";
-const char ZOOM_WINDOW[]           = "QtCreator.ZoomWindow";
-const char CLOSE_WINDOW[]           = "QtCreator.CloseWindow";
+const char MINIMIZE_WINDOW[]       = "Athletic.MinimizeWindow";
+const char ZOOM_WINDOW[]           = "Athletic.ZoomWindow";
+const char CLOSE_WINDOW[]           = "Athletic.CloseWindow";
 
-const char SPLIT[]                 = "QtCreator.Split";
-const char SPLIT_SIDE_BY_SIDE[]    = "QtCreator.SplitSideBySide";
-const char SPLIT_NEW_WINDOW[]      = "QtCreator.SplitNewWindow";
-const char REMOVE_CURRENT_SPLIT[]  = "QtCreator.RemoveCurrentSplit";
-const char REMOVE_ALL_SPLITS[]     = "QtCreator.RemoveAllSplits";
-const char GOTO_PREV_SPLIT[]       = "QtCreator.GoToPreviousSplit";
-const char GOTO_NEXT_SPLIT[]       = "QtCreator.GoToNextSplit";
-const char CLOSE[]                 = "QtCreator.Close";
-const char CLOSE_ALTERNATIVE[]     = "QtCreator.Close_Alternative"; // temporary, see QTCREATORBUG-72
-const char CLOSEALL[]              = "QtCreator.CloseAll";
-const char CLOSEOTHERS[]           = "QtCreator.CloseOthers";
-const char CLOSEALLEXCEPTVISIBLE[] = "QtCreator.CloseAllExceptVisible";
-const char GOTONEXT[]              = "QtCreator.GotoNext";
-const char GOTOPREV[]              = "QtCreator.GotoPrevious";
-const char GOTONEXTINHISTORY[]     = "QtCreator.GotoNextInHistory";
-const char GOTOPREVINHISTORY[]     = "QtCreator.GotoPreviousInHistory";
-const char GO_BACK[]               = "QtCreator.GoBack";
-const char GO_FORWARD[]            = "QtCreator.GoForward";
-const char ABOUT_QTCREATOR[]       = "QtCreator.AboutQtCreator";
-const char ABOUT_PLUGINS[]         = "QtCreator.AboutPlugins";
-const char S_RETURNTOEDITOR[]      = "QtCreator.ReturnToEditor";
+const char SPLIT[]                 = "Athletic.Split";
+const char SPLIT_SIDE_BY_SIDE[]    = "Athletic.SplitSideBySide";
+const char SPLIT_NEW_WINDOW[]      = "Athletic.SplitNewWindow";
+const char REMOVE_CURRENT_SPLIT[]  = "Athletic.RemoveCurrentSplit";
+const char REMOVE_ALL_SPLITS[]     = "Athletic.RemoveAllSplits";
+const char GOTO_PREV_SPLIT[]       = "Athletic.GoToPreviousSplit";
+const char GOTO_NEXT_SPLIT[]       = "Athletic.GoToNextSplit";
+const char CLOSE[]                 = "Athletic.Close";
+const char CLOSE_ALTERNATIVE[]     = "Athletic.Close_Alternative"; // temporary, see AthleticBUG-72
+const char CLOSEALL[]              = "Athletic.CloseAll";
+const char CLOSEOTHERS[]           = "Athletic.CloseOthers";
+const char CLOSEALLEXCEPTVISIBLE[] = "Athletic.CloseAllExceptVisible";
+const char GOTONEXT[]              = "Athletic.GotoNext";
+const char GOTOPREV[]              = "Athletic.GotoPrevious";
+const char GOTONEXTINHISTORY[]     = "Athletic.GotoNextInHistory";
+const char GOTOPREVINHISTORY[]     = "Athletic.GotoPreviousInHistory";
+const char GO_BACK[]               = "Athletic.GoBack";
+const char GO_FORWARD[]            = "Athletic.GoForward";
+const char ABOUT_ATHLETIC[]        = "Athletic.AboutAthletic";
+const char ABOUT_PLUGINS[]         = "Athletic.AboutPlugins";
+const char S_RETURNTOEDITOR[]      = "Athletic.ReturnToEditor";
 
 // Default groups
-const char G_DEFAULT_ONE[]         = "QtCreator.Group.Default.One";
-const char G_DEFAULT_TWO[]         = "QtCreator.Group.Default.Two";
-const char G_DEFAULT_THREE[]       = "QtCreator.Group.Default.Three";
+const char G_DEFAULT_ONE[]         = "Athletic.Group.Default.One";
+const char G_DEFAULT_TWO[]         = "Athletic.Group.Default.Two";
+const char G_DEFAULT_THREE[]       = "Athletic.Group.Default.Three";
 
 // Main menu bar groups
-const char G_FILE[]                = "QtCreator.Group.File";
-const char G_EDIT[]                = "QtCreator.Group.Edit";
-const char G_VIEW[]                = "QtCreator.Group.View";
-const char G_TOOLS[]               = "QtCreator.Group.Tools";
-const char G_WINDOW[]              = "QtCreator.Group.Window";
-const char G_HELP[]                = "QtCreator.Group.Help";
+const char G_FILE[]                = "Athletic.Group.File";
+const char G_EDIT[]                = "Athletic.Group.Edit";
+const char G_VIEW[]                = "Athletic.Group.View";
+const char G_TOOLS[]               = "Athletic.Group.Tools";
+const char G_WINDOW[]              = "Athletic.Group.Window";
+const char G_HELP[]                = "Athletic.Group.Help";
 
 // File menu groups
-const char G_FILE_NEW[]            = "QtCreator.Group.File.New";
-const char G_FILE_OPEN[]           = "QtCreator.Group.File.Open";
-const char G_FILE_PROJECT[]        = "QtCreator.Group.File.Project";
-const char G_FILE_SAVE[]           = "QtCreator.Group.File.Save";
-const char G_FILE_CLOSE[]          = "QtCreator.Group.File.Close";
-const char G_FILE_PRINT[]          = "QtCreator.Group.File.Print";
-const char G_FILE_OTHER[]          = "QtCreator.Group.File.Other";
+const char G_FILE_NEW[]            = "Athletic.Group.File.New";
+const char G_FILE_OPEN[]           = "Athletic.Group.File.Open";
+const char G_FILE_PROJECT[]        = "Athletic.Group.File.Project";
+const char G_FILE_SAVE[]           = "Athletic.Group.File.Save";
+const char G_FILE_CLOSE[]          = "Athletic.Group.File.Close";
+const char G_FILE_PRINT[]          = "Athletic.Group.File.Print";
+const char G_FILE_OTHER[]          = "Athletic.Group.File.Other";
 
 // Edit menu groups
-const char G_EDIT_UNDOREDO[]       = "QtCreator.Group.Edit.UndoRedo";
-const char G_EDIT_COPYPASTE[]      = "QtCreator.Group.Edit.CopyPaste";
-const char G_EDIT_SELECTALL[]      = "QtCreator.Group.Edit.SelectAll";
-const char G_EDIT_ADVANCED[]       = "QtCreator.Group.Edit.Advanced";
+const char G_EDIT_UNDOREDO[]       = "Athletic.Group.Edit.UndoRedo";
+const char G_EDIT_COPYPASTE[]      = "Athletic.Group.Edit.CopyPaste";
+const char G_EDIT_SELECTALL[]      = "Athletic.Group.Edit.SelectAll";
+const char G_EDIT_ADVANCED[]       = "Athletic.Group.Edit.Advanced";
 
-const char G_EDIT_FIND[]           = "QtCreator.Group.Edit.Find";
-const char G_EDIT_OTHER[]          = "QtCreator.Group.Edit.Other";
+const char G_EDIT_FIND[]           = "Athletic.Group.Edit.Find";
+const char G_EDIT_OTHER[]          = "Athletic.Group.Edit.Other";
 
 // Advanced edit menu groups
-const char G_EDIT_FORMAT[]         = "QtCreator.Group.Edit.Format";
-const char G_EDIT_COLLAPSING[]     = "QtCreator.Group.Edit.Collapsing";
-const char G_EDIT_TEXT[]           = "QtCreator.Group.Edit.Text";
-const char G_EDIT_BLOCKS[]         = "QtCreator.Group.Edit.Blocks";
-const char G_EDIT_FONT[]           = "QtCreator.Group.Edit.Font";
-const char G_EDIT_EDITOR[]         = "QtCreator.Group.Edit.Editor";
+const char G_EDIT_FORMAT[]         = "Athletic.Group.Edit.Format";
+const char G_EDIT_COLLAPSING[]     = "Athletic.Group.Edit.Collapsing";
+const char G_EDIT_TEXT[]           = "Athletic.Group.Edit.Text";
+const char G_EDIT_BLOCKS[]         = "Athletic.Group.Edit.Blocks";
+const char G_EDIT_FONT[]           = "Athletic.Group.Edit.Font";
+const char G_EDIT_EDITOR[]         = "Athletic.Group.Edit.Editor";
 
-const char G_TOOLS_OPTIONS[]       = "QtCreator.Group.Tools.Options";
+const char G_TOOLS_OPTIONS[]       = "Athletic.Group.Tools.Options";
 
 // Window menu groups
-const char G_WINDOW_SIZE[]         = "QtCreator.Group.Window.Size";
-const char G_WINDOW_PANES[]        = "QtCreator.Group.Window.Panes";
-const char G_WINDOW_VIEWS[]        = "QtCreator.Group.Window.Views";
-const char G_WINDOW_SPLIT[]        = "QtCreator.Group.Window.Split";
-const char G_WINDOW_NAVIGATE[]     = "QtCreator.Group.Window.Navigate";
-const char G_WINDOW_LIST[]         = "QtCreator.Group.Window.List";
-const char G_WINDOW_OTHER[]        = "QtCreator.Group.Window.Other";
+const char G_WINDOW_SIZE[]         = "Athletic.Group.Window.Size";
+const char G_WINDOW_PANES[]        = "Athletic.Group.Window.Panes";
+const char G_WINDOW_VIEWS[]        = "Athletic.Group.Window.Views";
+const char G_WINDOW_SPLIT[]        = "Athletic.Group.Window.Split";
+const char G_WINDOW_NAVIGATE[]     = "Athletic.Group.Window.Navigate";
+const char G_WINDOW_LIST[]         = "Athletic.Group.Window.List";
+const char G_WINDOW_OTHER[]        = "Athletic.Group.Window.Other";
 
 // Help groups (global)
-const char G_HELP_HELP[]           = "QtCreator.Group.Help.Help";
-const char G_HELP_SUPPORT[]        = "QtCreator.Group.Help.Supprt";
-const char G_HELP_ABOUT[]          = "QtCreator.Group.Help.About";
-const char G_HELP_UPDATES[]        = "QtCreator.Group.Help.Updates";
+const char G_HELP_HELP[]           = "Athletic.Group.Help.Help";
+const char G_HELP_SUPPORT[]        = "Athletic.Group.Help.Supprt";
+const char G_HELP_ABOUT[]          = "Athletic.Group.Help.About";
+const char G_HELP_UPDATES[]        = "Athletic.Group.Help.Updates";
 
 const char WIZARD_CATEGORY_QT[] = "R.Qt";
 const char WIZARD_TR_CATEGORY_QT[] = QT_TRANSLATE_NOOP("Core", "Qt");
@@ -174,14 +174,12 @@ const char SETTINGS_ID_MIMETYPES[] = "E.MimeTypes";
 
 const char SETTINGS_DEFAULTTEXTENCODING[] = "General/DefaultFileEncoding";
 
-const char SETTINGS_THEME[] = "Core/CreatorTheme";
+const char SETTINGS_THEME[] = "Core/AthleticTheme";
 const char DEFAULT_THEME[] = "flat";
 
 const char ALL_FILES_FILTER[]      = QT_TRANSLATE_NOOP("Core", "All Files (*)");
 
 const char TR_CLEAR_MENU[]         = QT_TRANSLATE_NOOP("Core", "Clear Menu");
-
-const char DEFAULT_BUILD_DIRECTORY[] = "../build-%{CurrentProject:Name}-%{CurrentKit:FileSystemName}-%{CurrentBuild:Name}";
 
 const int TARGET_ICON_SIZE = 32;
 

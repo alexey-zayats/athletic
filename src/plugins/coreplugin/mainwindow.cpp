@@ -80,7 +80,7 @@ MainWindow::MainWindow() :
     m_coreImpl(new ICore(this)),
     m_lowPrioAdditionalContexts(Constants::C_GLOBAL),
     m_settingsDatabase(new SettingsDatabase(QFileInfo(PluginManager::settings()->fileName()).path(),
-                                               QLatin1String("QtCreator"),
+                                               QLatin1String("Athletic"),
                                                this)),
     m_windowSupport(0),
     m_editorManager(0),
@@ -111,8 +111,7 @@ MainWindow::MainWindow() :
 
     setWindowTitle(tr("Athletic"));
 
-    if (HostOsInfo::isLinuxHost())
-        QApplication::setWindowIcon(Icons::QTLOGO_128.icon());
+    QApplication::setWindowIcon(Icons::LOGO_128.icon());
 
     QCoreApplication::setApplicationName(QLatin1String("Athletic"));
     QCoreApplication::setApplicationVersion(QLatin1String(Constants::APP_VERSION_LONG));
@@ -128,7 +127,7 @@ MainWindow::MainWindow() :
     // if the user has specified as base style in the theme settings,
     // prefer that
     const QStringList available = QStyleFactory::keys();
-    foreach (const QString &s, Utils::creatorTheme()->preferredStyles()) {
+    foreach (const QString &s, Utils::athleticTheme()->preferredStyles()) {
         if (available.contains(s, Qt::CaseInsensitive)) {
             baseName = s;
             break;
@@ -567,7 +566,7 @@ void MainWindow::registerDefaultActions()
     icon = QIcon::fromTheme(QLatin1String("help-about"));
     tmpaction = new QAction(icon, tr("About &Athletic"), this);
     tmpaction->setMenuRole(QAction::AboutRole);
-    cmd = ActionManager::registerAction(tmpaction, Constants::ABOUT_QTCREATOR);
+    cmd = ActionManager::registerAction(tmpaction, Constants::ABOUT_ATHLETIC);
     mhelp->addAction(cmd, Constants::G_HELP_ABOUT);
     tmpaction->setEnabled(true);
     connect(tmpaction, &QAction::triggered, this, &MainWindow::aboutAthletic);
@@ -584,7 +583,7 @@ void MainWindow::registerDefaultActions()
     if (!HostOsInfo::isMacHost()) { // doesn't have the "About" actions in the Help menu
         tmpaction = new QAction(this);
         tmpaction->setSeparator(true);
-        cmd = ActionManager::registerAction(tmpaction, "QtCreator.Help.Sep.About");
+        cmd = ActionManager::registerAction(tmpaction, "Athletic.Help.Sep.About");
         mhelp->addAction(cmd, Constants::G_HELP_ABOUT);
     }
 }

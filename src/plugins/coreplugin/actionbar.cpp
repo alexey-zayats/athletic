@@ -121,11 +121,11 @@ void ToolButton::paintEvent(QPaintEvent *event)
     if (!HostOsInfo::isMacHost() // Mac UIs usually don't hover
             && m_fader > 0 && isEnabled() && !isDown() && !isChecked()) {
         painter.save();
-        if (creatorTheme()->widgetStyle() == Theme::StyleDefault) {
+        if (athleticTheme()->widgetStyle() == Theme::StyleDefault) {
             painter.setOpacity(m_fader);
             ToolButton::hoverOverlay(&painter, rect());
         } else {
-            const QColor hoverColor = creatorTheme()->color(Theme::ToolButtonHoverColor);
+            const QColor hoverColor = athleticTheme()->color(Theme::ToolButtonHoverColor);
             QColor fadedHoverColor = hoverColor;
             fadedHoverColor.setAlpha(int(m_fader * hoverColor.alpha()));
             painter.fillRect(rect(), fadedHoverColor);
@@ -133,8 +133,8 @@ void ToolButton::paintEvent(QPaintEvent *event)
         painter.restore();
     } else if (isDown() || isChecked()) {
         painter.save();
-        const QColor selectedColor = creatorTheme()->color(Theme::ToolButtonSelectedColor);
-        if (creatorTheme()->widgetStyle() == Theme::StyleDefault) {
+        const QColor selectedColor = athleticTheme()->color(Theme::ToolButtonSelectedColor);
+        if (athleticTheme()->widgetStyle() == Theme::StyleDefault) {
             QLinearGradient grad(rect().topLeft(), rect().topRight());
             grad.setColorAt(0, Qt::transparent);
             grad.setColorAt(0.5, selectedColor);
@@ -245,11 +245,11 @@ void ActionBar::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     const QRectF borderRect = QRectF(rect()).adjusted(0.5, 0.5, -0.5, -0.5);
-    if (creatorTheme()->widgetStyle () == Theme::StyleFlat) {
+    if (athleticTheme()->widgetStyle () == Theme::StyleFlat) {
         // this paints the background of the bottom portion of the
         // left tab bar
         painter.fillRect(event->rect(), StyleHelper::baseColor());
-        painter.setPen(creatorTheme()->color(Theme::ToolBarSeparatorColor));
+        painter.setPen(athleticTheme()->color(Theme::ToolBarSeparatorColor));
         painter.drawLine(borderRect.topLeft(), borderRect.topRight());
     } else {
         painter.setPen(StyleHelper::sidebarShadow());
@@ -295,7 +295,7 @@ void ToolButton::hoverOverlay(QPainter *painter, const QRect &spanRect)
         overlay.fill(Qt::transparent);
         overlay.setDevicePixelRatio(dpr);
 
-        const QColor hoverColor = creatorTheme()->color(Theme::ToolButtonHoverColor);
+        const QColor hoverColor = athleticTheme()->color(Theme::ToolButtonHoverColor);
         const QRect rect(QPoint(), logicalSize);
         const QRectF borderRect = QRectF(rect).adjusted(0.5, 0.5, -0.5, -0.5);
 

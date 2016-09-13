@@ -9,7 +9,13 @@ include(../../athleticplugin.pri)
 
 SOURCES += \
 	fightcontrol.cpp \
+	fightcontrolmode.cpp
 
 HEADERS += \
 	fightcontrol.h \
-	fightcontrol_global.h
+	fightcontrol_global.h \
+	fightcontrolmode.h
+
+RESOURCES += \
+	fightcontrol.qrc \
+

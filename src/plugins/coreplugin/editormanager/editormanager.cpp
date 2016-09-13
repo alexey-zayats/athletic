@@ -219,26 +219,13 @@ void EditorManagerPrivate::init()
 
     const Context editManagerContext(Constants::C_EDITORMANAGER);
     // combined context for edit & design modes
-    const Context editDesignContext(Constants::C_EDITORMANAGER, Constants::C_DESIGN_MODE);
+    const Context editDesignContext(Constants::C_EDITORMANAGER, Constants::C_COMPETITION_MODE);
 
     ActionContainer *mfile = ActionManager::actionContainer(Constants::M_FILE);
-
-    // Revert to saved
-    m_revertToSavedAction->setIcon(QIcon::fromTheme(QLatin1String("document-revert")));
-    Command *cmd = ActionManager::registerAction(m_revertToSavedAction,
-                                       Constants::REVERTTOSAVED, editManagerContext);
-    cmd->setAttribute(Command::CA_UpdateText);
-    cmd->setDescription(tr("Revert File to Saved"));
-    mfile->addAction(cmd, Constants::G_FILE_SAVE);
-    connect(m_revertToSavedAction, &QAction::triggered, m_instance, &EditorManager::revertToSaved);
 
     // Save Action
     ActionManager::registerAction(m_saveAction, Constants::SAVE, editManagerContext);
     connect(m_saveAction, &QAction::triggered, m_instance, []() { EditorManager::saveDocument(); });
-
-    // Save As Action
-    ActionManager::registerAction(m_saveAsAction, Constants::SAVEAS, editManagerContext);
-    connect(m_saveAsAction, &QAction::triggered, m_instance, &EditorManager::saveDocumentAs);
 
     // Window Menu
     ActionContainer *mwindow = ActionManager::actionContainer(Constants::M_WINDOW);
@@ -248,7 +235,7 @@ void EditorManagerPrivate::init()
     mwindow->addSeparator(editManagerContext, Constants::G_WINDOW_NAVIGATE);
 
     // Close Action
-    cmd = ActionManager::registerAction(m_closeCurrentEditorAction, Constants::CLOSE, editManagerContext, true);
+    Command *cmd = ActionManager::registerAction(m_closeCurrentEditorAction, Constants::CLOSE, editManagerContext, true);
     cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+W")));
     cmd->setAttribute(Command::CA_UpdateText);
     cmd->setDescription(m_closeCurrentEditorAction->text());
@@ -784,14 +771,14 @@ void EditorManagerPrivate::doEscapeKeyFocusMoveMagic()
 
     if (!editorViewActive && !editorViewVisible) {
         // assumption is that editorView is in main window then
-        ModeManager::activateMode(Id(Constants::MODE_EDIT));
+        ModeManager::activateMode(Id(Constants::MODE_COMPETITION));
         setFocusToEditorViewAndUnmaximizePanes(editorView);
         return;
     }
 
     if (editorView->window() == ICore::mainWindow()) {
         // we are in a editor view and there's nothing to hide, switch to edit
-        ModeManager::activateMode(Id(Constants::MODE_EDIT));
+        ModeManager::activateMode(Id(Constants::MODE_COMPETITION));
         // next call works only because editor views in main window are shared between modes
         setFocusToEditorViewAndUnmaximizePanes(editorView);
     }
@@ -1114,19 +1101,13 @@ IEditor *EditorManagerPrivate::activateEditor(EditorView *view, IEditor *editor,
     if (!(flags & EditorManager::DoNotChangeCurrentEditor)) {
         setCurrentEditor(editor, (flags & EditorManager::IgnoreNavigationHistory));
         if (!(flags & EditorManager::DoNotMakeVisible)) {
-            // switch to design mode?
-            if (!(flags & EditorManager::DoNotSwitchToDesignMode) && editor->isDesignModePreferred()) {
-                ModeManager::activateMode(Constants::MODE_DESIGN);
-                ModeManager::setFocusToCurrentMode();
-            } else {
-                int index;
-                findEditorArea(view, &index);
-                if (index == 0) // main window --> we might need to switch mode
-                    if (!editor->widget()->isVisible())
-                        ModeManager::activateMode(Constants::MODE_EDIT);
-                editor->widget()->setFocus();
-                ICore::raiseWindow(editor->widget());
-            }
+            int index;
+            findEditorArea(view, &index);
+            if (index == 0) // main window --> we might need to switch mode
+                if (!editor->widget()->isVisible())
+                    ModeManager::activateMode(Constants::MODE_MATCH);
+            editor->widget()->setFocus();
+            ICore::raiseWindow(editor->widget());
         }
     } else if (!(flags & EditorManager::DoNotMakeVisible)) {
         view->setCurrentEditor(editor);
@@ -1458,7 +1439,7 @@ void EditorManagerPrivate::updateWindowTitleForDocument(IDocument *document, QWi
         windowTitle.append(dashSep);
     }
 
-    windowTitle.append(tr("Qt Creator"));
+    windowTitle.append(tr("Athletic"));
     window->window()->setWindowTitle(windowTitle);
     window->window()->setWindowFilePath(filePath);
 
@@ -1983,8 +1964,6 @@ void EditorManager::addSaveAndCloseEditorActions(QMenu *contextMenu, DocumentMod
     contextMenu->addSeparator();
 
     assignAction(d->m_saveCurrentEditorContextAction, ActionManager::command(Constants::SAVE)->action());
-    assignAction(d->m_saveAsCurrentEditorContextAction, ActionManager::command(Constants::SAVEAS)->action());
-    assignAction(d->m_revertToSavedCurrentEditorContextAction, ActionManager::command(Constants::REVERTTOSAVED)->action());
 
     IDocument *document = entry ? entry->document : 0;
 

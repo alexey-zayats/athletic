@@ -27,9 +27,6 @@ CORE_EXPORT extern const Utils::Icon FIND_CASE_INSENSITIVELY;
 CORE_EXPORT extern const Utils::Icon FIND_WHOLE_WORD;
 CORE_EXPORT extern const Utils::Icon FIND_REGEXP;
 CORE_EXPORT extern const Utils::Icon FIND_PRESERVE_CASE;
-CORE_EXPORT extern const Utils::Icon QTLOGO_32;
-CORE_EXPORT extern const Utils::Icon QTLOGO_64;
-CORE_EXPORT extern const Utils::Icon QTLOGO_128;
 
 CORE_EXPORT extern const Utils::Icon ARROW_UP;
 CORE_EXPORT extern const Utils::Icon ARROW_DOWN;
@@ -78,14 +75,18 @@ CORE_EXPORT extern const Utils::Icon BOUNDING_RECT;
 CORE_EXPORT extern const Utils::Icon EYE_OPEN_TOOLBAR;
 CORE_EXPORT extern const Utils::Icon EYE_CLOSED_TOOLBAR;
 
-CORE_EXPORT extern const Utils::Icon MODE_EDIT_CLASSIC;
-CORE_EXPORT extern const Utils::Icon MODE_EDIT_FLAT;
-CORE_EXPORT extern const Utils::Icon MODE_EDIT_FLAT_ACTIVE;
+CORE_EXPORT extern const Utils::Icon MODE_COMPETITION_CLASSIC;
+CORE_EXPORT extern const Utils::Icon MODE_COMPETITION_FLAT;
+CORE_EXPORT extern const Utils::Icon MODE_COMPETITION_FLAT_ACTIVE;
+
 CORE_EXPORT extern const Utils::Icon MODE_DESIGN_CLASSIC;
 CORE_EXPORT extern const Utils::Icon MODE_DESIGN_FLAT;
 CORE_EXPORT extern const Utils::Icon MODE_DESIGN_FLAT_ACTIVE;
 
-CORE_EXPORT extern const Utils::Icon ATHLETIC_LOGO;
+CORE_EXPORT extern const Utils::Icon LOGO_32;
+CORE_EXPORT extern const Utils::Icon LOGO_64;
+CORE_EXPORT extern const Utils::Icon LOGO_128;
+CORE_EXPORT extern const Utils::Icon LOGO_256;
 
 } // namespace Icons
 } // namespace Core

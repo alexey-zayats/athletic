@@ -4,8 +4,9 @@ include(../../../athletic.pri)
 
 TEMPLATE = app
 VERSION = $$APP_VERSION
-TARGET = $${APP_TARGET}.$${APP_NAME}
+TARGET = $${APP_TARGET} # .$${APP_NAME}
 DESTDIR = $$APP_BIN_PATH
+DESTDIR = $$APP_BUILD_TREE
 
 QT += network
 
@@ -18,24 +19,23 @@ LIBS *= -l$$qtLibraryName(extensionsystem) \
 APP_GIT_REVISION = $$system(git --git-dir $$APP_SOURCE_TREE/.git --work-tree $$APP_BUILD_TREE describe --always --tags)
 
 win32 {
-#	RC_FILE = athletic.rc
+	RC_FILE = athletic.rc
 	target.path = $$APP_BIN_PATH
 	INSTALLS += target
 } else:macx {
-	CONFIG -= app_bundle
 	LIBS += -framework CoreFoundation
-	ASSETCATALOG.files = $$PWD/qtcreator.xcassets
+	ASSETCATALOG.files = $$PWD/athletic.xcassets
 	macx-xcode {
 		QMAKE_BUNDLE_DATA += ASSETCATALOG
 	} else {
-		ASSETCATALOG.output = $$APP_DATA_PATH/qtcreator.icns
+		ASSETCATALOG.output = $$APP_DATA_PATH/athletic.icns
 		ASSETCATALOG.commands = xcrun actool \
-			--app-icon qtcreator \
-			--output-partial-info-plist $$shell_quote($(TMPDIR)/qtcreator.Info.plist) \
+			--app-icon athletic \
+			--output-partial-info-plist $$shell_quote($(TMPDIR)/athletic.Info.plist) \
 			--platform macosx \
 			--minimum-deployment-target 10.7 \
-			--compile $$shell_quote($$IDE_DATA_PATH) \
-			$$shell_quote($$PWD/qtcreator.xcassets) > /dev/null
+			--compile $$shell_quote($$APP_DATA_PATH) \
+			$$shell_quote($$PWD/athletic.xcassets) > /dev/null
 		ASSETCATALOG.input = ASSETCATALOG.files
 		ASSETCATALOG.CONFIG += no_link target_predeps
 		QMAKE_EXTRA_COMPILERS += ASSETCATALOG

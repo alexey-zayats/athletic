@@ -350,7 +350,7 @@ QString ICore::resourcePath()
 
 QString ICore::userResourcePath()
 {
-    // Create qtcreator dir if it doesn't yet exist
+    // Create application dir if it doesn't yet exist
     const QString configDir = QFileInfo(settings(QSettings::UserScope)->fileName()).path();
     const QString urp = configDir + QLatin1String("/Athletic");
 

@@ -36,6 +36,9 @@ SOURCES += \
 	outputformatter.cpp \
 	synchronousprocess.cpp \
 	ansiescapecodehandler.cpp \
+	navigationtreeview.cpp \
+	tooltip/tips.cpp \
+	tooltip/tooltip.cpp \
 
 HEADERS += \
 	hostosinfo.h \
@@ -77,6 +80,11 @@ HEADERS += \
 	outputformatter.h \
 	synchronousprocess.h \
 	ansiescapecodehandler.h \
+	navigationtreeview.h \
+	tooltip/tips.h \
+	tooltip/tooltip.h \
+	tooltip/effects.h \
+	tooltip/reuse.h \
 
 !macx {
 	win32 {

@@ -974,13 +974,6 @@ void readSettings()
     d->m_useProjectsDirectory = s->value(QLatin1String(useProjectDirectoryKeyC),
                                          d->m_useProjectsDirectory).toBool();
 
-    const QString settingsShadowDir = s->value(QLatin1String(buildDirectoryKeyC),
-                                               QString()).toString();
-    if (!settingsShadowDir.isEmpty())
-        d->m_buildDirectory = settingsShadowDir;
-    else
-        d->m_buildDirectory = QLatin1String(Constants::DEFAULT_BUILD_DIRECTORY);
-
     s->endGroup();
 }
 

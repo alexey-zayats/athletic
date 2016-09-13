@@ -43,7 +43,7 @@ CorePlugin::~CorePlugin()
     }
 
     delete m_mainWindow;
-    setCreatorTheme(0);
+    setAthleticTheme(0);
 }
 
 void CorePlugin::parseArguments(const QStringList &arguments)
@@ -82,7 +82,7 @@ void CorePlugin::parseArguments(const QStringList &arguments)
         theme->readSettings(themeSettings);
         if (theme->flag(Theme::ApplyThemePaletteGlobally))
             QApplication::setPalette(theme->palette());
-        setCreatorTheme(theme);
+        setAthleticTheme(theme);
     }
 
     // defer creation of these widgets until here,

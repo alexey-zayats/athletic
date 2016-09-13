@@ -27,7 +27,7 @@ public:
     QMap<QString, QColor> palette;
 };
 
-UTILS_EXPORT void setCreatorTheme(Theme *theme);
+UTILS_EXPORT void setAthleticTheme(Theme *theme);
 
 } // namespace Utils
 

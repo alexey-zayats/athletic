@@ -15,6 +15,8 @@ namespace FightControl {
 
 namespace Internal {
 
+class FightControlMode;
+
 using namespace ExtensionSystem;
 
 class FightControlPLugin : public ExtensionSystem::IPlugin
@@ -33,6 +35,7 @@ public:
 
 private slots:
 private:
+    FightControlMode *m_fightControlMode;
 };
 
 } // namespace Internal

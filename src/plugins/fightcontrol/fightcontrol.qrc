@@ -1,4 +1,8 @@
 <RCC>
-    <qresource prefix="/fightcontrol">
-    </qresource>
+	<qresource prefix="/fightcontrol">
+	<file>images/mode_match.png</file>
+	<file>images/mode_match@2x.png</file>
+	<file>images/mode_match_mask.png</file>
+	<file>images/mode_match_mask@2x.png</file>
+	</qresource>
 </RCC>

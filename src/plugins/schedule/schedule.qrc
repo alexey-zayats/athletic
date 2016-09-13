@@ -1,0 +1,8 @@
+<RCC>
+	<qresource prefix="/schedule">
+	<file>images/mode_schedule.png</file>
+	<file>images/mode_schedule@2x.png</file>
+	<file>images/mode_schedule_mask.png</file>
+	<file>images/mode_schedule_mask@2x.png</file>
+	</qresource>
+</RCC>

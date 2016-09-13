@@ -71,36 +71,36 @@ OutputWindow::OutputWindow(Context context, QWidget *parent)
     d->outputWindowContext->setWidget(this);
     ICore::addContextObject(d->outputWindowContext);
 
-    QAction *undoAction = new QAction(this);
-    QAction *redoAction = new QAction(this);
-    QAction *cutAction = new QAction(this);
-    QAction *copyAction = new QAction(this);
-    QAction *pasteAction = new QAction(this);
-    QAction *selectAllAction = new QAction(this);
+//    QAction *undoAction = new QAction(this);
+//    QAction *redoAction = new QAction(this);
+//    QAction *cutAction = new QAction(this);
+//    QAction *copyAction = new QAction(this);
+//    QAction *pasteAction = new QAction(this);
+//    QAction *selectAllAction = new QAction(this);
 
-    ActionManager::registerAction(undoAction, Constants::UNDO, context);
-    ActionManager::registerAction(redoAction, Constants::REDO, context);
-    ActionManager::registerAction(cutAction, Constants::CUT, context);
-    ActionManager::registerAction(copyAction, Constants::COPY, context);
-    ActionManager::registerAction(pasteAction, Constants::PASTE, context);
-    ActionManager::registerAction(selectAllAction, Constants::SELECTALL, context);
+//    ActionManager::registerAction(undoAction, Constants::UNDO, context);
+//    ActionManager::registerAction(redoAction, Constants::REDO, context);
+//    ActionManager::registerAction(cutAction, Constants::CUT, context);
+//    ActionManager::registerAction(copyAction, Constants::COPY, context);
+//    ActionManager::registerAction(pasteAction, Constants::PASTE, context);
+//    ActionManager::registerAction(selectAllAction, Constants::SELECTALL, context);
 
-    connect(undoAction, &QAction::triggered, this, &QPlainTextEdit::undo);
-    connect(redoAction, &QAction::triggered, this, &QPlainTextEdit::redo);
-    connect(cutAction, &QAction::triggered, this, &QPlainTextEdit::cut);
-    connect(copyAction, &QAction::triggered, this, &QPlainTextEdit::copy);
-    connect(pasteAction, &QAction::triggered, this, &QPlainTextEdit::paste);
-    connect(selectAllAction, &QAction::triggered, this, &QPlainTextEdit::selectAll);
+//    connect(undoAction, &QAction::triggered, this, &QPlainTextEdit::undo);
+//    connect(redoAction, &QAction::triggered, this, &QPlainTextEdit::redo);
+//    connect(cutAction, &QAction::triggered, this, &QPlainTextEdit::cut);
+//    connect(copyAction, &QAction::triggered, this, &QPlainTextEdit::copy);
+//    connect(pasteAction, &QAction::triggered, this, &QPlainTextEdit::paste);
+//    connect(selectAllAction, &QAction::triggered, this, &QPlainTextEdit::selectAll);
 
-    connect(this, &QPlainTextEdit::undoAvailable, undoAction, &QAction::setEnabled);
-    connect(this, &QPlainTextEdit::redoAvailable, redoAction, &QAction::setEnabled);
-    connect(this, &QPlainTextEdit::copyAvailable, cutAction, &QAction::setEnabled);  // OutputWindow never read-only
-    connect(this, &QPlainTextEdit::copyAvailable, copyAction, &QAction::setEnabled);
+//    connect(this, &QPlainTextEdit::undoAvailable, undoAction, &QAction::setEnabled);
+//    connect(this, &QPlainTextEdit::redoAvailable, redoAction, &QAction::setEnabled);
+//    connect(this, &QPlainTextEdit::copyAvailable, cutAction, &QAction::setEnabled);  // OutputWindow never read-only
+//    connect(this, &QPlainTextEdit::copyAvailable, copyAction, &QAction::setEnabled);
 
-    undoAction->setEnabled(false);
-    redoAction->setEnabled(false);
-    cutAction->setEnabled(false);
-    copyAction->setEnabled(false);
+//    undoAction->setEnabled(false);
+//    redoAction->setEnabled(false);
+//    cutAction->setEnabled(false);
+//    copyAction->setEnabled(false);
 
     m_scrollTimer.setInterval(10);
     m_scrollTimer.setSingleShot(true);

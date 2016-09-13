@@ -24,7 +24,7 @@ VersionDialog::VersionDialog(QWidget *parent)
     // We need to set the window icon explicitly here since for some reason the
     // application icon isn't used when the size of the dialog is fixed (at least not on X11/GNOME)
     if (Utils::HostOsInfo::isLinuxHost())
-        setWindowIcon(Icons::QTLOGO_128.icon());
+        setWindowIcon(Icons::LOGO_128.icon());
 
     setWindowTitle(tr("About Athletic"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -81,7 +81,7 @@ VersionDialog::VersionDialog(QWidget *parent)
     connect(buttonBox , &QDialogButtonBox::rejected, this, &QDialog::reject);
 
     QLabel *logoLabel = new QLabel;
-    logoLabel->setPixmap(Icons::QTLOGO_128.pixmap());
+    logoLabel->setPixmap(Icons::LOGO_128.pixmap());
     layout->addWidget(logoLabel , 0, 0, 1, 1);
     layout->addWidget(copyRightLabel, 0, 1, 4, 4);
     layout->addWidget(buttonBox, 4, 0, 1, 5);

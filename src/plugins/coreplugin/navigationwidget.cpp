@@ -162,7 +162,7 @@ void NavigationWidget::setFactories(const QList<INavigationWidgetFactory *> &fac
                 this, [this, action]() { activateSubWidget(d->m_actionMap[action]); });
 
         Command *cmd = ActionManager::registerAction(action,
-            id.withPrefix("QtCreator.Sidebar."), navicontext);
+            id.withPrefix("Athletic.Sidebar."), navicontext);
         cmd->setDefaultKeySequence(factory->activationSequence());
         d->m_commandMap.insert(id, cmd);
 

@@ -123,7 +123,7 @@ void StyleHelper::setBaseColor(const QColor &newcolor)
 {
     m_requestedBaseColor = newcolor;
 
-    const QColor themeBaseColor = creatorTheme()->color(Theme::PanelStatusBarBackgroundColor);
+    const QColor themeBaseColor = athleticTheme()->color(Theme::PanelStatusBarBackgroundColor);
     const QColor defaultBaseColor = QColor(DEFAULT_BASE_COLOR);
     QColor color;
 
@@ -288,10 +288,10 @@ void StyleHelper::drawArrow(QStyle::PrimitiveElement element, QPainter *painter,
         };
 
         if (!enabled) {
-            drawCommonStyleArrow(image.rect(), creatorTheme()->color(Theme::IconsDisabledColor));
+            drawCommonStyleArrow(image.rect(), athleticTheme()->color(Theme::IconsDisabledColor));
         } else {
             drawCommonStyleArrow(image.rect().translated(0, devicePixelRatio), toolBarDropShadowColor());
-            drawCommonStyleArrow(image.rect(), creatorTheme()->color(Theme::IconsBaseColor));
+            drawCommonStyleArrow(image.rect(), athleticTheme()->color(Theme::IconsBaseColor));
         }
         painter.end();
         pixmap = QPixmap::fromImage(image);
@@ -504,6 +504,8 @@ QString StyleHelper::dpiSpecificImageFile(const QString &fileName)
                 imageFileWithResolution(fileName, qRound(qApp->devicePixelRatio()));
         if (QFile::exists(atDprfileName))
             return atDprfileName;
+        else
+            qWarning() << "File not found: " << atDprfileName;
     }
     return fileName;
 }

@@ -24,12 +24,13 @@ EditMode::EditMode() :
     m_splitter(new MiniSplitter),
     m_rightSplitWidgetLayout(new QVBoxLayout)
 {
-    setObjectName(QLatin1String("EditMode"));
-    setDisplayName(tr("Edit"));
-    setIcon(Utils::Icon::modeIcon(Icons::MODE_EDIT_CLASSIC,
-                                  Icons::MODE_EDIT_FLAT, Icons::MODE_EDIT_FLAT_ACTIVE));
-    setPriority(Constants::P_MODE_EDIT);
-    setId(Constants::MODE_EDIT);
+    setObjectName(QLatin1String("CompetitionMode"));
+    setDisplayName(tr("Competition"));
+    setIcon(Utils::Icon::modeIcon(Icons::MODE_COMPETITION_CLASSIC,
+                                  Icons::MODE_COMPETITION_FLAT,
+                                  Icons::MODE_COMPETITION_FLAT_ACTIVE));
+    setPriority(Constants::P_MODE_COMPETITION);
+    setId(Constants::MODE_COMPETITION);
 
     m_rightSplitWidgetLayout->setSpacing(0);
     m_rightSplitWidgetLayout->setMargin(0);
@@ -68,7 +69,7 @@ EditMode::EditMode() :
     ICore::addContextObject(modeContextObject);
 
     setWidget(m_splitter);
-    setContext(Context(Constants::C_EDIT_MODE,
+    setContext(Context(Constants::C_COMPETITION_MODE,
                        Constants::C_NAVIGATION_PANE));
 }
 
