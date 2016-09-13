@@ -82,6 +82,7 @@ public slots:
                                     Id settingsId = Id(),
                                     QWidget *parent = 0);
     void aboutAthletic();
+    void showSportsSelector();
 
 protected:
     virtual void closeEvent(QCloseEvent *event);

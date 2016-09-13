@@ -1,11 +1,13 @@
 
 #include "tabwidget.h"
 #include "actionbar.h"
+#include "coreicons.h"
 
 #include <utils/hostosinfo.h>
 #include <utils/styledbar.h>
 #include <utils/stylehelper.h>
 #include <utils/theme/theme.h>
+#include <utils/icon.h>
 
 #include <QDebug>
 
@@ -262,72 +264,72 @@ static void paintSelectedTabBackground(QPainter *painter, const QRect &spanRect)
 void TabBar::paintTab(QPainter *painter, int tabIndex) const
 {
     if (!validIndex(tabIndex)) {
-            qWarning("invalid index");
-            return;
-        }
-        painter->save();
+        qWarning("invalid index");
+        return;
+    }
+    painter->save();
 
-        QRect rect = tabRect(tabIndex);
-        bool selected = (tabIndex == m_currentIndex);
-        bool enabled = isTabEnabled(tabIndex);
+    QRect rect = tabRect(tabIndex);
+    bool selected = (tabIndex == m_currentIndex);
+    bool enabled = isTabEnabled(tabIndex);
 
-        if (selected) {
-            if (athleticTheme()->widgetStyle() == Theme::StyleFlat) {
-              // background color of a fancy tab that is active
-              painter->fillRect(rect, athleticTheme()->color(Theme::ToolButtonSelectedColor));
-            } else {
-                paintSelectedTabBackground(painter, rect);
-            }
-        }
-
-        QString tabText(this->tabText(tabIndex));
-        QRect tabTextRect(rect);
-        const bool drawIcon = rect.height() > 36;
-        QRect tabIconRect(tabTextRect);
-        tabTextRect.translate(0, drawIcon ? -2 : 1);
-        QFont boldFont(painter->font());
-        boldFont.setPointSizeF(StyleHelper::sidebarFontSize());
-        boldFont.setBold(true);
-        painter->setFont(boldFont);
-        painter->setPen(selected ? QColor(255, 255, 255, 160) : QColor(0, 0, 0, 110));
-        const int textFlags = Qt::AlignCenter | (drawIcon ? Qt::AlignBottom : Qt::AlignVCenter) | Qt::TextWordWrap;
-
-        const float fader = m_tabs[tabIndex]->fader();
-        if (fader > 0 && !HostOsInfo::isMacHost() && !selected && enabled) {
-            painter->save();
-            painter->setOpacity(fader);
-            if (athleticTheme()->widgetStyle() == Theme::StyleFlat)
-                painter->fillRect(rect, athleticTheme()->color(Theme::ToolButtonHoverColor));
-            else
-                ToolButton::hoverOverlay(painter, rect);
-            painter->restore();
-        }
-
-        if (!enabled && athleticTheme()->widgetStyle() == Theme::StyleDefault)
-            painter->setOpacity(0.7);
-
-        if (drawIcon) {
-            int textHeight = painter->fontMetrics().boundingRect(QRect(0, 0, width(), height()), Qt::TextWordWrap, tabText).height();
-            tabIconRect.adjust(0, 4, 0, -textHeight);
-            const QIcon::Mode iconMode = enabled ? (selected ? QIcon::Active : QIcon::Normal)
-                                                 : QIcon::Disabled;
-            StyleHelper::drawIconWithShadow(tabIcon(tabIndex), tabIconRect, painter, iconMode);
-        }
-
-        painter->setOpacity(1.0); //FIXME: was 0.7 before?
-        if (enabled) {
-            painter->setPen(selected
-              ? athleticTheme()->color(Theme::TabWidgetEnabledSelectedTextColor)
-              : athleticTheme()->color(Theme::TabWidgetEnabledUnselectedTextColor));
+    if (selected) {
+        if (athleticTheme()->widgetStyle() == Theme::StyleFlat) {
+            // background color of a fancy tab that is active
+            painter->fillRect(rect, athleticTheme()->color(Theme::ToolButtonSelectedColor));
         } else {
-            painter->setPen(selected
-              ? athleticTheme()->color(Theme::TabWidgetDisabledSelectedTextColor)
-              : athleticTheme()->color(Theme::TabWidgetDisabledUnselectedTextColor));
+            paintSelectedTabBackground(painter, rect);
         }
-        painter->translate(0, -1);
-        painter->drawText(tabTextRect, textFlags, tabText);
+    }
 
+    QString tabText(this->tabText(tabIndex));
+    QRect tabTextRect(rect);
+    const bool drawIcon = rect.height() > 36;
+    QRect tabIconRect(tabTextRect);
+    tabTextRect.translate(0, drawIcon ? -2 : 1);
+    QFont boldFont(painter->font());
+    boldFont.setPointSizeF(StyleHelper::sidebarFontSize());
+    boldFont.setBold(true);
+    painter->setFont(boldFont);
+    painter->setPen(selected ? QColor(255, 255, 255, 160) : QColor(0, 0, 0, 110));
+    const int textFlags = Qt::AlignCenter | (drawIcon ? Qt::AlignBottom : Qt::AlignVCenter) | Qt::TextWordWrap;
+
+    const float fader = m_tabs[tabIndex]->fader();
+    if (fader > 0 && !HostOsInfo::isMacHost() && !selected && enabled) {
+        painter->save();
+        painter->setOpacity(fader);
+        if (athleticTheme()->widgetStyle() == Theme::StyleFlat)
+            painter->fillRect(rect, athleticTheme()->color(Theme::ToolButtonHoverColor));
+        else
+            ToolButton::hoverOverlay(painter, rect);
         painter->restore();
+    }
+
+    if (!enabled && athleticTheme()->widgetStyle() == Theme::StyleDefault)
+        painter->setOpacity(0.7);
+
+    if (drawIcon) {
+        int textHeight = painter->fontMetrics().boundingRect(QRect(0, 0, width(), height()), Qt::TextWordWrap, tabText).height();
+        tabIconRect.adjust(0, 4, 0, -textHeight);
+        const QIcon::Mode iconMode = enabled ? (selected ? QIcon::Active : QIcon::Normal)
+                                             : QIcon::Disabled;
+        StyleHelper::drawIconWithShadow(tabIcon(tabIndex), tabIconRect, painter, iconMode);
+    }
+
+    painter->setOpacity(1.0); //FIXME: was 0.7 before?
+    if (enabled) {
+        painter->setPen(selected
+                  ? athleticTheme()->color(Theme::TabWidgetEnabledSelectedTextColor)
+                  : athleticTheme()->color(Theme::TabWidgetEnabledUnselectedTextColor));
+    } else {
+        painter->setPen(selected
+                        ? athleticTheme()->color(Theme::TabWidgetDisabledSelectedTextColor)
+                        : athleticTheme()->color(Theme::TabWidgetDisabledUnselectedTextColor));
+    }
+    painter->translate(0, -1);
+    painter->drawText(tabTextRect, textFlags, tabText);
+
+    painter->restore();
 }
 
 void TabBar::setCurrentIndex(int index)
@@ -385,6 +387,18 @@ void ColorButton::paintEvent(QPaintEvent *event)
         const QRectF innerRect = QRectF(rect()).adjusted(0.5, 0.5, -0.5, -0.5);
         p.drawLine(innerRect.bottomLeft(), innerRect.bottomRight());
     }
+
+
+    QIcon icon = Utils::Icon::modeIcon(Core::Icons::SELECT_SPORTS_CLASSIC,
+                          Core::Icons::SELECT_SPORTS_FLAT,
+                          Core::Icons::SELECT_SPORTS_FLAT_ACTIVE);
+
+
+    const QRect iconRect = QRect(rect()).adjusted(1, 1, -1, -1);
+
+    QPainter p(this);
+    p.setPen(StyleHelper::borderColor());
+    StyleHelper::drawIconWithShadow(icon, iconRect, &p, QIcon::Normal);
 }
 
 //////
