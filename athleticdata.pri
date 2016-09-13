@@ -7,9 +7,8 @@
 
 # used in custom compilers which just copy files
 defineReplace(stripStaticBase) {
-	return($$section(1, /, -2, -1))
-#	return($$relative_path($$1, $$STATIC_BASE))
-#	return($$relative_path($$absolute_path($$1, $$STATIC_OUTPUT_BASE), $$STATIC_BASE))
+    win32: return($$section(1, \\, -2, -1))
+    else:  return($$section(1, /, -2, -1))
 }
 
 # handle conditional copying based on STATIC_BASE compared to STATIC_OUTPUT_BASE
