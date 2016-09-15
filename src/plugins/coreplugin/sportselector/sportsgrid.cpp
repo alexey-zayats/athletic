@@ -162,7 +162,7 @@ void SportsGrid::setGridSize(int size) {
     QSize sh = sportSizeHint();
 
     int x = sh.width() * m_colls;
-    int y = sh.height() * ((m_sportSize % m_colls) == 0 ? (m_sportSize / m_colls) : (qCeil(m_sportSize / m_colls)+1));
+    int y = sh.height() * ((m_sportSize % m_colls) == 0 ? (m_sportSize / m_colls) : (qFloor(m_sportSize / m_colls)+1));
 
     qDebug() << sh;
     qDebug() << m_sportSize;

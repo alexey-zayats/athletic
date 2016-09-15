@@ -78,23 +78,21 @@ SportSelectorWidget::SportSelectorWidget(QAction *sportSelectorAction, QWidget *
     QList<Core::ISport*> list = PluginManager::getObjects<Core::ISport>();
     qSort(list.begin(), list.end(), lessThanBySporttitle);
 
+     m_olympicSport = new OlympicSport();
+    list.prepend (m_olympicSport);
+
     int sportSize = list.size();
 
     m_sportsGrid = new SportsGrid(this);
     m_sportsGrid->setGridSize(sportSize);
 
-    int i = 0;
-    m_olympicSport = new OlympicSport();
-    m_sportsGrid->insertSport (i, m_olympicSport->icon (), m_olympicSport->title ());
-    m_sportsGrid->setSportEnabled (i, true);
-    m_sportsGrid->setCurrentIndex (i);
-
-    for(++i; i < sportSize; i++) {
+    for(int i = 0; i < sportSize; i++) {
         ISport *s = list.at(i);
         m_sportsGrid->insertSport (i, s->icon (), s->title ());
         m_sportsGrid->setSportEnabled (i, true);
     }
 
+    m_sportsGrid->setCurrentIndex (0);
     connect(m_sportsGrid, &SportsGrid::currentChanged, this, &SportSelectorWidget::sportsChanged);
 
     layout->addWidget (m_sportsGrid);
