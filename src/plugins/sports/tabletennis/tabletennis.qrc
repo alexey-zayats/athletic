@@ -1,0 +1,6 @@
+<RCC>
+	<qresource prefix="/tabletennis">
+	<file>images/tabletennis.png</file>
+	<file>images/tabletennis@2x.png</file>
+	</qresource>
+</RCC>

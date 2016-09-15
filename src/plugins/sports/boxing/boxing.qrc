@@ -1,0 +1,6 @@
+<RCC>
+	<qresource prefix="/boxing">
+	<file>images/boxing.png</file>
+	<file>images/boxing@2x.png</file>
+	</qresource>
+</RCC>

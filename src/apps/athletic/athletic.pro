@@ -5,8 +5,9 @@ include(../../../athletic.pri)
 TEMPLATE = app
 VERSION = $$APP_VERSION
 TARGET = $${APP_TARGET} # .$${APP_NAME}
-DESTDIR = $$APP_BIN_PATH
-#DESTDIR = $$APP_BUILD_TREE
+
+macx:DESTDIR = $$APP_BUILD_TREE
+else:DESTDIR = $$APP_BIN_PATH
 
 QT += network
 

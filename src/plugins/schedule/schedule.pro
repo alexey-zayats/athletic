@@ -8,12 +8,15 @@ include(../../athleticplugin.pri)
 
 SOURCES += \
 	schedule.cpp \
-	schedulemode.cpp
+	schedulemode.cpp \
+    scheduleicons.cpp
 
 HEADERS += \
 	schedule.h \
 	schedule_global.h \
-	schedulemode.h
+	schedulemode.h \
+    scheduleconstants.h \
+    scheduleicons.h
 
 FORMS += \
 	schedule.ui

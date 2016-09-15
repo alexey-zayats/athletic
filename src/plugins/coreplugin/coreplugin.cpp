@@ -7,7 +7,6 @@
 #include "coreconstants.h"
 #include "actionmanager/actionmanager.h"
 #include "find/findplugin.h"
-#include "editmode.h"
 #include "modemanager.h"
 #include "helpmanager.h"
 
@@ -37,11 +36,6 @@ CorePlugin::CorePlugin()
 
 CorePlugin::~CorePlugin()
 {
-    if (m_editMode) {
-        removeObject(m_editMode);
-        delete m_editMode;
-    }
-
     delete m_mainWindow;
     setAthleticTheme(0);
 }
@@ -103,14 +97,7 @@ bool CorePlugin::initialize(const QStringList &arguments, QString *errorMessage)
     new ActionManager(this);
     Theme::initialPalette();
     parseArguments(arguments);
-    const bool success = m_mainWindow->init(errorMessage);
-    if (success) {
-        m_editMode = new EditMode;
-        addObject(m_editMode);
-        ModeManager::activateMode(m_editMode->id());
-    }
-
-    return success;
+    return m_mainWindow->init(errorMessage);
 }
 
 void CorePlugin::extensionsInitialized()

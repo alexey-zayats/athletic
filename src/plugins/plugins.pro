@@ -1,8 +1,11 @@
 TEMPLATE = subdirs
 SUBDIRS  = \
 	coreplugin \
-	schedule \
 	updater \
-	fightcontrol \
-	fightboard \
-	help
+	schedule \
+	competition \
+	match \
+	athlete \
+	statistics \
+	help \
+	sports \

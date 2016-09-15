@@ -198,7 +198,7 @@ void OpenPagesManager::closeCurrentPage()
     const bool returnOnClose = LocalHelpManager::returnOnClose();
 
     if (m_model->rowCount() == 1 && returnOnClose) {
-        ModeManager::activateMode(Core::Constants::MODE_COMPETITION);
+        ModeManager::activateMode("Schedule");
     } else {
         Q_ASSERT(indexes.count() == 1);
         removePage(indexes.first().row());

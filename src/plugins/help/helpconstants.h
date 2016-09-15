@@ -37,7 +37,7 @@ static const QLatin1String AboutBlank("about:blank");
 static const QLatin1String WeAddedFilterKey("UnfilteredFilterInserted");
 static const QLatin1String PreviousFilterNameKey("UnfilteredFilterName");
 
-const int  P_MODE_HELP    = 70;
+const int  P_MODE_HELP    = 50;
 const char ID_MODE_HELP  [] = "Help";
 const char HELP_CATEGORY[] = "H.Help";
 const char HELP_CATEGORY_ICON[] = ":/help/images/category_help.png";

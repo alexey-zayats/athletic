@@ -75,7 +75,7 @@ public:
         m_tabs.insert(index, tab);
         updateGeometry();
     }
-    void setEnabled(int index, bool enabled);
+
     void removeTab(int index) {
         Tab *tab = m_tabs.takeAt(index);
         delete tab;

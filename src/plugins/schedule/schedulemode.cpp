@@ -1,6 +1,9 @@
 #include "schedulemode.h"
+#include "scheduleconstants.h"
+#include "scheduleicons.h"
 
 #include <coreplugin/coreconstants.h>
+
 #include <coreplugin/icore.h>
 #include <coreplugin/coreicons.h>
 #include <coreplugin/iwelcomepage.h>
@@ -23,6 +26,8 @@
 
 using namespace Schedule;
 using namespace Schedule::Internal;
+using namespace Schedule::Constants;
+using namespace Schedule::Icons;
 
 using namespace Core;
 using namespace Utils;
@@ -35,20 +40,14 @@ ScheduleMode::ScheduleMode()
 {
     setDisplayName(tr("Schedule"));
 
-    const Utils::Icon MODE_SCHEDULE_CLASSIC(
-            QLatin1String(":/schedule/images/mode_schedule.png"));
-    const Utils::Icon MODE_SCHEDULE_FLAT({
-            {QLatin1String(":/schedule/images/mode_schedule_mask.png"), Utils::Theme::IconsBaseColor}});
-    const Utils::Icon MODE_SCHEDULE_FLAT_ACTIVE({
-            {QLatin1String(":/schedule/images/mode_schedule_mask.png"), Utils::Theme::IconsModeScheduleActiveColor}});
-
     setIcon(Utils::Icon::modeIcon(MODE_SCHEDULE_CLASSIC,
                                   MODE_SCHEDULE_FLAT,
                                   MODE_SCHEDULE_FLAT_ACTIVE));
-    setPriority(Constants::P_MODE_SCHEDULE);
-    setId(Constants::MODE_SCHEDULE);
+
+    setPriority(P_MODE_SCHEDULE);
+    setId(MODE_SCHEDULE);
     setContextHelpId(QLatin1String("Athletic Manual"));
-    setContext(Context(Constants::C_SCHEDULE_MODE));
+    setContext(Context(C_SCHEDULE_MODE));
 
     m_modeWidget = new QWidget;
     m_modeWidget->setObjectName(QLatin1String("SchedulePageModeWidget"));

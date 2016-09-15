@@ -4,10 +4,10 @@
 	\"CompatVersion\" : \"$$APP_COMPAT_VERSION\",
 	\"Required\" : true,
 	\"Vendor\" : \"Alexey Zayats\",
-        \"Copyright\" : \"(C) 2016 Agitum\",
+	\"Copyright\" : \"(C) 2016 Agitum\",
 	\"License\" : [ \"\"],
-        \"Category\" : \"Athletic.App\",
+	\"Category\" : \"Athletic\",
 	\"Description\" : \"The core plugin for the Athletic.\",
-        \"Url\" : \"https://athletic.cloud/\",
+	\"Url\" : \"https://athletic.cloud/\",
 	$$dependencyList
 }

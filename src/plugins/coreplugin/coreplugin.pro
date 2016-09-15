@@ -71,7 +71,6 @@ SOURCES += \
 	plugindialog.cpp \
 	find/itemviewfind.cpp \
 	find/basetextfind.cpp \
-	editmode.cpp \
 	editormanager/ieditor.cpp \
 	editormanager/ieditorfactory.cpp \
 	editormanager/editorview.cpp \
@@ -97,6 +96,11 @@ SOURCES += \
 	locator/ilocatorfilter.cpp \
 	sidebar.cpp \
 	sidebarwidget.cpp \
+	sportselector/sportselectorwidget.cpp \
+	isport.cpp \
+    sportselector/sportbutton.cpp \
+    sportselector/sportsgrid.cpp \
+    sportselector/olympicsport.cpp
 
 HEADERS += \
 	actionbar.h \
@@ -163,7 +167,6 @@ HEADERS += \
 	find/itemviewfind.h \
 	find/basetextfind.h \
 	plugindialog.h \
-	editmode.h \
 	editormanager/ieditor.h \
 	editormanager/ieditorfactory.h \
 	editormanager/editorview.h \
@@ -191,6 +194,11 @@ HEADERS += \
 	locator/ilocatorfilter.h \
 	sidebar.h \
 	sidebarwidget.h \
+	sportselector/sportselectorwidget.h \
+	isport.h \
+    sportselector/sportbutton.h \
+    sportselector/sportsgrid.h \
+    sportselector/olympicsport.h
 
 FORMS = \
 	systemsettings.ui \

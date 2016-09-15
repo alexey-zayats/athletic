@@ -67,6 +67,8 @@
 
 #include "mainwindow.h"
 
+#include "sportselector/sportselectorwidget.h"
+
 using namespace ExtensionSystem;
 using namespace Utils;
 
@@ -103,7 +105,9 @@ MainWindow::MainWindow() :
     m_optionsAction(0),
     m_toggleSideBarAction(0),
     m_toggleSideBarButton(new QToolButton),
-    m_toggleModeSelectorAction(0)
+    m_toggleModeSelectorAction(0),
+    m_sportSelector(0),
+    m_projectSelectorAction(0)
 {
     (void) new DocumentManager(this);
     OutputPaneManager::create();
@@ -142,7 +146,7 @@ MainWindow::MainWindow() :
     setCorner(Qt::BottomRightCorner, Qt::BottomDockWidgetArea);
 
     m_modeManager = new ModeManager(this, m_modeStack);
-    connect(m_modeStack, &TabWidget::topAreaClicked, this, &MainWindow::showSportsSelector);
+//    connect(m_modeStack, &TabWidget::topAreaClicked, this, &MainWindow::showSportsSelector);
 
 //            [](Qt::MouseButton, Qt::KeyboardModifiers modifiers) {
 //        qCDebug(corepluginLog) << "TabWidget::topAreaClicked";
@@ -173,11 +177,6 @@ MainWindow::MainWindow() :
     // Add a small Toolbutton for toggling the navigation widget
     statusBar()->insertPermanentWidget(0, m_toggleSideBarButton);
     statusBar()->setProperty("p_styled", true);
-}
-
-void MainWindow::showSportsSelector ()
-{
-qDebug() << Q_FUNC_INFO;
 }
 
 void MainWindow::setSidebarVisible(bool visible)
@@ -265,6 +264,7 @@ MainWindow::~MainWindow()
 
     delete m_helpManager;
     m_helpManager = 0;
+
 }
 
 bool MainWindow::init(QString *errorMessage)
@@ -307,6 +307,15 @@ void MainWindow::extensionsInitialized()
 
     readSettings();
     updateContext();
+
+    m_projectSelectorAction = new QAction(this);
+    m_projectSelectorAction->setCheckable(true);
+    m_projectSelectorAction->setEnabled(true);
+
+    m_sportSelector = new SportSelectorWidget(m_projectSelectorAction, this);
+
+    connect(m_projectSelectorAction, &QAction::triggered, m_sportSelector, &QWidget::show);
+    ModeManager::addProjectSelector(m_projectSelectorAction);
 
     emit m_coreImpl->coreAboutToOpen();
     // Delay restoreWindowState, since it is overridden by LayoutRequest event

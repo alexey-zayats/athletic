@@ -1,0 +1,6 @@
+<RCC>
+	<qresource prefix="/judo">
+	<file>images/judo.png</file>
+	<file>images/judo@2x.png</file>
+	</qresource>
+</RCC>

@@ -75,10 +75,6 @@ CORE_EXPORT extern const Utils::Icon BOUNDING_RECT;
 CORE_EXPORT extern const Utils::Icon EYE_OPEN_TOOLBAR;
 CORE_EXPORT extern const Utils::Icon EYE_CLOSED_TOOLBAR;
 
-CORE_EXPORT extern const Utils::Icon MODE_COMPETITION_CLASSIC;
-CORE_EXPORT extern const Utils::Icon MODE_COMPETITION_FLAT;
-CORE_EXPORT extern const Utils::Icon MODE_COMPETITION_FLAT_ACTIVE;
-
 CORE_EXPORT extern const Utils::Icon MODE_DESIGN_CLASSIC;
 CORE_EXPORT extern const Utils::Icon MODE_DESIGN_FLAT;
 CORE_EXPORT extern const Utils::Icon MODE_DESIGN_FLAT_ACTIVE;

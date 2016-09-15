@@ -1,0 +1,6 @@
+<RCC>
+	<qresource prefix="/taekwondo">
+	<file>images/taekwondo.png</file>
+	<file>images/taekwondo@2x.png</file>
+	</qresource>
+</RCC>

@@ -16,7 +16,7 @@ using namespace ExtensionSystem;
 class UpdaterPlugin : public ExtensionSystem::IPlugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "cloud.athletic.app.plugin" FILE "Updater.json")
+    Q_PLUGIN_METADATA(IID "cloud.athletic.app.plugin" FILE "updater.json")
 
 public:
     UpdaterPlugin();

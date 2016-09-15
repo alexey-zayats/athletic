@@ -73,10 +73,6 @@ const Icon BOUNDING_RECT({{QLatin1String(":/core/images/boundingrect.png"), Them
 const Icon EYE_OPEN_TOOLBAR({{QLatin1String(":/core/images/eye_open.png"), Theme::IconsBaseColor}});
 const Icon EYE_CLOSED_TOOLBAR({{QLatin1String(":/core/images/eye_closed.png"), Theme::IconsBaseColor}});
 
-const Icon MODE_COMPETITION_CLASSIC(QLatin1String(":/actionbar/images/mode_competition.png"));
-const Icon MODE_COMPETITION_FLAT({{QLatin1String(":/actionbar/images/mode_competition_mask.png"), Theme::IconsBaseColor}});
-const Icon MODE_COMPETITION_FLAT_ACTIVE({{QLatin1String(":/actionbar/images/mode_competition_mask.png"), Theme::IconsModeCompetitionActiveColor}});
-
 const Icon LOGO_32(QLatin1String(":/core/images/logo/icon_32x32.png"));
 const Icon LOGO_64(QLatin1String(":/core/images/logo/icon_64x64.png"));
 const Icon LOGO_128(QLatin1String(":/core/images/logo/icon_128x128.png"));

@@ -1,0 +1,8 @@
+<RCC>
+	<qresource prefix="/statistics">
+	<file>images/mode_statistics.png</file>
+	<file>images/mode_statistics@2x.png</file>
+	<file>images/mode_statistics_mask.png</file>
+	<file>images/mode_statistics_mask@2x.png</file>
+	</qresource>
+</RCC>

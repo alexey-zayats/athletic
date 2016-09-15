@@ -1,0 +1,8 @@
+<RCC>
+	<qresource prefix="/match">
+	<file>images/mode_match.png</file>
+	<file>images/mode_match@2x.png</file>
+	<file>images/mode_match_mask.png</file>
+	<file>images/mode_match_mask@2x.png</file>
+	</qresource>
+</RCC>

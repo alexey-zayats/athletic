@@ -46,7 +46,6 @@ private slots:
 private:
     void parseArguments(const QStringList & arguments);
     MainWindow *m_mainWindow;
-    EditMode *m_editMode;
 };
 
 } // namespace Internal

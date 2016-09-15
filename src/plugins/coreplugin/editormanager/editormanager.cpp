@@ -219,7 +219,7 @@ void EditorManagerPrivate::init()
 
     const Context editManagerContext(Constants::C_EDITORMANAGER);
     // combined context for edit & design modes
-    const Context editDesignContext(Constants::C_EDITORMANAGER, Constants::C_COMPETITION_MODE);
+    const Context editDesignContext(Constants::C_EDITORMANAGER/*, Constants::C_COMPETITION_MODE*/);
 
     ActionContainer *mfile = ActionManager::actionContainer(Constants::M_FILE);
 
@@ -771,14 +771,14 @@ void EditorManagerPrivate::doEscapeKeyFocusMoveMagic()
 
     if (!editorViewActive && !editorViewVisible) {
         // assumption is that editorView is in main window then
-        ModeManager::activateMode(Id(Constants::MODE_COMPETITION));
+//        ModeManager::activateMode(Id(Constants::MODE_COMPETITION));
         setFocusToEditorViewAndUnmaximizePanes(editorView);
         return;
     }
 
     if (editorView->window() == ICore::mainWindow()) {
         // we are in a editor view and there's nothing to hide, switch to edit
-        ModeManager::activateMode(Id(Constants::MODE_COMPETITION));
+//        ModeManager::activateMode(Id(Constants::MODE_COMPETITION));
         // next call works only because editor views in main window are shared between modes
         setFocusToEditorViewAndUnmaximizePanes(editorView);
     }
@@ -1103,9 +1103,9 @@ IEditor *EditorManagerPrivate::activateEditor(EditorView *view, IEditor *editor,
         if (!(flags & EditorManager::DoNotMakeVisible)) {
             int index;
             findEditorArea(view, &index);
-            if (index == 0) // main window --> we might need to switch mode
-                if (!editor->widget()->isVisible())
-                    ModeManager::activateMode(Constants::MODE_MATCH);
+//            if (index == 0) // main window --> we might need to switch mode
+//                if (!editor->widget()->isVisible())
+//                    ModeManager::activateMode(Constants::MODE_MATCH);
             editor->widget()->setFocus();
             ICore::raiseWindow(editor->widget());
         }

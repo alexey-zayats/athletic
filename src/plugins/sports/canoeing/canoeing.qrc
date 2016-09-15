@@ -1,0 +1,6 @@
+<RCC>
+	<qresource prefix="/canoeing">
+	<file>images/canoeing.png</file>
+	<file>images/canoeing@2x.png</file>
+	</qresource>
+</RCC>

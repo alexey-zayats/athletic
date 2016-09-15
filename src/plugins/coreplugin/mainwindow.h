@@ -38,6 +38,7 @@ class VersionDialog;
 class WindowSupport;
 class SystemSettings;
 class ProgressManagerPrivate;
+class SportSelectorWidget;
 
 class MainWindow : public Utils::AppMainWindow
 {
@@ -82,7 +83,6 @@ public slots:
                                     Id settingsId = Id(),
                                     QWidget *parent = 0);
     void aboutAthletic();
-    void showSportsSelector();
 
 protected:
     virtual void closeEvent(QCloseEvent *event);
@@ -149,6 +149,9 @@ private:
 
     QColor m_overrideColor;
     QList<std::function<bool()>> m_preCloseListeners;
+
+    SportSelectorWidget *m_sportSelector;
+    QAction *m_projectSelectorAction;
 };
 
 } // namespace Internal

@@ -8,14 +8,6 @@ namespace Constants {
 
 const char FOUNDED_AT[]          = "2015";
 
-// Modes
-const char MODE_SCHEDULE[]          = "Schedule";
-const char MODE_COMPETITION[]      = "Competition";
-const char MODE_MATCH[]            = "Match";
-const int  P_MODE_SCHEDULE         = 100;
-const int  P_MODE_COMPETITION      = 90;
-const int  P_MODE_MATCH            = 80;
-
 // Menubar
 const char MENU_BAR[]              = "Athletic.MenuBar";
 
@@ -33,9 +25,7 @@ const char M_HELP[]                = "Athletic.Menu.Help";
 
 // Contexts
 const char C_GLOBAL[]              = "Global Context";
-const char C_SCHEDULE_MODE[]    = "Core.ScheduleMode";
-const char C_COMPETITION_MODE[]    = "Core.CompetitionMode";
-const char C_MATCH_MODE[]          = "Core.MatchMode";
+
 const char C_EDITORMANAGER[]       = "Core.EditorManager";
 const char C_NAVIGATION_PANE[]     = "Core.NavigationPane";
 const char C_PROBLEM_PANE[]        = "Core.ProblemPane";

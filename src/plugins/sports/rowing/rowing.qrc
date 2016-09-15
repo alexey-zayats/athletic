@@ -1,0 +1,6 @@
+<RCC>
+	<qresource prefix="/rowing">
+	<file>images/rowing.png</file>
+	<file>images/rowing@2x.png</file>
+	</qresource>
+</RCC>

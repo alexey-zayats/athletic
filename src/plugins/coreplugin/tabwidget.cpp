@@ -388,17 +388,6 @@ void ColorButton::paintEvent(QPaintEvent *event)
         p.drawLine(innerRect.bottomLeft(), innerRect.bottomRight());
     }
 
-
-    QIcon icon = Utils::Icon::modeIcon(Core::Icons::SELECT_SPORTS_CLASSIC,
-                          Core::Icons::SELECT_SPORTS_FLAT,
-                          Core::Icons::SELECT_SPORTS_FLAT_ACTIVE);
-
-
-    const QRect iconRect = QRect(rect()).adjusted(1, 1, -1, -1);
-
-    QPainter p(this);
-    p.setPen(StyleHelper::borderColor());
-    StyleHelper::drawIconWithShadow(icon, iconRect, &p, QIcon::Normal);
 }
 
 //////
