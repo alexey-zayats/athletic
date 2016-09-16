@@ -146,16 +146,17 @@ MainWindow::MainWindow() :
     setCorner(Qt::BottomRightCorner, Qt::BottomDockWidgetArea);
 
     m_modeManager = new ModeManager(this, m_modeStack);
-//    connect(m_modeStack, &TabWidget::topAreaClicked, this, &MainWindow::showSportsSelector);
-
-//            [](Qt::MouseButton, Qt::KeyboardModifiers modifiers) {
-//        qCDebug(corepluginLog) << "TabWidget::topAreaClicked";
-//        if (modifiers & Qt::ShiftModifier) {
-//            QColor color = QColorDialog::getColor(StyleHelper::requestedBaseColor(), ICore::dialogParent());
-//            if (color.isValid())
-//                StyleHelper::setBaseColor(color);
-//        }
-//    });
+    connect(m_modeStack, &TabWidget::topAreaClicked, this,
+            [](Qt::MouseButton, Qt::KeyboardModifiers modifiers)
+    {
+        if (modifiers & Qt::ShiftModifier) {
+            QColor color = QColorDialog::getColor(StyleHelper::requestedBaseColor(), ICore::dialogParent());
+            if (color.isValid())
+                StyleHelper::setBaseColor(color);
+        } else if (modifiers & Qt::ControlModifier) {
+            StyleHelper::setBaseColor(StyleHelper::DEFAULT_BASE_COLOR);
+        }
+    });
 
     registerDefaultContainers();
     registerDefaultActions();
@@ -314,7 +315,7 @@ void MainWindow::extensionsInitialized()
 
     m_sportSelector = new SportSelectorWidget(m_projectSelectorAction, this);
 
-    connect(m_projectSelectorAction, &QAction::triggered, m_sportSelector, &QWidget::show);
+    connect(m_projectSelectorAction, &QAction::triggered, m_sportSelector, &SportSelectorWidget::setVisible);
     ModeManager::addProjectSelector(m_projectSelectorAction);
 
     emit m_coreImpl->coreAboutToOpen();

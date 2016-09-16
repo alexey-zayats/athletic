@@ -9,6 +9,7 @@
 #include <QPixmapCache>
 #include <QPropertyAnimation>
 #include <QDebug>
+#include <QToolTip>
 
 #include <utils/hostosinfo.h>
 #include <utils/stringutils.h>
@@ -56,8 +57,7 @@ bool ToolButton::event(QEvent *e)
         break;
     case QEvent::ToolTip:
     {
-        //                QHelpEvent *he = static_cast<QHelpEvent *>(e);
-        //                ToolTip::show(mapToGlobal(he->pos()), toolTip(), this);
+        QToolTip::showText(static_cast<QHelpEvent*>(e)->globalPos(), toolTip(), this);
         return true;
     }
     default:
@@ -330,12 +330,12 @@ ActionBar::ActionBar(QWidget *parent)
     m_actionsLayout = new QVBoxLayout;
     QVBoxLayout *spacerLayout = new QVBoxLayout;
     spacerLayout->addLayout(m_actionsLayout);
-    int sbh = 8;
+    int sbh = 0;
     spacerLayout->addSpacing(sbh);
     spacerLayout->setMargin(0);
     spacerLayout->setSpacing(0);
     setLayout(spacerLayout);
-    setContentsMargins(0,2,0,0);
+    setContentsMargins(0,0,0,0);
 }
 
 void ActionBar::addProjectSelector(QAction *action)

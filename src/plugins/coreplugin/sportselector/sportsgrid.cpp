@@ -43,8 +43,6 @@ SportsGrid::SportsGrid(QWidget *parent)
 
     // We use a zerotimer to keep the sidebar responsive
     connect(&m_triggerTimer, &QTimer::timeout, this, &SportsGrid::emitCurrentIndex);
-
-    setStyleSheet ( QLatin1String("border: 1px solid blue;") );
 }
 
 SportsGrid::~SportsGrid()

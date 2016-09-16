@@ -295,7 +295,7 @@ void TabBar::paintTab(QPainter *painter, int tabIndex) const
     const int textFlags = Qt::AlignCenter | (drawIcon ? Qt::AlignBottom : Qt::AlignVCenter) | Qt::TextWordWrap;
 
     const float fader = m_tabs[tabIndex]->fader();
-    if (fader > 0 && !HostOsInfo::isMacHost() && !selected && enabled) {
+    if (fader > 0 /*&& !HostOsInfo::isMacHost()*/ && !selected && enabled) {
         painter->save();
         painter->setOpacity(fader);
         if (athleticTheme()->widgetStyle() == Theme::StyleFlat)
@@ -413,7 +413,7 @@ TabWidget::TabWidget(QWidget *parent)
     layout->addWidget(fancyButton);
     selectionLayout->addWidget(bar);
 
-    selectionLayout->addWidget(m_tabBar, 1);
+
     m_selectionWidget->setLayout(selectionLayout);
     m_selectionWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 
@@ -428,6 +428,8 @@ TabWidget::TabWidget(QWidget *parent)
     m_cornerWidgetContainer->setLayout(cornerWidgetLayout);
 
     selectionLayout->addWidget(m_cornerWidgetContainer, 0);
+    selectionLayout->addWidget(m_tabBar, 1);
+
 
     m_modesStack = new QStackedLayout;
     m_statusBar = new QStatusBar;
