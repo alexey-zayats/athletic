@@ -75,7 +75,7 @@ SportSelectorWidget::SportSelectorWidget(QAction *sportSelectorAction, QWidget *
                                       : Icons::SELECT_SPORTS_CLASSIC.icon());
 
     m_sportsAction->setProperty("titledAction", true);
-    m_sportsAction->setProperty("heading", tr("Filter"));
+//    m_sportsAction->setProperty("heading", tr("Filter"));
     m_sportsAction->setProperty("subtitle", tr("All"));
 
 
@@ -96,10 +96,10 @@ SportSelectorWidget::SportSelectorWidget(QAction *sportSelectorAction, QWidget *
     m_sportsGrid->insertSport (0, m_sportsAction->icon (), m_sportsAction->property("subtitle").toString ());
     m_sportsGrid->setSportEnabled (0, true);
 
-    for(int i = 1; i < sportSize; i++) {
+    for(int i = 0; i < sportSize; i++) {
         ISport *s = list.at(i);
-        m_sportsGrid->insertSport (i, s->icon (), s->title ());
-        m_sportsGrid->setSportEnabled (i, true);
+        m_sportsGrid->insertSport (i+1, s->icon (), s->title ());
+        m_sportsGrid->setSportEnabled (i+1, true);
     }
 
     m_sportsGrid->setCurrentIndex (0);

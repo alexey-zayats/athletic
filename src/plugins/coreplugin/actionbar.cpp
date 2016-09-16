@@ -239,6 +239,17 @@ void ToolButton::paintEvent(QPaintEvent *event)
         iconRect.moveCenter(rect().center());
         StyleHelper::drawIconWithShadow(icon(), iconRect, &painter, iconMode);
     }
+
+    const QRectF borderRect = QRectF(rect()).adjusted(0.5, 0.5, -0.5, -0.5);
+    if (athleticTheme()->widgetStyle () == Theme::StyleFlat) {
+        painter.setPen(athleticTheme()->color(Theme::ToolBarSeparatorColor));
+        painter.drawLine(borderRect.bottomLeft(), borderRect.bottomRight());
+    } else {
+        painter.setPen(StyleHelper::sidebarShadow());
+        painter.drawLine(borderRect.bottomLeft(), borderRect.bottomRight());
+        painter.setPen(StyleHelper::sidebarHighlight());
+        painter.drawLine(borderRect.bottomLeft() + QPointF(1, 1), borderRect.bottomRight() + QPointF(0, 1));
+    }
 }
 
 void ActionBar::paintEvent(QPaintEvent *event)
