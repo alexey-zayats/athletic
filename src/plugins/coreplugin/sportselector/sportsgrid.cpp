@@ -162,11 +162,7 @@ void SportsGrid::setGridSize(int size) {
     int x = sh.width() * m_colls;
     int y = sh.height() * ((m_sportSize % m_colls) == 0 ? (m_sportSize / m_colls) : (qFloor(m_sportSize / m_colls)+1));
 
-    qDebug() << sh;
-    qDebug() << m_sportSize;
-    qDebug() << x << y;
-
-    parentWidget ()->resize (QSize(x,y+10));
+    parentWidget ()->resize (QSize(x,y));
 }
 
 QRect SportsGrid::sportRect(int index) const

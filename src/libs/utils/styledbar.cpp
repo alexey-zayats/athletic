@@ -11,6 +11,8 @@ StyledBar::StyledBar(QWidget *parent)
     setProperty("panelwidget", true);
     setProperty("panelwidget_singlerow", true);
     setProperty("lightColored", false);
+
+    qDebug() << rect();
 }
 
 void StyledBar::setSingleRow(bool singleRow)

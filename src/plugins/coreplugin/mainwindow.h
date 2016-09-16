@@ -73,6 +73,7 @@ public:
     void addPreCloseListener(const std::function<bool()> &listener);
     void setSuppressNavigationWidget(bool suppress);
 
+    TabWidget *tabWidget() const { return m_modeStack; }
 
 
 public slots:

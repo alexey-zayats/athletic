@@ -5,6 +5,7 @@
 #include "olympicsport.h"
 
 #include "../isport.h"
+#include "../mainwindow.h"
 #include "../tabwidget.h"
 
 #include <utils/styledbar.h>
@@ -35,6 +36,9 @@
 #include <QStackedLayout>
 #include <QToolTip>
 #include <QApplication>
+
+#include <QToolBar>
+#include <QRect>
 
 using namespace Utils;
 using namespace ExtensionSystem;
@@ -71,7 +75,8 @@ SportSelectorWidget::SportSelectorWidget(QAction *sportSelectorAction, QWidget *
                                       : Icons::SELECT_SPORTS_CLASSIC.icon());
 
     m_sportsAction->setProperty("titledAction", true);
-    m_sportsAction->setProperty("heading", tr("Sports"));
+    m_sportsAction->setProperty("heading", tr("Filter"));
+    m_sportsAction->setProperty("subtitle", tr("All"));
 
 
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -79,16 +84,19 @@ SportSelectorWidget::SportSelectorWidget(QAction *sportSelectorAction, QWidget *
     QList<Core::ISport*> list = PluginManager::getObjects<Core::ISport>();
     qSort(list.begin(), list.end(), lessThanBySporttitle);
 
-     m_olympicSport = new OlympicSport();
-     m_sportsAction->setProperty("subtitle", m_olympicSport->title ());
-    list.prepend (m_olympicSport);
+//     m_olympicSport = new OlympicSport();
+//     m_sportsAction->setProperty("subtitle", m_olympicSport->title ());
+//    list.prepend (m_olympicSport);
 
     int sportSize = list.size();
 
     m_sportsGrid = new SportsGrid(this);
-    m_sportsGrid->setGridSize(sportSize);
+    m_sportsGrid->setGridSize(sportSize+1);
 
-    for(int i = 0; i < sportSize; i++) {
+    m_sportsGrid->insertSport (0, m_sportsAction->icon (), m_sportsAction->property("subtitle").toString ());
+    m_sportsGrid->setSportEnabled (0, true);
+
+    for(int i = 1; i < sportSize; i++) {
         ISport *s = list.at(i);
         m_sportsGrid->insertSport (i, s->icon (), s->title ());
         m_sportsGrid->setSportEnabled (i, true);
@@ -100,7 +108,11 @@ SportSelectorWidget::SportSelectorWidget(QAction *sportSelectorAction, QWidget *
     layout->addWidget (m_sportsGrid);
 
     layout->setMargin (0);
+    layout->addSpacing(0);
+    layout->setMargin(0);
+    layout->setSpacing(0);
     setLayout (layout);
+    setContentsMargins(0,0,0,0);
 }
 
 SportSelectorWidget::~SportSelectorWidget()
@@ -126,9 +138,18 @@ void SportSelectorWidget::doLayout(bool keepSize)
 //    QPoint moveTo = m_sportsAction->mapToGlobal(QPoint(0,0));
 //    moveTo -= QPoint(0, height());
 
+    static QStatusBar *statusBar = Core::ICore::statusBar();
 
-    QPoint p = QApplication::activeWindow()->pos();
-    move( p.x () + 71, p.y () + 46 );
+    MainWindow *mw = qobject_cast<MainWindow*>( Core::ICore::mainWindow () );
+    QWidget *w = qobject_cast<QWidget*>(mw->tabWidget());
+
+    QPoint tabPoint = w->mapToGlobal(QPoint(0,0));
+    QPoint statusPoint = statusBar->mapToGlobal(QPoint(0,0));
+//    moveTo -= QPoint(0, height());
+
+
+//    QPoint p = QApplication::activeWindow()->pos();
+    move( statusPoint.x (), tabPoint.y () + statusBar->rect ().height ());
 }
 
 void SportSelectorWidget::setVisible(bool visible)

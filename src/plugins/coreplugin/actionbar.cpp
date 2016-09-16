@@ -330,12 +330,12 @@ ActionBar::ActionBar(QWidget *parent)
     m_actionsLayout = new QVBoxLayout;
     QVBoxLayout *spacerLayout = new QVBoxLayout;
     spacerLayout->addLayout(m_actionsLayout);
-    int sbh = 0;
+    int sbh = 2;
     spacerLayout->addSpacing(sbh);
     spacerLayout->setMargin(0);
     spacerLayout->setSpacing(0);
     setLayout(spacerLayout);
-    setContentsMargins(0,0,0,0);
+    setContentsMargins(0,2,0,0);
 }
 
 void ActionBar::addProjectSelector(QAction *action)
