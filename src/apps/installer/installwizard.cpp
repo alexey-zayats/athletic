@@ -38,10 +38,13 @@ InstallWizard::InstallWizard(QWidget *parent)
     connect(this, SIGNAL(currentIdChanged(int)), this, SLOT(currentIdChanged(int)));
 }
 
-void InstallWizard::customButtonClicked(int which) {}
+void InstallWizard::customButtonClicked(int which) {
+    Q_UNUSED(which)
+}
 
 void InstallWizard::currentIdChanged(int id)
 {
+    Q_UNUSED(id)
 //    if ( id == Page_Conclusion ) {
         SystemId sysId;
         qCDebug(installerLog) << "System(name): " << sysId.getMachineName();

@@ -99,8 +99,7 @@ SOURCES += \
 	sportselector/sportselectorwidget.cpp \
 	isport.cpp \
     sportselector/sportbutton.cpp \
-    sportselector/sportsgrid.cpp \
-    sportselector/olympicsport.cpp
+    sportselector/sportsgrid.cpp
 
 HEADERS += \
 	actionbar.h \
@@ -197,8 +196,7 @@ HEADERS += \
 	sportselector/sportselectorwidget.h \
 	isport.h \
     sportselector/sportbutton.h \
-    sportselector/sportsgrid.h \
-    sportselector/olympicsport.h
+    sportselector/sportsgrid.h
 
 FORMS = \
 	systemsettings.ui \
