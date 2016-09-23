@@ -71,8 +71,8 @@ SportSelectorWidget::SportSelectorWidget(QAction *sportSelectorAction, QWidget *
     setWindowFlags(Qt::Popup);
 
     m_sportsAction->setIcon(athleticTheme()->flag(Theme::FlatSideBarIcons)
-                                      ? Icons::SELECT_SPORTS_FLAT.icon()
-                                      : Icons::SELECT_SPORTS_CLASSIC.icon());
+                                      ? Icons::OLYMPIC_FLAT.icon()
+                                      : Icons::OLYMPIC_CLASSIC.icon());
 
     m_sportsAction->setProperty("titledAction", true);
 //    m_sportsAction->setProperty("heading", tr("Filter"));

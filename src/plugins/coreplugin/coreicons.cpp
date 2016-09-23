@@ -78,10 +78,9 @@ const Icon LOGO_64(QLatin1String(":/core/images/logo/icon_64x64.png"));
 const Icon LOGO_128(QLatin1String(":/core/images/logo/icon_128x128.png"));
 const Icon LOGO_256(QLatin1String(":/core/images/logo/icon_256x256.png"));
 
-const Icon SELECT_SPORTS_CLASSIC(QLatin1String(":/core/images/select_sports.png"));
-const Icon SELECT_SPORTS_FLAT({{QLatin1String(":/core/images/select_sports_mask.png"), Theme::IconsBaseColor}});
-const Icon SELECT_SPORTS_FLAT_ACTIVE({{QLatin1String(":/core/images/select_sports_mask.png"),Theme::IconsModeMatchActiveColor}});
-
+const Icon OLYMPIC_CLASSIC(QLatin1String(":/core/images/olympic.png"));
+const Icon OLYMPIC_FLAT({{QLatin1String(":/core/images/olympic_mask.png"), Theme::IconsBaseColor}});
+const Icon OLYMPIC_FLAT_ACTIVE({{QLatin1String(":/core/images/olympic_mask.png"),Theme::IconsModeMatchActiveColor}});
 
 } // namespace Icons
 } // namespace Core

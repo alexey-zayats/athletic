@@ -84,9 +84,10 @@ CORE_EXPORT extern const Utils::Icon LOGO_64;
 CORE_EXPORT extern const Utils::Icon LOGO_128;
 CORE_EXPORT extern const Utils::Icon LOGO_256;
 
-CORE_EXPORT extern const Utils::Icon SELECT_SPORTS_CLASSIC;
-CORE_EXPORT extern const Utils::Icon SELECT_SPORTS_FLAT;
-CORE_EXPORT extern const Utils::Icon SELECT_SPORTS_FLAT_ACTIVE;
+CORE_EXPORT extern const Utils::Icon OLYMPIC_CLASSIC;
+CORE_EXPORT extern const Utils::Icon OLYMPIC_FLAT;
+CORE_EXPORT extern const Utils::Icon OLYMPIC_FLAT_ACTIVE;
+
 
 } // namespace Icons
 } // namespace Core

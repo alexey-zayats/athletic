@@ -34,8 +34,8 @@ Core::Id OlympicSport::id() const
 QIcon OlympicSport::icon() const
 {
     return athleticTheme()->flag(Theme::FlatSideBarIcons)
-            ? Icons::SELECT_SPORTS_FLAT.icon()
-            : Icons::SELECT_SPORTS_CLASSIC.icon();
+            ? Icons::OLYMPIC_FLAT.icon()
+            : Icons::OLYMPIC_CLASSIC.icon();
 }
 
 }
