@@ -1,6 +1,0 @@
-<RCC>
-	<qresource prefix="/volleyball">
-	<file>images/volleyball.png</file>
-	<file>images/volleyball@2x.png</file>
-	</qresource>
-</RCC>

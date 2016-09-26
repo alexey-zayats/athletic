@@ -6,8 +6,10 @@
 #include <coreplugin/icore.h>
 #include <coreplugin/coreicons.h>
 #include <coreplugin/modemanager.h>
+#include <coreplugin/sidebar.h>
+#include <coreplugin/minisplitter.h>
 
-#include <coreplugin/ifightboard.h>
+#include <coreplugin/imatchboard.h>
 
 #include <extensionsystem/pluginmanager.h>
 
@@ -50,6 +52,7 @@ MatchMode::MatchMode()
 
     m_modeWidget = new QWidget;
     m_modeWidget->setObjectName(QLatin1String("MatchModeWidget"));
+
     QVBoxLayout *layout = new QVBoxLayout(m_modeWidget);
     layout->setMargin(0);
     layout->setSpacing(0);
@@ -80,7 +83,7 @@ void MatchMode::initPlugins()
     setActivePlugin(settings->value(QLatin1String(currentPageSettingsKeyC)).toInt());
 
 
-    QList<IFightBoard *> availablePages = PluginManager::getObjects<IFightBoard>();
+    QList<IMatchBoard *> availablePages = PluginManager::getObjects<IMatchBoard>();
     addPages(availablePages);
 
     // make sure later added pages are made available too:
@@ -90,16 +93,16 @@ void MatchMode::initPlugins()
 
 void MatchMode::pluginAdded(QObject *obj)
 {
-    IFightBoard *page = qobject_cast<IFightBoard*>(obj);
+    IMatchBoard *page = qobject_cast<IMatchBoard*>(obj);
     if (!page)
         return;
-    addPages(QList<IFightBoard *>() << page);
+    addPages(QList<IMatchBoard *>() << page);
 }
 
-void MatchMode::addPages(const QList<IFightBoard *> &pages)
+void MatchMode::addPages(const QList<IMatchBoard *> &pages)
 {
-    QList<IFightBoard *> addedPages = pages;
-    Utils::sort(addedPages, [](const IFightBoard *l, const IFightBoard *r) {
+    QList<IMatchBoard *> addedPages = pages;
+    Utils::sort(addedPages, [](const IMatchBoard *l, const IMatchBoard *r) {
         return l->priority() < r->priority();
     });
 
@@ -107,7 +110,7 @@ void MatchMode::addPages(const QList<IFightBoard *> &pages)
     auto addIt = addedPages.begin();
     auto currentIt = m_pluginList.begin();
     while (addIt != addedPages.end()) {
-        IFightBoard *page = *addIt;
+        IMatchBoard *page = *addIt;
         while (currentIt != m_pluginList.end() && (*currentIt)->priority() <= page->priority())
             ++currentIt;
         // currentIt is now either end() or a page with higher value

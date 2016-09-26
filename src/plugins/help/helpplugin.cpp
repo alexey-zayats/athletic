@@ -17,7 +17,6 @@
 #include "qtwebkithelpviewer.h"
 #include "remotehelpfilter.h"
 #include "searchwidget.h"
-//#include "searchtaskhandler.h"
 #include "textbrowserhelpviewer.h"
 
 #ifdef MAC_NATIVE_HELPVIEWER
@@ -252,9 +251,9 @@ ExtensionSystem::IPlugin::ShutdownFlag HelpPlugin::aboutToShutdown()
 
 void HelpPlugin::resetFilter()
 {
-    const QString &filterInternal = QString::fromLatin1("Qt Creator %1.%2.%3")
+    const QString &filterInternal = QString::fromLatin1("Athletic %1.%2.%3")
         .arg(APP_VERSION_MAJOR).arg(APP_VERSION_MINOR).arg(APP_VERSION_RELEASE);
-    QRegExp filterRegExp(QLatin1String("Qt Creator \\d*\\.\\d*\\.\\d*"));
+    QRegExp filterRegExp(QLatin1String("Athletic \\d*\\.\\d*\\.\\d*"));
 
     QHelpEngineCore *engine = &LocalHelpManager::helpEngine();
     const QStringList &filters = engine->customFilters();
@@ -623,12 +622,12 @@ void HelpPlugin::handleHelpRequest(const QUrl &url, HelpManager::HelpViewerLocat
 
 void HelpPlugin::slotOpenSupportPage()
 {
-    showLinkInHelpMode(QUrl(QLatin1String("qthelp://org.qt-project.qtcreator/doc/technical-support.html")));
+    showLinkInHelpMode(QUrl(QLatin1String("qthelp://athletic.cloud/doc/support.html")));
 }
 
 void HelpPlugin::slotReportBug()
 {
-    QDesktopServices::openUrl(QUrl(QLatin1String("https://bugreports.qt.io")));
+    QDesktopServices::openUrl(QUrl(QLatin1String("https://report.athletic.cloud")));
 }
 
 void HelpPlugin::doSetupIfNeeded()

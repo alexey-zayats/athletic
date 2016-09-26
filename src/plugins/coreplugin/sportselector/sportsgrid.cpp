@@ -64,7 +64,7 @@ QSize SportsGrid::sportSizeHint(bool minimum) const
         if (width > maxLabelwidth)
             maxLabelwidth = width;
     }
-    int iconHeight = minimum ? 0 : 38;
+    int iconHeight = minimum ? 0 : 48;
     return QSize(qMax(width, maxLabelwidth + 4), iconHeight + spacing + fm.height());
 }
 
@@ -294,15 +294,24 @@ void SportsGrid::paintSport(QPainter *painter, int index) const
     if (!enabled && athleticTheme()->widgetStyle() == Theme::StyleDefault)
         painter->setOpacity(0.7);
 
-    if (drawIcon) {
-        int textHeight = painter->fontMetrics().boundingRect(QRect(0, 0, width(), height()), Qt::TextWordWrap, sportText).height();
-        sportIconRect.adjust(0, 4, 0, -textHeight);
+    if (drawIcon)
+    {
+        double dY = painter->fontMetrics().boundingRect(QRect(0, 0, width(), height()), Qt::TextWordWrap, sportText).height();
+        double height = sportIconRect.height () - dY;
+        double k = height / sportIconRect.height ();
+        int width = k * sportIconRect.width ();
+        int dX = sportIconRect.width () - width;
+
+        sportIconRect.setWidth ( width );
+        sportIconRect.setHeight ( height );
+
+        sportIconRect.adjust ( (dX / 2), (dY / 3), 0, 0 );
         const QIcon::Mode iconMode = enabled ? (selected ? QIcon::Active : QIcon::Normal)
                                              : QIcon::Disabled;
         StyleHelper::drawIconWithShadow(sportIcon(index), sportIconRect, painter, iconMode);
     }
 
-    painter->setOpacity(1.0); //FIXME: was 0.7 before?
+    // painter->setOpacity(1.0); //FIXME: was 0.7 before?
     if (enabled) {
         painter->setPen(selected
                   ? athleticTheme()->color(Theme::TabWidgetEnabledSelectedTextColor)

@@ -1,6 +1,0 @@
-<RCC>
-	<qresource prefix="/handball">
-	<file>images/handball.png</file>
-	<file>images/handball@2x.png</file>
-	</qresource>
-</RCC>

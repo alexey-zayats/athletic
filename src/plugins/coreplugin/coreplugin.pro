@@ -92,14 +92,15 @@ SOURCES += \
 	messageoutputwindow.cpp \
 	outputwindow.cpp \
 	iwelcomepage.cpp \
-	ifightboard.cpp \
 	locator/ilocatorfilter.cpp \
 	sidebar.cpp \
 	sidebarwidget.cpp \
 	sportselector/sportselectorwidget.cpp \
 	isport.cpp \
     sportselector/sportbutton.cpp \
-    sportselector/sportsgrid.cpp
+    sportselector/sportsgrid.cpp \
+    imatchboard.cpp \
+    imatchcontrol.cpp
 
 HEADERS += \
 	actionbar.h \
@@ -189,14 +190,15 @@ HEADERS += \
 	messageoutputwindow.h \
 	outputwindow.h \
 	iwelcomepage.h \
-	ifightboard.h \
 	locator/ilocatorfilter.h \
 	sidebar.h \
 	sidebarwidget.h \
 	sportselector/sportselectorwidget.h \
 	isport.h \
     sportselector/sportbutton.h \
-    sportselector/sportsgrid.h
+    sportselector/sportsgrid.h \
+    imatchboard.h \
+    imatchcontrol.h
 
 FORMS = \
 	systemsettings.ui \

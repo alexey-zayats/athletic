@@ -427,9 +427,8 @@ TabWidget::TabWidget(QWidget *parent)
     cornerWidgetLayout->addStretch();
     m_cornerWidgetContainer->setLayout(cornerWidgetLayout);
 
-    selectionLayout->addWidget(m_cornerWidgetContainer, 0);
     selectionLayout->addWidget(m_tabBar, 1);
-
+    selectionLayout->addWidget(m_cornerWidgetContainer, 0);
 
     m_modesStack = new QStackedLayout;
     m_statusBar = new QStatusBar;

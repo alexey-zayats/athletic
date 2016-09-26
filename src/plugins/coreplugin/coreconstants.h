@@ -31,28 +31,11 @@ const char C_NAVIGATION_PANE[]     = "Core.NavigationPane";
 const char C_PROBLEM_PANE[]        = "Core.ProblemPane";
 const char C_GENERAL_OUTPUT_PANE[] = "Core.GeneralOutputPane";
 
-// Default editor kind
-//const char K_DEFAULT_TEXT_EDITOR_DISPLAY_NAME[] = QT_TRANSLATE_NOOP("OpenWith::Editors", "Plain Text Editor");
-//const char K_DEFAULT_TEXT_EDITOR_ID[] = "Core.PlainTextEditor";
-//const char K_DEFAULT_BINARY_EDITOR_ID[] = "Core.BinaryEditor";
-
-//actions
-//const char UNDO[]                  = "Athletic.Undo";
-//const char REDO[]                  = "Athletic.Redo";
-//const char COPY[]                  = "Athletic.Copy";
-//const char PASTE[]                 = "Athletic.Paste";
-//const char CUT[]                   = "Athletic.Cut";
-//const char SELECTALL[]             = "Athletic.SelectAll";
-
 const char GOTO[]                  = "Athletic.Goto";
 
 const char NEW[]                   = "Athletic.New";
 const char OPEN[]                  = "Athletic.Open";
-//const char OPEN_WITH[]             = "Athletic.OpenWith";
-//const char REVERTTOSAVED[]         = "Athletic.RevertToSaved";
 const char SAVE[]                  = "Athletic.Save";
-//const char SAVEAS[]                = "Athletic.SaveAs";
-//const char SAVEALL[]               = "Athletic.SaveAll";
 const char PRINT[]                 = "Athletic.Print";
 const char EXIT[]                  = "Athletic.Exit";
 

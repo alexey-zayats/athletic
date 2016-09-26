@@ -1,5 +1,5 @@
-#ifndef IFIGHTBOARD_H
-#define IFIGHTBOARD_H
+#ifndef IMATCHBOARD_H
+#define IMATCHBOARD_H
 
 #include "core_global.h"
 
@@ -10,7 +10,7 @@
 
 namespace Core {
 
-class CORE_EXPORT IFightBoard : public QObject
+class CORE_EXPORT IMatchBoard : public QObject
 {
     Q_OBJECT
 
@@ -19,8 +19,8 @@ class CORE_EXPORT IFightBoard : public QObject
     Q_PROPERTY(Core::Id id READ id CONSTANT)
 
 public:
-    IFightBoard();
-    virtual ~IFightBoard();
+    IMatchBoard();
+    virtual ~IMatchBoard();
 
     virtual QString title() const = 0;
     virtual int priority() const { return 0; }
@@ -29,4 +29,4 @@ public:
 
 } // Core
 
-#endif // IFIGHTBOARD_H
+#endif // IMATCHBOARD_H

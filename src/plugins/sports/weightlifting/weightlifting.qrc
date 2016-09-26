@@ -1,6 +1,0 @@
-<RCC>
-	<qresource prefix="/weightlifting">
-	<file>images/weightlifting.png</file>
-	<file>images/weightlifting@2x.png</file>
-	</qresource>
-</RCC>

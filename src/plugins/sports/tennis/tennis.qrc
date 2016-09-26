@@ -1,6 +1,0 @@
-<RCC>
-	<qresource prefix="/tennis">
-	<file>images/tennis.png</file>
-	<file>images/tennis@2x.png</file>
-	</qresource>
-</RCC>

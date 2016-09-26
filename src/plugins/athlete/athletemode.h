@@ -9,7 +9,7 @@
 using namespace Core;
 
 namespace Core {
-class IFightBoard;
+class IMatchBoard;
 }
 
 namespace Athlete {
@@ -43,12 +43,12 @@ signals:
 
 private:
     void schedulePluginAdded(QObject*);
-    void addPages(const QList<IFightBoard *> &pages);
+    void addPages(const QList<IMatchBoard *> &pages);
 
     QWidget *m_matchPage;
     QWidget *m_modeWidget;
-    QMap<Id, IFightBoard *> m_idPageMap;
-    QList<IFightBoard *> m_pluginList;
+    QMap<Id, IMatchBoard *> m_idPageMap;
+    QList<IMatchBoard *> m_pluginList;
     int m_activePlugin;
 };
 

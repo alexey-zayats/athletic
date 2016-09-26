@@ -1,6 +1,0 @@
-<RCC>
-	<qresource prefix="/curling">
-	<file>images/curling.png</file>
-	<file>images/curling@2x.png</file>
-	</qresource>
-</RCC>

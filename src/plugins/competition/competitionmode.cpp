@@ -42,8 +42,10 @@ CompetitionMode::CompetitionMode() :
 
     m_rightSplitWidgetLayout->setSpacing(0);
     m_rightSplitWidgetLayout->setMargin(0);
+
     QWidget *rightSplitWidget = new QWidget;
     rightSplitWidget->setLayout(m_rightSplitWidgetLayout);
+
     auto editorPlaceHolder = new EditorManagerPlaceHolder(this);
     m_rightSplitWidgetLayout->insertWidget(0, editorPlaceHolder);
 
@@ -56,6 +58,7 @@ CompetitionMode::CompetitionMode() :
     MiniSplitter *splitter = new MiniSplitter;
     splitter->setOrientation(Qt::Vertical);
     splitter->insertWidget(0, rightPaneSplitter);
+
     QWidget *outputPane = new OutputPanePlaceHolder(this, splitter);
     outputPane->setObjectName(QLatin1String("EditModeOutputPanePlaceHolder"));
     splitter->insertWidget(1, outputPane);

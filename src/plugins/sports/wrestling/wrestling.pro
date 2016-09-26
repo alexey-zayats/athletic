@@ -7,13 +7,17 @@ include(../../../athleticplugin.pri)
 SOURCES += \
 	wrestling.cpp \
 	wrestlingsport.cpp \
-	wrestlingicons.cpp
+	wrestlingicons.cpp \
+    matchboard.cpp \
+    matchcontrol.cpp
 
 HEADERS += \
 	wrestling.h \
 	wrestling_global.h \
 	wrestlingsport.h \
-	wrestlingicons.h
+	wrestlingicons.h \
+    matchboard.h \
+    matchcontrol.h
 
 RESOURCES += \
 	wrestling.qrc

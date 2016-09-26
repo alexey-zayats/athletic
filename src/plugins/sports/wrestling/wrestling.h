@@ -9,6 +9,9 @@
 
 namespace Wrestling {
 
+class MatchBoard;
+class MatchControl;
+
 namespace Internal {
 
 class WrestlingSport;
@@ -33,6 +36,8 @@ private slots:
 
 private:
     WrestlingSport *m_wrestlingSport;
+    MatchBoard *m_matchBoard;
+    MatchControl *m_matchControl;
 };
 
 } // namespace Internal

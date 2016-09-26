@@ -125,12 +125,8 @@ void SportSelectorWidget::doLayout(bool keepSize)
 
     static QStatusBar *statusBar = Core::ICore::statusBar();
 
-    MainWindow *mw = qobject_cast<MainWindow*>( Core::ICore::mainWindow () );
-    QWidget *w = qobject_cast<QWidget*>(mw->tabWidget());
-
-    QPoint tabPoint = w->mapToGlobal(QPoint(0,0));
     QPoint statusPoint = statusBar->mapToGlobal(QPoint(0,0));
-    move( statusPoint.x (), tabPoint.y () + statusBar->rect ().height ());
+    move( statusPoint.x (), statusPoint.y() - /* tabPoint.y () + statusBar->rect ().*/ height ());
 }
 
 void SportSelectorWidget::setVisible(bool visible)
