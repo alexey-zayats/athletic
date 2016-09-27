@@ -449,7 +449,7 @@ void MainWindow::registerDefaultActions()
     // handling of shortcut overrides in menus, item views, combos....
 
     // New File Action
-    QIcon icon = QIcon::fromTheme(QLatin1String("document-new"), Icons::NEWFILE.icon());
+    QIcon icon = Icons::NEWFILE.icon();
     m_newAction = new QAction(icon, tr("&New File or Project..."), this);
     Command *cmd = ActionManager::registerAction(m_newAction, Constants::NEW);
     cmd->setDefaultKeySequence(QKeySequence::New);
@@ -462,7 +462,7 @@ void MainWindow::registerDefaultActions()
     });
 
     // Open Action
-    icon = QIcon::fromTheme(QLatin1String("document-open"), Icons::OPENFILE.icon());
+    icon = Icons::OPENFILE.icon();
     m_openAction = new QAction(icon, tr("&Open File or Project..."), this);
     cmd = ActionManager::registerAction(m_openAction, Constants::OPEN);
     cmd->setDefaultKeySequence(QKeySequence::Open);

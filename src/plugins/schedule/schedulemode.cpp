@@ -23,6 +23,11 @@
 #include <QMessageBox>
 
 #include <QDir>
+#include <QToolButton>
+#include <QHBoxLayout>
+#include <QAction>
+#include <QSpacerItem>
+#include <QButtonGroup>
 
 using namespace Schedule;
 using namespace Schedule::Internal;
@@ -36,7 +41,8 @@ using namespace ExtensionSystem;
 static const char currentPageSettingsKeyC[] = "ScheduleTab";
 
 ScheduleMode::ScheduleMode()
-    : m_activePlugin(0)
+    : m_generalButton(0),
+      m_byDayButton(0)
 {
     setDisplayName(tr("Schedule"));
 
@@ -51,6 +57,7 @@ ScheduleMode::ScheduleMode()
 
     m_modeWidget = new QWidget;
     m_modeWidget->setObjectName(QLatin1String("SchedulePageModeWidget"));
+
     QVBoxLayout *layout = new QVBoxLayout(m_modeWidget);
     layout->setMargin(0);
     layout->setSpacing(0);
@@ -59,7 +66,28 @@ ScheduleMode::ScheduleMode()
     m_schedulePage->setObjectName(QLatin1String("Schedule"));
 
     StyledBar *styledBar = new StyledBar(m_modeWidget);
-    styledBar->setObjectName(QLatin1String("SchedulePageStyledBar"));
+
+    QHBoxLayout *topBarLayout = new QHBoxLayout;
+    topBarLayout->setMargin (0);
+    topBarLayout->setSpacing (0);
+    styledBar->setLayout (topBarLayout);
+
+    QSpacerItem *spacerItem = new QSpacerItem(1,1, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    m_generalButton = new QToolButton(styledBar);
+    m_generalAction = new QAction(Icons::SCHEDULE_GENERAL.icon (), tr("General"), styledBar);
+    m_generalButton->setText ( m_generalAction->text () );
+    m_generalButton->setDefaultAction (m_generalAction);
+
+    m_byDayButton = new QToolButton(styledBar);
+    m_dayAction = new QAction(Icons::SCHEDULE_BYDAY.icon (), tr("By day"), styledBar);
+    m_byDayButton->setText ( m_dayAction->text () );
+    m_byDayButton->setDefaultAction (m_dayAction);
+
+    topBarLayout->addWidget (m_generalButton);
+    topBarLayout->addWidget (m_byDayButton);
+    topBarLayout->addItem (spacerItem);
+
     layout->addWidget(styledBar);
 
     m_modeWidget->setLayout(layout);
@@ -70,57 +98,7 @@ ScheduleMode::ScheduleMode()
 
 ScheduleMode::~ScheduleMode()
 {
-    QSettings *settings = ICore::settings();
-    settings->setValue(QLatin1String(currentPageSettingsKeyC), activePlugin());
     delete m_modeWidget;
 }
 
-void ScheduleMode::initPlugins()
-{
-    QSettings *settings = ICore::settings();
-    setActivePlugin(settings->value(QLatin1String(currentPageSettingsKeyC)).toInt());
 
-//    facilitateQml(m_welcomePage->engine());
-
-    QList<IWelcomePage *> availablePages = PluginManager::getObjects<IWelcomePage>();
-    addPages(availablePages);
-    // make sure later added pages are made available too:
-    connect(PluginManager::instance(), &PluginManager::objectAdded,
-            this, &ScheduleMode::pluginAdded);
-
-//    QString path = resourcePath() + QLatin1String("/welcomescreen/welcomescreen.qml");
-
-    // finally, load the root page
-//    m_welcomePage->setSource(QUrl::fromLocalFile(path));
-}
-
-void ScheduleMode::pluginAdded(QObject *obj)
-{
-    IWelcomePage *page = qobject_cast<IWelcomePage*>(obj);
-    if (!page)
-        return;
-    addPages(QList<IWelcomePage *>() << page);
-}
-
-void ScheduleMode::addPages(const QList<IWelcomePage *> &pages)
-{
-    QList<IWelcomePage *> addedPages = pages;
-    Utils::sort(addedPages, [](const IWelcomePage *l, const IWelcomePage *r) {
-        return l->priority() < r->priority();
-    });
-
-    // insert into m_pluginList, keeping m_pluginList sorted by priority
-    auto addIt = addedPages.begin();
-    auto currentIt = m_pluginList.begin();
-    while (addIt != addedPages.end()) {
-        IWelcomePage *page = *addIt;
-        while (currentIt != m_pluginList.end() && (*currentIt)->priority() <= page->priority())
-            ++currentIt;
-        // currentIt is now either end() or a page with higher value
-        currentIt = m_pluginList.insert(currentIt, page);
-        m_idPageMap.insert(page->id(), page);
-//        page->facilitateQml(engine);
-        ++currentIt;
-        ++addIt;
-    }
-}

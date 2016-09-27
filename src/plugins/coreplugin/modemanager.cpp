@@ -107,7 +107,6 @@ IMode *ModeManager::mode(Id id)
 
 void ModeManager::activateMode(Id id)
 {
-    qCInfo(corepluginLog) << id;
     const int index = indexOf(id);
     if (index >= 0)
         d->m_modeStack->setCurrentIndex(index);

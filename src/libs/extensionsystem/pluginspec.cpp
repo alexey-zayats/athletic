@@ -699,15 +699,6 @@ bool PluginSpecPrivate::readMetaData(const QJsonObject &metaData)
         }
     }
 
-    qCDebug(extentionSystemLog) <<
-            QString(QLatin1String("PLUGIN: %1 (%2), category(%3), enabled(%4), required(%5), vendor(%6)"))
-            .arg( name )
-            .arg( version )
-            .arg( category )
-            .arg( enabledByDefault ? tr("true") : tr("false") )
-            .arg( required ? tr("true") : tr("false") )
-            .arg( vendor);
-
     return true;
 }
 

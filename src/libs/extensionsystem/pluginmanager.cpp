@@ -903,8 +903,6 @@ void PluginManagerPrivate::loadPlugin(PluginSpec *spec, PluginSpec::State destSt
 */
 void PluginManagerPrivate::setPluginPaths(const QStringList &paths)
 {
-    qCDebug(extentionSystemLog) << "Plugin search paths:" << paths;
-    qCDebug(extentionSystemLog) << "Required IID:" << pluginIID;
     pluginPaths = paths;
     readSettings();
     readPluginPaths();

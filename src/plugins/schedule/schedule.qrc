@@ -4,5 +4,9 @@
 	<file>images/mode_schedule@2x.png</file>
 	<file>images/mode_schedule_mask.png</file>
 	<file>images/mode_schedule_mask@2x.png</file>
+	<file>images/selector_general.png</file>
+	<file>images/selector_general@2x.png</file>
+	<file>images/selector_byday.png</file>
+	<file>images/selector_byday@2x.png</file>
 	</qresource>
 </RCC>

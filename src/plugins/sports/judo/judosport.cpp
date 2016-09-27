@@ -8,7 +8,6 @@ using namespace Core;
 JudoSport::JudoSport(QObject *parent) :
     ISport(parent)
 {
-    qCDebug(judoLog) << Q_FUNC_INFO;
 }
 
 JudoSport::~JudoSport()

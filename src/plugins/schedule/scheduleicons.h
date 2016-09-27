@@ -12,7 +12,10 @@ SCHEDULE_EXPORT extern const Utils::Icon MODE_SCHEDULE_CLASSIC;
 SCHEDULE_EXPORT extern const Utils::Icon MODE_SCHEDULE_FLAT;
 SCHEDULE_EXPORT extern const Utils::Icon MODE_SCHEDULE_FLAT_ACTIVE;
 
+SCHEDULE_EXPORT extern const Utils::Icon SCHEDULE_GENERAL;
+SCHEDULE_EXPORT extern const Utils::Icon SCHEDULE_BYDAY;
+
 } // namespace Icons
-} // namespace Statistics
+} // namespace Schedule
 
 #endif // SHCDULEICON_H

@@ -44,7 +44,7 @@ using namespace ExtensionSystem;
 using namespace Core;
 using namespace Core::Internal;
 
-static bool lessThanBySporttitle(const ISport *one, const ISport *two)
+static bool lessThanBySportTitle(const ISport *one, const ISport *two)
 {
     return one->title() < two->title();
 }
@@ -78,10 +78,10 @@ SportSelectorWidget::SportSelectorWidget(QAction *sportSelectorAction, QWidget *
 
     QVBoxLayout *layout = new QVBoxLayout(this);
 
-    QList<Core::ISport*> list = PluginManager::getObjects<Core::ISport>();
-    qSort(list.begin(), list.end(), lessThanBySporttitle);
+    m_sportsList = PluginManager::getObjects<Core::ISport>();
+    qSort(m_sportsList.begin(), m_sportsList.end(), lessThanBySportTitle);
 
-    int sportSize = list.size();
+    int sportSize = m_sportsList.size();
 
     m_sportsGrid = new SportsGrid(this);
     m_sportsGrid->setGridSize(sportSize+1);
@@ -90,7 +90,7 @@ SportSelectorWidget::SportSelectorWidget(QAction *sportSelectorAction, QWidget *
     m_sportsGrid->setSportEnabled (0, true);
 
     for(int i = 0; i < sportSize; i++) {
-        ISport *s = list.at(i);
+        ISport *s = m_sportsList.at(i);
         m_sportsGrid->insertSport (i+1, s->icon (), s->title ());
         m_sportsGrid->setSportEnabled (i+1, true);
     }

@@ -8,7 +8,6 @@ using namespace Core;
 WrestlingSport::WrestlingSport(QObject *parent) :
     ISport(parent)
 {
-    qCDebug(wrestlingLog) << Q_FUNC_INFO;
 }
 
 WrestlingSport::~WrestlingSport()

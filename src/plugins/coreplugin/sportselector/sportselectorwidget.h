@@ -13,6 +13,8 @@ QT_END_NAMESPACE
 
 namespace Core {
 
+class ISport;
+
 namespace Internal {
 
 class SportsGrid;
@@ -42,6 +44,7 @@ private:
 
     QAction *m_sportsAction;
     SportsGrid *m_sportsGrid;
+    QList<Core::ISport*> m_sportsList;
 };
 
 }

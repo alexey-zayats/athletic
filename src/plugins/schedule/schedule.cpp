@@ -43,7 +43,7 @@ bool SchedulePLugin::initialize(const QStringList &arguments, QString *errorMess
 
 void SchedulePLugin::extensionsInitialized()
 {
-    m_scheduleMode->initPlugins();
+//    m_scheduleMode->initPlugins();
     ModeManager::activateMode(m_scheduleMode->id());
 }
 
