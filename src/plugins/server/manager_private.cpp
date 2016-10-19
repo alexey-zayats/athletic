@@ -122,7 +122,6 @@ namespace Server
             Q_FOREACH(CommunicationInterface* iface, m_interfaces)
             {
                 m_interface = iface;
-                qDebug() << m_interface->backends() << "containst" << interface << "is" << (m_interface->backends().contains(interface));
                 if(m_interface && m_interface->backends().contains(interface))
                 {
                     connect(
@@ -137,10 +136,6 @@ namespace Server
                 {
                     m_interface = 0;
                 }
-            }
-
-            if (m_interface) {
-                qDebug() << "Interface is " <<   m_interface->backends();
             }
 
             if(!(m_interface && m_interface->start(interface)))
