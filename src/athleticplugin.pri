@@ -67,7 +67,9 @@ exists($$PLUGINJSON_IN) {
 	DISTFILES += $$PLUGINJSON
 }
 
-QMAKE_LFLAGS_SONAME = -Wl,-install_name,@rpath/../plugins/
+osx {
+    QMAKE_LFLAGS_SONAME = -Wl,-install_name,@rpath/../plugins/
+}
 
 include(rpath.pri)
 

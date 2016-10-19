@@ -8,10 +8,8 @@ win32 {
 }
 
 DESTDIR = $$APP_LIBRARY_PATH
-macx{
+osx{
 	QMAKE_LFLAGS_SONAME = -Wl,-install_name,@rpath/../Frameworks/
-} else {
-	QMAKE_LFLAGS_SONAME = -Wl,-install_name,@rpath/../$$APP_LIBRARY_BASENAME/
 }
 
 
