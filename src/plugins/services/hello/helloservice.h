@@ -13,6 +13,8 @@ public:
     Service( QObject *parent = 0);
 public slots:
     void index();
+    void article(QString
+                 );
 protected:
     Server::Service::UrlMap urlMap() const;
 };

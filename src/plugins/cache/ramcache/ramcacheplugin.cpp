@@ -11,12 +11,10 @@ using namespace Ram::Internal;
 RamCachePlugin::RamCachePlugin() :
     m_factory(0)
 {
-    qDebug() << Q_FUNC_INFO;
 }
 
 RamCachePlugin::~RamCachePlugin()
 {
-    qDebug() << Q_FUNC_INFO;
     if ( 0 != m_factory ) {
         ExtensionSystem::PluginManager::removeObject(m_factory);
         delete m_factory;
@@ -26,7 +24,6 @@ RamCachePlugin::~RamCachePlugin()
 
 bool RamCachePlugin::initialize(const QStringList &arguments, QString *errorMessage)
 {
-    qDebug() << Q_FUNC_INFO;
     Q_UNUSED(arguments);
     Q_UNUSED(errorMessage);
 
@@ -37,18 +34,15 @@ bool RamCachePlugin::initialize(const QStringList &arguments, QString *errorMess
 
 void RamCachePlugin::extensionsInitialized()
 {
-    qDebug() << Q_FUNC_INFO;
 }
 
 bool RamCachePlugin::delayedInitialize()
 {
-    qDebug() << Q_FUNC_INFO;
     return true;
 }
 
 ExtensionSystem::IPlugin::ShutdownFlag RamCachePlugin::aboutToShutdown()
 {
-    qDebug() << Q_FUNC_INFO;
     return SynchronousShutdown;
 }
 

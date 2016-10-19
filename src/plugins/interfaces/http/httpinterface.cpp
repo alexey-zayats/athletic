@@ -44,7 +44,6 @@ namespace Http
         QTextStream cout(stdout);
         QSettings *settings = ExtensionSystem::PluginManager::settings ();
 
-
         if(backend.toUpper() == QLatin1String("HTTP") )
         {
             QString portString;
@@ -84,9 +83,13 @@ namespace Http
         }
 
         QSettings *settings = ExtensionSystem::PluginManager::settings ();
+        settings->beginGroup( QLatin1String("Server") );
 
         const quint16 portNumber = settings->value(QLatin1String("HTTP/portNumber"), 0).value<quint16>();
         m_staticDirectory = settings->value(QLatin1String("HTTP/staticDirectory"), QString()).toString();
+
+        settings->endGroup();
+
         QTextStream cout(stdout);
         if(!m_staticDirectory.isEmpty())
         {

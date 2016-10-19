@@ -15,19 +15,16 @@ ServerPlugin::ServerPlugin() :
     m_manager(0),
     m_mapper(0)
 {
-    qDebug() << Q_FUNC_INFO;
 }
 
 ServerPlugin::~ServerPlugin()
 {
-    qDebug() << Q_FUNC_INFO;
     delete m_manager;
     delete m_mapper;
 }
 
 bool ServerPlugin::initialize(const QStringList &arguments, QString *errorMessage)
 {
-    qDebug() << Q_FUNC_INFO;
     Q_UNUSED(arguments);
     Q_UNUSED(errorMessage);
 
@@ -36,8 +33,6 @@ bool ServerPlugin::initialize(const QStringList &arguments, QString *errorMessag
 
 void ServerPlugin::extensionsInitialized()
 {
-    qDebug() << Q_FUNC_INFO;
-
     m_manager = new Manager(this);
     m_mapper = new PrefixMapper(PrefixMapper::ThreadedResponses, this);
     m_mapper->connect(m_manager, SIGNAL(newRequest(Server::Request*)),SLOT(respond(Server::Request*)));
@@ -50,12 +45,10 @@ void ServerPlugin::extensionsInitialized()
 
 bool ServerPlugin::delayedInitialize()
 {
-    qDebug() << Q_FUNC_INFO;
     return true;
 }
 
 ExtensionSystem::IPlugin::ShutdownFlag ServerPlugin::aboutToShutdown()
 {
-    qDebug() << Q_FUNC_INFO;
     return SynchronousShutdown;
 }

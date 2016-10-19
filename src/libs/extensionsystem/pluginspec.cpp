@@ -566,12 +566,12 @@ bool PluginSpecPrivate::readMetaData(const QJsonObject &metaData)
     QJsonValue value;
     value = metaData.value(QLatin1String("IID"));
     if (!value.isString()) {
-        qCDebug(extentionSystemLog) << "Not a plugin (no string IID found)" << filePath;
+        qInfo(extentionSystemLog) << "Not a plugin (no string IID found)" << filePath;
         return false;
     }
 
     if (value.toString() != PluginManager::pluginIID()) {
-        qCDebug(extentionSystemLog) << "Plugin ignored (IID does not match)" << filePath;
+        qInfo(extentionSystemLog) << "Plugin ignored (IID does not match)" << filePath;
         return false;
     }
 

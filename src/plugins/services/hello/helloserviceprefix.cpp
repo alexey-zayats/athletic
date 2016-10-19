@@ -16,7 +16,7 @@ ServicePrefix::~ServicePrefix()
 
 QString ServicePrefix::prefix() const
 {
-    return QLatin1String("");
+    return QLatin1String("hello");
 }
 
 Server::SpawnerBase *ServicePrefix::service()

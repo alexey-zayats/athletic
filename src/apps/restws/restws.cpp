@@ -107,7 +107,7 @@ static void messageOutput(QtMsgType type, const QMessageLogContext &context, con
             break;
         case QtFatalMsg:
             format = QLatin1Literal("%1 %2 [fatal]: %3 (%4:%5, %6)\n");
-            abort();
+            break;
     }
 
     QString date = QDateTime::currentDateTime().toString (QLatin1Literal("yyyy-MM-dd HH:mm:ss.zzz"));
@@ -121,13 +121,15 @@ static void messageOutput(QtMsgType type, const QMessageLogContext &context, con
 
     QTextStream cout(stdout);
     cout << output;
+
+    if (type == QtFatalMsg) abort();
 }
 
 
 int main(int argc, char **argv)
 {
     QLoggingCategory::setFilterRules( QLatin1String("athletic.*.debug=true\n"
-                                                    "athletic.*.info=true\n"
+                                                    "athletic.*.info=false\n"
                                                     "athletic.*.warning=true\n"
                                                     "athletic.*.critical=true") );
 

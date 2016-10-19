@@ -75,17 +75,26 @@ namespace Server
                 Private::setPrefix(request, currentPrefix + '/' + newPrefix);
             }
             QByteArray suffix;
-            Q_FOREACH(const QByteArray& part, parts)
-            {
-                suffix.append('/');
-                suffix.append(part);
+            if ( parts.size() ) {
+                Q_FOREACH(const QByteArray& part, parts)
+                {
+                    suffix.append('/');
+                    suffix.append(part);
+                }
+            } else {
+                suffix = QByteArray("");
             }
             Private::setSuffix(request, suffix);
+
             d->responder->respond(receiver.spawner, receiver.slot, request);
         }
         else
         {
-            qWarning("404 on request for '%s' ('%s'/'%s') - service: %s", request->url(RequestUrl).toEncoded().constData(), Private::prefix(request).constData(), Private::suffix(request).constData(), serviceName.constData());
+            qWarning("404 on request for '%s' ('%s'/'%s') - service: %s",
+                     request->url(RequestUrl).toEncoded().constData(),
+                     Private::prefix(request).constData(),
+                     Private::suffix(request).constData(),
+                     serviceName.constData());
             request->setHeader("STATUS", "404 Not Found");
             QTextStream out(request);
             out << tr("<h1>404 Not Found</h1><p>The page you are looking for could not be found.</p>") << endl;

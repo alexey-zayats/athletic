@@ -854,8 +854,6 @@ void PluginManagerPrivate::loadPlugin(PluginSpec *spec, PluginSpec::State destSt
     if (!spec->isEffectivelyEnabled() && destState == PluginSpec::Loaded)
         return;
 
-    qDebug() << spec->name();
-
     switch (destState) {
     case PluginSpec::Running:
         spec->d->initializeExtensions();

@@ -11,6 +11,7 @@
 #include <QStringList>
 #include <QTextStream>
 #include <QSettings>
+#include <QSqlDatabase>
 
 namespace Server
 {
@@ -42,6 +43,7 @@ namespace Server
         }
 
         const QString interface = settings->value( QLatin1String("Server/socketType"), QString()).toString();
+
         QTextStream cerr(stderr);
 
         if(interface.isEmpty())
@@ -120,6 +122,7 @@ namespace Server
             Q_FOREACH(CommunicationInterface* iface, m_interfaces)
             {
                 m_interface = iface;
+                qDebug() << m_interface->backends() << "containst" << interface << "is" << (m_interface->backends().contains(interface));
                 if(m_interface && m_interface->backends().contains(interface))
                 {
                     connect(
@@ -134,6 +137,10 @@ namespace Server
                 {
                     m_interface = 0;
                 }
+            }
+
+            if (m_interface) {
+                qDebug() << "Interface is " <<   m_interface->backends();
             }
 
             if(!(m_interface && m_interface->start(interface)))
@@ -152,7 +159,7 @@ namespace Server
                 return;
             }
         }
-        if(! m_interface)
+        if(!m_interface)
         {
             cerr << "Failed to find a backend." << endl;
             exit(1);
@@ -200,13 +207,13 @@ namespace Server
         {
             cout << " - " << interface << endl;
         }
-        cout << "Interface [FCGI-UNIX]: " << flush;
+        cout << "Interface [FCGI-TCP]: " << flush;
 
         QString interface;
         interface = cin.readLine().toUpper();
         if(interface.isEmpty())
         {
-            interface = QLatin1String("FCGI-UNIX");
+            interface = QLatin1String("FCGI-TCP");
         }
         settings->setValue( QLatin1String("socketType"), interface);
         Q_FOREACH(CommunicationInterface* iface, m_interfaces)
@@ -240,11 +247,18 @@ namespace Server
         cout << "***** Server Database Configuration *****" << endl;
         cout << "********************************************" << endl;
 
-        cout << "Driver [QMYSQL]: " << flush;
+        QStringList drivers =  QSqlDatabase::drivers();
+        cout << "The following drivers are available:" << endl;
+        Q_FOREACH(const QString& drv, drivers)
+        {
+            cout << " - " << drv << endl;
+        }
+
+        cout << "Driver [QPSQL]: " << flush;
         driver = cin.readLine();
         if(driver.isEmpty())
         {
-            driver = QLatin1String("QMYSQL");
+            driver = QLatin1String("QPSQL");
         }
 
         cout << "Host [localhost]: " << flush;
