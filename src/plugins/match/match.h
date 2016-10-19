@@ -1,6 +1,6 @@
 
-#ifndef MATCHPLUGIN_H
-#define MATCHPLUGIN_H
+#ifndef MatchPlugin_H
+#define MatchPlugin_H
 
 #include <extensionsystem/iplugin.h>
 
@@ -19,14 +19,14 @@ class MatchMode;
 
 using namespace ExtensionSystem;
 
-class MatchPLugin : public ExtensionSystem::IPlugin
+class MatchPlugin : public ExtensionSystem::IPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "cloud.athletic.app.plugin" FILE "match.json")
 
 public:
-    MatchPLugin();
-    ~MatchPLugin();
+    MatchPlugin();
+    ~MatchPlugin();
 
     bool initialize(const QStringList &arguments, QString *errorMessage = 0);
     void extensionsInitialized();
@@ -41,4 +41,4 @@ private:
 } // namespace Internal
 } // namespace Match
 
-#endif // MATCHPLUGIN_H
+#endif // MatchPlugin_H

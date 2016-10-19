@@ -61,6 +61,7 @@
 #include "windowsupport.h"
 #include "navigationwidget.h"
 #include "coreicons.h"
+
 #include "plugindialog.h"
 
 #include "outputpanemanager.h"
@@ -85,7 +86,7 @@ MainWindow::MainWindow() :
                                                QLatin1String("Athletic"),
                                                this)),
     m_windowSupport(0),
-    m_editorManager(0),
+//    m_editorManager(0),
     m_progressManager(new ProgressManagerPrivate),
     m_statusBarManager(0),
     m_modeManager(0),
@@ -166,7 +167,8 @@ MainWindow::MainWindow() :
 
     m_statusBarManager = new StatusBarManager(this);
     m_messageManager = new MessageManager;
-    m_editorManager = new EditorManager(this);
+
+//    m_editorManager = new EditorManager(this);
 
     setCentralWidget(m_modeStack);
 
@@ -246,8 +248,8 @@ MainWindow::~MainWindow()
     PluginManager::removeObject(m_outputView);
     delete m_outputView;
 
-    delete m_editorManager;
-    m_editorManager = 0;
+//    delete m_editorManager;
+//    m_editorManager = 0;
 
     delete m_progressManager;
     m_progressManager = 0;
@@ -295,7 +297,7 @@ bool MainWindow::init(QString *errorMessage)
 
 void MainWindow::extensionsInitialized()
 {
-    EditorManagerPrivate::extensionsInitialized();
+//    EditorManagerPrivate::extensionsInitialized();
 
     m_windowSupport = new WindowSupport(this, Context("Core.MainWindow"));
     m_windowSupport->setCloseActionEnabled(false);
@@ -608,7 +610,7 @@ void MainWindow::registerDefaultActions()
 
 void MainWindow::setFocusToEditor()
 {
-    EditorManagerPrivate::doEscapeKeyFocusMoveMagic();
+//    EditorManagerPrivate::doEscapeKeyFocusMoveMagic();
 }
 
 bool MainWindow::showOptionsDialog(Id page, QWidget *parent)
@@ -753,7 +755,7 @@ void MainWindow::readSettings()
     m_navigationWidget->restoreSettings(settings);
     m_rightPaneWidget->readSettings(settings);
 
-     EditorManagerPrivate::readSettings();
+//     EditorManagerPrivate::readSettings();
 }
 
 void MainWindow::writeSettings()
@@ -777,7 +779,7 @@ void MainWindow::writeSettings()
     settings->endGroup();
 
     ActionManager::saveSettings();
-    EditorManagerPrivate::saveSettings();
+//    EditorManagerPrivate::saveSettings();
     m_navigationWidget->saveSettings(settings);
 }
 

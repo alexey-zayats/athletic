@@ -16,7 +16,7 @@
 #include <utils/theme/theme_p.h>
 
 #include <extensionsystem/pluginmanager.h>
-#include <extensionsystem/pluginerroroverview.h>
+#include <widgets/pluginerroroverview.h>
 
 #include <QMenuBar>
 #include <QMainWindow>
@@ -104,7 +104,7 @@ void CorePlugin::extensionsInitialized()
 {
     m_mainWindow->extensionsInitialized();
     if (ExtensionSystem::PluginManager::hasError()) {
-        auto errorOverview = new ExtensionSystem::PluginErrorOverview(m_mainWindow);
+        auto errorOverview = new Widgets::PluginErrorOverview(m_mainWindow);
         errorOverview->setAttribute(Qt::WA_DeleteOnClose);
         errorOverview->setModal(true);
         errorOverview->show();

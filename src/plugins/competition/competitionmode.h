@@ -8,10 +8,6 @@ class QSplitter;
 class QVBoxLayout;
 QT_END_NAMESPACE
 
-namespace Core {
-class EditorManager;
-}
-
 using namespace Core;
 
 namespace Competition {
@@ -26,8 +22,6 @@ public:
     ~CompetitionMode();
 
 private:
-    void grabEditorManager(IMode *mode);
-
     QSplitter *m_splitter;
     QVBoxLayout *m_rightSplitWidgetLayout;
 };

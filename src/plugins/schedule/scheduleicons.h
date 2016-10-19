@@ -15,6 +15,8 @@ SCHEDULE_EXPORT extern const Utils::Icon MODE_SCHEDULE_FLAT_ACTIVE;
 SCHEDULE_EXPORT extern const Utils::Icon SCHEDULE_GENERAL;
 SCHEDULE_EXPORT extern const Utils::Icon SCHEDULE_BYDAY;
 
+SCHEDULE_EXPORT extern const Utils::Icon CALENDAR_SELECTOR;
+
 } // namespace Icons
 } // namespace Schedule
 

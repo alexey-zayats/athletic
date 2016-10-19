@@ -9,7 +9,7 @@ TARGET = $${APP_TARGET} # .$${APP_NAME}
 macx:DESTDIR = $$APP_BUILD_TREE
 else:DESTDIR = $$APP_BIN_PATH
 
-QT += network
+QT += network widgets
 
 include(../../rpath.pri)
 
@@ -49,12 +49,8 @@ win32 {
 
 QMAKE_SUBSTITUTES += $$PWD/athletic_version.h.in
 
-FORMS += \
-
 SOURCES += \
 	athletic.cpp
-
-RESOURCES += \
 
 HEADERS += \
 	athletic.h

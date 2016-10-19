@@ -9,3 +9,8 @@ SUBDIRS  = \
 	statistics \
 	help \
 	sports \
+	server \
+	cache \
+	interfaces \
+	services \
+

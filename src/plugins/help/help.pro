@@ -80,7 +80,8 @@ FORMS += docsettingspage.ui \
 	filternamedialog.ui \
 	topicchooser.ui
 
-QT += webenginewidgets
+QT += webenginewidgets widgets
+
 HEADERS += webenginehelpviewer.h
 SOURCES += webenginehelpviewer.cpp
 DEFINES += WEBENGINE_HELPVIEWER

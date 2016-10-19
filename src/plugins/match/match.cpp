@@ -9,15 +9,15 @@ using namespace Match::Internal;
 
 Q_LOGGING_CATEGORY(matchLod, "athletic.plugins.match")
 
-MatchPLugin::MatchPLugin()
+MatchPlugin::MatchPlugin()
 {
 }
 
-MatchPLugin::~MatchPLugin()
+MatchPlugin::~MatchPlugin()
 {
 }
 
-bool MatchPLugin::initialize(const QStringList &arguments, QString *errorMessage)
+bool MatchPlugin::initialize(const QStringList &arguments, QString *errorMessage)
 {
     Q_UNUSED(arguments);
     Q_UNUSED(errorMessage);
@@ -28,17 +28,17 @@ bool MatchPLugin::initialize(const QStringList &arguments, QString *errorMessage
     return true;
 }
 
-void MatchPLugin::extensionsInitialized()
+void MatchPlugin::extensionsInitialized()
 {
     m_matchMode->initPlugins();
 }
 
-bool MatchPLugin::delayedInitialize()
+bool MatchPlugin::delayedInitialize()
 {
     return true;
 }
 
-ExtensionSystem::IPlugin::ShutdownFlag MatchPLugin::aboutToShutdown()
+ExtensionSystem::IPlugin::ShutdownFlag MatchPlugin::aboutToShutdown()
 {
     return SynchronousShutdown;
 }

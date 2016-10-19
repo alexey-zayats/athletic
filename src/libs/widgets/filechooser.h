@@ -14,7 +14,7 @@ QT_END_NAMESPACE
 
 namespace Widgets
 {
-class ATHLETIC_WIDGETS_EXPORT FileChooser : public QWidget
+class WIDGETS_EXPORT FileChooser : public QWidget
 {
     Q_OBJECT
 public:

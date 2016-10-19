@@ -5,11 +5,18 @@ include(../../../athletic.pri)
 TEMPLATE = app
 VERSION = $$APP_VERSION
 TARGET = $${APP_TARGET}.$${APP_NAME}
+
 DESTDIR = $$APP_BIN_PATH
+
+#macx:DESTDIR = $$APP_BUILD_TREE
+#else:DESTDIR = $$APP_BIN_PATH
+
+QT += network
 
 include(../../rpath.pri)
 
-LIBS *= -l$$qtLibraryName(extensionsystem) -l$$qtLibraryName(utils)
+LIBS *= -l$$qtLibraryName(extensionsystem) \
+	-l$$qtLibraryName(utils)
 
 APP_GIT_REVISION = $$system(git --git-dir $$APP_SOURCE_TREE/.git --work-tree $$APP_BUILD_TREE describe --always --tags)
 
@@ -27,10 +34,11 @@ win32 {
 
 QMAKE_SUBSTITUTES += $$PWD/restws_version.h.in
 
-CONFIG += no_batch crypto
+CONFIG += crypto
 
 SOURCES += \
-	restws.cpp
+	restws.cpp \
 
-FORMS += \
+HEADERS += \
+	restws.h \
 

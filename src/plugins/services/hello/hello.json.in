@@ -1,0 +1,15 @@
+{
+	\"Name\" : \"Hello\",
+	\"Version\" : \"$$APP_VERSION\",
+	\"CompatVersion\" : \"$$APP_COMPAT_VERSION\",
+	\"Required\" : false,
+	\"DisabledByDefault\": false,
+	\"Vendor\" : \"Alexey Zayats\",
+	\"Copyright\" : \"(C) 2016 Agitum\",
+	\"License\" : [ \"\"],
+	\"Category\" : \"Server\",
+	\"Description\" : \"Hello responder plugin for Athletic applicaion server\",
+	\"Url\" : \"https://athletic.cloud/\",
+	\"Platform\": \"\",
+	$$dependencyList
+}
