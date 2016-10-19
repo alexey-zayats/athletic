@@ -62,4 +62,5 @@ crypto.prf.cmake
 +	LINKAGE = -framework @QCA_LIB_NAME@
 }
 
-
+QCA
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release ..
