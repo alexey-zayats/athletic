@@ -371,6 +371,11 @@ IPlugin *PluginSpec::plugin() const
     return d->plugin;
 }
 
+void PluginSpec::setEnabledBySettings(bool value)
+{
+    d->setEnabledBySettings(value);
+}
+
 /*!
     Returns the list of dependencies, already resolved to existing plugin specs.
     Valid if PluginSpec::Resolved state is reached.
@@ -561,18 +566,20 @@ bool PluginSpecPrivate::readMetaData(const QJsonObject &metaData)
     QJsonValue value;
     value = metaData.value(QLatin1String("IID"));
     if (!value.isString()) {
-        qCDebug(extentionSystemLog) << "Not a plugin (no string IID found)";
+        qInfo(extentionSystemLog) << "Not a plugin (no string IID found)" << filePath;
         return false;
     }
 
     if (value.toString() != PluginManager::pluginIID()) {
-        qCDebug(extentionSystemLog) << "Plugin ignored (IID does not match)";
+        qInfo(extentionSystemLog) << "Plugin ignored (IID does not match)" << filePath;
         return false;
     }
+
 
     value = metaData.value(QLatin1String(PLUGIN_METADATA));
     if (!value.isObject())
         return reportError(tr("Plugin meta data not found"));
+
     QJsonObject pluginInfo = value.toObject();
 
     value = pluginInfo.value(QLatin1String(PLUGIN_NAME));

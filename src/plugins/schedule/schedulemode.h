@@ -7,6 +7,7 @@
 #include <coreplugin/id.h>
 
 class QToolButton;
+class QVBoxLayout;
 
 using namespace Core;
 
@@ -15,6 +16,8 @@ class IWelcomePage;
 }
 
 namespace Schedule {
+
+class ScheduleWidget;
 
 namespace Internal {
 
@@ -25,18 +28,24 @@ public:
     ScheduleMode();
     ~ScheduleMode();
 
+     void init();
+
 public slots:
 
 signals:
 
 private:
-    QWidget *m_schedulePage;
+
+
+    ScheduleWidget *m_scheduleWidget;
     QWidget *m_modeWidget;
 
     QToolButton *m_generalButton;
     QToolButton *m_byDayButton;
     QAction *m_generalAction;
     QAction *m_dayAction;
+
+    QVBoxLayout *layout;
 };
 
 } // Internal

@@ -4,10 +4,10 @@
 #include <QLoggingCategory>
 #include <qglobal.h>
 
-#if defined(APP_WIDGETS_LIB)
-#  define ATHLETIC_WIDGETS_EXPORT Q_DECL_EXPORT
+#if defined(WIDGETS_LIBRARY)
+#  define WIDGETS_EXPORT Q_DECL_EXPORT
 #else
-#  define ATHLETIC_WIDGETS_EXPORT Q_DECL_IMPORT
+#  define WIDGETS_EXPORT Q_DECL_IMPORT
 #endif
 
 Q_DECLARE_LOGGING_CATEGORY(widgetsLog)

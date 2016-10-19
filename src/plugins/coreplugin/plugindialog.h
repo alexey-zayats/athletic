@@ -10,7 +10,10 @@ QT_END_NAMESPACE
 
 namespace ExtensionSystem {
 class PluginSpec;
-class PluginView;
+}
+
+namespace Widgets {
+    class PluginView;
 }
 
 namespace Core {
@@ -30,7 +33,7 @@ private:
     void openErrorDetails();
     void closeDialog();
 
-    ExtensionSystem::PluginView *m_view;
+    Widgets::PluginView *m_view;
 
     QPushButton *m_detailsButton;
     QPushButton *m_errorDetailsButton;

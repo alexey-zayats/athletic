@@ -11,8 +11,8 @@
 #include <coreplugin/outputpane.h>
 #include <coreplugin/rightpane.h>
 
-#include <coreplugin/editormanager/editormanager.h>
-#include <coreplugin/editormanager/ieditor.h>
+//#include <coreplugin/editormanager/editormanager.h>
+//#include <coreplugin/editormanager/ieditor.h>
 
 #include <QLatin1String>
 #include <QHBoxLayout>
@@ -46,8 +46,7 @@ CompetitionMode::CompetitionMode() :
     QWidget *rightSplitWidget = new QWidget;
     rightSplitWidget->setLayout(m_rightSplitWidgetLayout);
 
-    auto editorPlaceHolder = new EditorManagerPlaceHolder(this);
-    m_rightSplitWidgetLayout->insertWidget(0, editorPlaceHolder);
+    m_rightSplitWidgetLayout->insertWidget(0, new QWidget);
 
     MiniSplitter *rightPaneSplitter = new MiniSplitter;
     rightPaneSplitter->insertWidget(0, rightSplitWidget);
@@ -59,25 +58,10 @@ CompetitionMode::CompetitionMode() :
     splitter->setOrientation(Qt::Vertical);
     splitter->insertWidget(0, rightPaneSplitter);
 
-    QWidget *outputPane = new OutputPanePlaceHolder(this, splitter);
-    outputPane->setObjectName(QLatin1String("EditModeOutputPanePlaceHolder"));
-    splitter->insertWidget(1, outputPane);
-    splitter->setStretchFactor(0, 3);
-    splitter->setStretchFactor(1, 0);
-
     m_splitter->insertWidget(0, new NavigationWidgetPlaceHolder(this));
     m_splitter->insertWidget(1, splitter);
     m_splitter->setStretchFactor(0, 0);
     m_splitter->setStretchFactor(1, 1);
-
-    connect(ModeManager::instance(), &ModeManager::currentModeChanged,
-            this, &CompetitionMode::grabEditorManager);
-    m_splitter->setFocusProxy(editorPlaceHolder);
-
-    IContext *modeContextObject = new IContext(this);
-    modeContextObject->setContext(Context(Core::Constants::C_EDITORMANAGER));
-    modeContextObject->setWidget(m_splitter);
-    ICore::addContextObject(modeContextObject);
 
     setWidget(m_splitter);
     setContext(Context(Competition::Constants::C_COMPETITION_MODE,
@@ -89,14 +73,6 @@ CompetitionMode::~CompetitionMode()
     delete m_splitter;
 }
 
-void CompetitionMode::grabEditorManager(IMode *mode)
-{
-    if (mode != this)
-        return;
-
-    if (EditorManager::currentEditor())
-        EditorManager::currentEditor()->widget()->setFocus();
-}
 
 } // namespace Internal
 } // namespace Core

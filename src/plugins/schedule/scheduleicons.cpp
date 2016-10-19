@@ -16,5 +16,8 @@ const Utils::Icon SCHEDULE_GENERAL(
 const Utils::Icon SCHEDULE_BYDAY(
         QLatin1String(":/schedule/images/selector_byday.png"));
 
+const Utils::Icon CALENDAR_SELECTOR(
+        QLatin1String(":/schedule/images/calendar.png"));
+
 }
 }

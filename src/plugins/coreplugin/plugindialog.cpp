@@ -2,10 +2,11 @@
 #include "plugindialog.h"
 
 #include <extensionsystem/pluginmanager.h>
-#include <extensionsystem/pluginview.h>
-#include <extensionsystem/plugindetailsview.h>
-#include <extensionsystem/pluginerrorview.h>
 #include <extensionsystem/pluginspec.h>
+
+#include <widgets/pluginview.h>
+#include <widgets/plugindetailsview.h>
+#include <widgets/pluginerrorview.h>
 
 #include <utils/lineedit.h>
 
@@ -24,14 +25,14 @@ static bool s_isRestartRequired = false;
 
 PluginDialog::PluginDialog(QWidget *parent)
     : QDialog(parent),
-      m_view(new ExtensionSystem::PluginView(this))
+      m_view(new Widgets::PluginView(this))
 {
     QVBoxLayout *vl = new QVBoxLayout(this);
 
     auto filterEdit = new Utils::LineEdit(this);
     filterEdit->setFiltering(true);
     connect(filterEdit, &Utils::LineEdit::filterChanged,
-            m_view, &ExtensionSystem::PluginView::setFilter);
+            m_view, &Widgets::PluginView::setFilter);
     vl->addWidget(filterEdit);
 
     vl->addWidget(m_view);
@@ -61,11 +62,11 @@ PluginDialog::PluginDialog(QWidget *parent)
     resize(650, 400);
     setWindowTitle(tr("Installed Plugins"));
 
-    connect(m_view, &ExtensionSystem::PluginView::currentPluginChanged,
+    connect(m_view, &Widgets::PluginView::currentPluginChanged,
             this, &PluginDialog::updateButtons);
-    connect(m_view, &ExtensionSystem::PluginView::pluginActivated,
+    connect(m_view, &Widgets::PluginView::pluginActivated,
             this, &PluginDialog::openDetails);
-    connect(m_view, &ExtensionSystem::PluginView::pluginSettingsChanged,
+    connect(m_view, &Widgets::PluginView::pluginSettingsChanged,
             this, &PluginDialog::updateRestartRequired);
     connect(m_detailsButton, &QAbstractButton::clicked,
             [this]  { openDetails(m_view->currentPlugin()); });
@@ -109,7 +110,7 @@ void PluginDialog::openDetails(ExtensionSystem::PluginSpec *spec)
     dialog.setWindowTitle(tr("Plugin Details of %1").arg(spec->name()));
     QVBoxLayout *layout = new QVBoxLayout;
     dialog.setLayout(layout);
-    ExtensionSystem::PluginDetailsView *details = new ExtensionSystem::PluginDetailsView(&dialog);
+    Widgets::PluginDetailsView *details = new Widgets::PluginDetailsView(&dialog);
     layout->addWidget(details);
     details->update(spec);
     QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Close, Qt::Horizontal, &dialog);
@@ -129,7 +130,7 @@ void PluginDialog::openErrorDetails()
     dialog.setWindowTitle(tr("Plugin Errors of %1").arg(spec->name()));
     QVBoxLayout *layout = new QVBoxLayout;
     dialog.setLayout(layout);
-    ExtensionSystem::PluginErrorView *errors = new ExtensionSystem::PluginErrorView(&dialog);
+    Widgets::PluginErrorView *errors = new Widgets::PluginErrorView(&dialog);
     layout->addWidget(errors);
     errors->update(spec);
     QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Close, Qt::Horizontal, &dialog);

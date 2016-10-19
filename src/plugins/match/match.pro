@@ -2,22 +2,21 @@ DEFINES += MATCH_LIBRARY
 
 QT += \
 	network \
-	printsupport \
-	sql
+	widgets
 
 include(../../athleticplugin.pri)
 
 SOURCES += \
 	match.cpp \
 	matchmode.cpp \
-    matchicons.cpp
+	matchicons.cpp
 
 HEADERS += \
 	match.h \
 	match_global.h \
 	matchmode.h \
-    matchicons.h \
-    matchconstants.h
+	matchicons.h \
+	matchconstants.h
 
 RESOURCES += \
 	match.qrc \

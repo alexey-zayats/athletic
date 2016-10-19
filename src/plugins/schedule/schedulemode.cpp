@@ -1,6 +1,7 @@
 #include "schedulemode.h"
 #include "scheduleconstants.h"
 #include "scheduleicons.h"
+#include "schedulewidget.h"
 
 #include <coreplugin/coreconstants.h>
 
@@ -58,43 +59,26 @@ ScheduleMode::ScheduleMode()
     m_modeWidget = new QWidget;
     m_modeWidget->setObjectName(QLatin1String("SchedulePageModeWidget"));
 
-    QVBoxLayout *layout = new QVBoxLayout(m_modeWidget);
+    layout = new QVBoxLayout(m_modeWidget);
     layout->setMargin(0);
     layout->setSpacing(0);
 
-    m_schedulePage = new QWidget(m_modeWidget);
-    m_schedulePage->setObjectName(QLatin1String("Schedule"));
 
     StyledBar *styledBar = new StyledBar(m_modeWidget);
-
-    QHBoxLayout *topBarLayout = new QHBoxLayout;
-    topBarLayout->setMargin (0);
-    topBarLayout->setSpacing (0);
-    styledBar->setLayout (topBarLayout);
-
-    QSpacerItem *spacerItem = new QSpacerItem(1,1, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-    m_generalButton = new QToolButton(styledBar);
-    m_generalAction = new QAction(Icons::SCHEDULE_GENERAL.icon (), tr("General"), styledBar);
-    m_generalButton->setText ( m_generalAction->text () );
-    m_generalButton->setDefaultAction (m_generalAction);
-
-    m_byDayButton = new QToolButton(styledBar);
-    m_dayAction = new QAction(Icons::SCHEDULE_BYDAY.icon (), tr("By day"), styledBar);
-    m_byDayButton->setText ( m_dayAction->text () );
-    m_byDayButton->setDefaultAction (m_dayAction);
-
-    topBarLayout->addWidget (m_generalButton);
-    topBarLayout->addWidget (m_byDayButton);
-    topBarLayout->addItem (spacerItem);
-
     layout->addWidget(styledBar);
-
-    m_modeWidget->setLayout(layout);
-    layout->addWidget(m_schedulePage);
 
     setWidget(m_modeWidget);
 }
+
+ void ScheduleMode::init()
+ {
+     m_scheduleWidget = new ScheduleWidget(m_modeWidget);
+     m_scheduleWidget->setObjectName(QLatin1String("Schedule"));
+
+     layout->addWidget(m_scheduleWidget, 1);
+
+      m_modeWidget->setLayout(layout);
+ }
 
 ScheduleMode::~ScheduleMode()
 {

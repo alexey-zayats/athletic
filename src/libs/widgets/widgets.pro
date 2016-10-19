@@ -1,15 +1,31 @@
 include(../../athleticlibrary.pri)
 
-DEFINES += APP_WIDGETS_LIB
+DEFINES += WIDGETS_LIBRARY
+unix:LIBS += $$QMAKE_LIBS_DYNLOAD
 
-QT += gui network
+QT += gui widgets
 
 SOURCES += \
-    filechooser.cpp \
-    widgets.cpp
+	filechooser.cpp \
+	widgets.cpp \
+	plugindetailsview.cpp \
+	pluginerroroverview.cpp \
+	pluginerrorview.cpp \
+	pluginview.cpp \
 
 HEADERS += \
-    filechooser.h \
-    widgets_global.h \
+	filechooser.h \
+	widgets_global.h \
+	plugindetailsview.h \
+	pluginerroroverview.h \
+	pluginerrorview.h \
+	pluginview.h \
 
-DEFINES += APP_REL_TOOLS_PATH=$$shell_quote(\"$$relative_path($$APP_LIBEXEC_PATH, $$APP_BIN_PATH)\")
+FORMS += \
+	plugindetailsview.ui \
+	pluginerroroverview.ui \
+	pluginerrorview.ui \
+
+RESOURCES += \
+	pluginview.qrc \
+

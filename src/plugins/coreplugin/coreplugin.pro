@@ -1,10 +1,13 @@
 DEFINES += CORE_LIBRARY
 DEFINES += APP_SHOW_BUILD_DATE
+
 QT += \
 	help \
 	network \
 	printsupport \
 	sql \
+	gui \
+	widgets \
 
 # embedding build time information prevents repeatedly binary exact versions from same source code
 isEmpty(APP_SHOW_BUILD_DATE): APP_SHOW_BUILD_DATE = $$(APP_SHOW_BUILD_DATE)
@@ -97,10 +100,10 @@ SOURCES += \
 	sidebarwidget.cpp \
 	sportselector/sportselectorwidget.cpp \
 	isport.cpp \
-    sportselector/sportbutton.cpp \
-    sportselector/sportsgrid.cpp \
-    imatchboard.cpp \
-    imatchcontrol.cpp
+	sportselector/sportbutton.cpp \
+	sportselector/sportsgrid.cpp \
+	imatchboard.cpp \
+	imatchcontrol.cpp
 
 HEADERS += \
 	actionbar.h \
@@ -195,10 +198,10 @@ HEADERS += \
 	sidebarwidget.h \
 	sportselector/sportselectorwidget.h \
 	isport.h \
-    sportselector/sportbutton.h \
-    sportselector/sportsgrid.h \
-    imatchboard.h \
-    imatchcontrol.h
+	sportselector/sportbutton.h \
+	sportselector/sportsgrid.h \
+	imatchboard.h \
+	imatchcontrol.h
 
 FORMS = \
 	systemsettings.ui \
@@ -223,6 +226,7 @@ else:macx {
 }
 else:unix {
 	SOURCES += progressmanager/progressmanager_x11.cpp
+
 
 #    IMAGE_SIZE_LIST = 16 24 32 48 64 128 256 512
 

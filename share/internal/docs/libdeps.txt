@@ -1,0 +1,65 @@
+Qt configure
+
+Mac OS X
+./configure -prefix /opt/qt/framework/5.7.0 \
+	-debug-and-release \
+	-opensource \
+	-shared \
+	-plugin-sql-psql \
+	-plugin-sql-sqlite \
+	-openssl \
+	-gui \
+	-I /opt/local/include \
+	-I /opt/local/include/freetype2 \
+	-I /opt/local/include/postgresql95 \
+	-L /opt/local/lib \
+	-L /opt/local/lib/postgresql95 \
+	-nomake examples \
+	-confirm-license \
+	-system-pcre \
+	-no-freetype \
+	-system-libjpeg \
+	-system-libpng \
+	-system-zlib \
+	-largefile \
+	-c++std c++11 \
+	-qt-freetype \
+	-no-fontconfig
+
+
+FFMpeg
+Max OS X - Dev
+./configure  --prefix=/opt/local \
+	--enable-gpl \
+	--enable-nonfree \
+	--enable-libass \
+	--enable-libfdk-aac \
+	--enable-libfreetype \
+	--enable-libmp3lame \
+	--enable-libopus \
+	--enable-libtheora \
+	--enable-libvorbis \
+	--enable-libvpx \
+	--enable-libx264 \
+	--enable-libxvid \
+	--enable-shared \
+	--enable-static \
+	--enable-debug=3 \
+	--assert-level=2 \
+	--enable-extra-warnings \
+	--disable-optimizations \
+	--disable-stripping 
+
+QCA patch
+crypto.prf.cmake
+-exists($$QCA_LIBDIR/qca.framework) {
++exists($$QCA_LIBDIR/@QCA_LIB_NAME@.framework) {
+ 	QMAKE_CXXFLAGS += -F$$QCA_LIBDIR
+ 	LIBS *= -F$$QCA_LIBDIR
+-	INCLUDEPATH += $$QCA_LIBDIR/qca.framework/Headers
+-	LINKAGE = -framework qca
++	INCLUDEPATH += $$QCA_LIBDIR/@QCA_LIB_NAME@.framework/Headers
++	LINKAGE = -framework @QCA_LIB_NAME@
+}
+
+

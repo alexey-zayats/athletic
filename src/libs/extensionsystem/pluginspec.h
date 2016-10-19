@@ -88,11 +88,12 @@ public:
     bool hasError() const;
     QString errorString() const;
 
+    void setEnabledBySettings(bool value);
+
 private:
     PluginSpec();
 
     Internal::PluginSpecPrivate *d;
-    friend class PluginView;
     friend class Internal::PluginManagerPrivate;
     friend class Internal::PluginSpecPrivate;
 };

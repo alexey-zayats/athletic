@@ -2,7 +2,7 @@ include(../../athleticlibrary.pri)
 
 DEFINES += APP_UTILS_LIB
 
-QT += gui network
+QT += gui widgets
 
 SOURCES += \
 	hostosinfo.cpp \
@@ -104,7 +104,7 @@ osx {
 	LIBS += -framework Foundation
 }
 
-DEFINES += APP_REL_TOOLS_PATH=$$shell_quote(\"$$relative_path($$APP_LIBEXEC_PATH, $$APP_BIN_PATH)\")
-
-win32: LIBS += -luser32 -lshell32
-win32: LIBS += -liphlpapi -lws2_32
+win32 {
+	LIBS += -luser32 -lshell32
+	LIBS += -liphlpapi -lws2_32
+}

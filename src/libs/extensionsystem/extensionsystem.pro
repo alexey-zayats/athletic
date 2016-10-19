@@ -2,14 +2,7 @@
 include(../../athleticlibrary.pri)
 
 DEFINES += EXTENSIONSYSTEM_LIBRARY
-
 unix:LIBS += $$QMAKE_LIBS_DYNLOAD
-
-!isEmpty(vcproj) {
-	DEFINES += IDE_TEST_DIR=\"$$IDE_SOURCE_TREE\"
-} else {
-	DEFINES += IDE_TEST_DIR=\\\"$$IDE_SOURCE_TREE\\\"
-}
 
 HEADERS += \
 	invoker.h \
@@ -21,10 +14,7 @@ HEADERS += \
 	pluginspec.h \
 	pluginspec_p.h \
 	plugincollection.h \
-	plugindetailsview.h \
-	pluginerroroverview.h \
-	pluginerrorview.h \
-	pluginview.h \
+
 
 SOURCES += \
 	invoker.cpp \
@@ -33,16 +23,5 @@ SOURCES += \
 	pluginspec.cpp \
 	plugincollection.cpp \
 	extentionsystem.cpp \
-	plugindetailsview.cpp \
-	pluginerroroverview.cpp \
-	pluginerrorview.cpp \
-	pluginview.cpp \
 
-FORMS += \
-	plugindetailsview.ui \
-	pluginerroroverview.ui \
-	pluginerrorview.ui \
-
-RESOURCES += \
-	pluginview.qrc \
 

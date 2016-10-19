@@ -1,0 +1,44 @@
+Athletic
+is a sports Event Management software
+
+Архитектура
+
+Приложение (Qt)
+Сайт
+	Qt на сервере - REST or JSONP ?
+	Angular (2?) для web-клиента
+	
+Приложение для планшета - Scoreboard
+
+Зависимости
+1. Qt (основная библиотека)
+	1.1. qca (криптография)
+	1.2. QtAv (видео/аудио обработка)
+	1.3. QtWebApp (веб?-сервер)
+	1.4. grantlee (http://www.grantlee.org/apidox/index.html)
+
+Отчеты
+1. Генератор
+- получение данных
+- визуализация их
+- шаблоны
+2. Дизайнер
+- Редактор получения данных
+- Редактор отображения
+
+Защита от нелицензированного использования / Лицензирование / Активация
+1. Clock tampering using ntp
+2. http://stackoverflow.com/questions/3002067/how-are-software-license-keys-generated
+3. http://www.brandonstaggs.com/2007/07/26/implementing-a-partial-serial-number-verification-system-in-delphi/
+6. https://oroboro.com/unique-machine-fingerprint/
+7. http://www.codeproject.com/Articles/99499/Implementation-of-the-Licensing-System-for-a-Softw
+8. http://www.codeproject.com/Articles/16506/Product-Activation-Based-on-RSA-Signatures
+
+Домены
+1. athlet.info - 890
+2. athlet.club - 590
+3. athletic.cloud - 890
+4. at-sports.events - 2990
+5. sports-event.agency - 1990
+
+

@@ -5,6 +5,7 @@ APP_PLUGIN_VERSION = 0.0.1
 APP_LIB_DEPENDS += \
 	extensionsystem \
 	utils \
+	widgets \
 
 APP_PLUGIN_DEPENDS += \
 
