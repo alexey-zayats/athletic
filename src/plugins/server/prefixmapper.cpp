@@ -90,7 +90,7 @@ namespace Server
         }
         else
         {
-            qWarning("404 on request for '%s' ('%s'/'%s') - service: %s",
+            qWarning("404 on request for '%s' ('%s%s') - service: %s",
                      request->url(RequestUrl).toEncoded().constData(),
                      Private::prefix(request).constData(),
                      Private::suffix(request).constData(),

@@ -18,6 +18,8 @@ namespace FastCgi
 
         const quint8 highBitMask = 1 << 7;
 
+        QByteArray name, value;
+
         while(i < bytesToRead)
         {
             quint32 nameLength;
@@ -61,11 +63,13 @@ namespace FastCgi
                 valueLength = data[i++];
             }
 
-            const QByteArray name = QByteArray(&data.constData()[i], nameLength);
+            name = QByteArray(&data.constData()[i], nameLength);
             i += nameLength;
-            const QByteArray value = QByteArray(&data.constData()[i], valueLength);
+            value = QByteArray(&data.constData()[i], valueLength);
             i += valueLength;
             m_parameters.insert(name, value);
+            name.clear();
+            value.clear();
         }
     }
 

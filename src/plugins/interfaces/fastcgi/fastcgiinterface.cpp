@@ -26,17 +26,16 @@ namespace FastCgi
     {
         QStringList stringOutput;
         SocketServer::SocketTypes supported = SocketServer::supportedSocketTypes();
-        if(supported.testFlag(SocketServer::UnixSocket)) stringOutput << QLatin1String("FCGI-UNIX");
-        if(supported.testFlag(SocketServer::TcpSocket)) stringOutput << QLatin1String("FCGI-TCP");
+        if(supported.testFlag(SocketServer::TcpSocket)) stringOutput << QLatin1String("FCGI");
         return stringOutput;
     }
 
     QStringList Interface::detectedBackends() const
     {
         QStringList out;
-        if(SocketServer::activeSocketTypes() & SocketServer::UnixSocket)
+        if(SocketServer::activeSocketTypes() & SocketServer::TcpSocket)
         {
-            out << QLatin1String("FCGI-UNIX");
+            out << QLatin1String("FCGI");
         }
         return out;
     }
@@ -48,13 +47,8 @@ namespace FastCgi
 
         QSettings *settings = ExtensionSystem::PluginManager::settings ();
 
-        if(backend.toUpper() == QLatin1String("FCGI-UNIX") )
+        if(backend.toUpper() == QLatin1String("FCGI") )
         {
-            return;
-        }
-        if(backend.toUpper() == QLatin1String("FCGI-TCP") )
-        {
-            settings->beginGroup( QLatin1String("FastCGI") );
             QString portString;
             cout << "Port number: " << flush;
             portString = cin.readLine();
@@ -65,8 +59,7 @@ namespace FastCgi
                 qFatal("Not a valid port number.");
                 return;
             }
-            settings->setValue(QLatin1String("portNumber"), portNumber);
-            settings->endGroup ();
+            settings->setValue(QLatin1String("Server/FastCGI/portNumber"), portNumber);
             return;
         }
         qFatal("Unknown FastCGI backend: %s", qPrintable(backend));
@@ -75,27 +68,16 @@ namespace FastCgi
     bool Interface::startBackend(const QString& backend)
     {
         quint16 port = 0;
-        SocketServer::SocketType socketType;
-
-        if(backend == QLatin1String("FCGI-UNIX") )
-        {
-            socketType = SocketServer::UnixSocket;
-#ifdef WITH_SYSLOG_SUPPORT
-            new DebugHandler(this);
-#endif
-        }
 
         QSettings *settings = ExtensionSystem::PluginManager::settings ();
-        if(backend == QLatin1String("FCGI-TCP") )
+        if(backend == QLatin1String("FCGI") )
         {
-            port = settings->value( QLatin1String("FastCGI/portNumber") , 0).value<quint16>();
+            port = settings->value( QLatin1String("Server/FastCGI/portNumber") , 0).value<quint16>();
             QTextStream cout(stdout);
-            socketType = SocketServer::TcpSocket;
-
             cout << "Following configuration in '" << settings->fileName() << "' and listening for FastCGI on TCP port " << port << endl;
         }
 
-        return m_socketServer->listen(socketType, port);
+        return m_socketServer->listen(SocketServer::TcpSocket, port);
     }
 
     Interface::~Interface()

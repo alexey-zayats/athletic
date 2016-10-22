@@ -67,6 +67,7 @@ namespace Http
                 return;
             }
             const QByteArray line = m_socket->readLine().trimmed();
+            qDebug() << line;
             const QList<QByteArray> parts = line.split(' ');
             Q_ASSERT(parts.count() == 3);
             m_requestHeaders.insert("REQUEST_METHOD", parts.at(0));
@@ -74,7 +75,6 @@ namespace Http
             const QByteArray uri = parts.at(1);
             m_requestHeaders.insert("REQUEST_URI", uri);
             const int startOfQueryString = uri.indexOf('?') + 1;
-            m_requestHeaders.insert("PATH_INFO", uri.mid(0, startOfQueryString - 1));
             if(startOfQueryString > 0)
             {
                 m_requestHeaders.insert("QUERY_STRING", uri.mid(startOfQueryString));

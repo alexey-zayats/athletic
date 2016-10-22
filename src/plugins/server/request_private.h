@@ -1,8 +1,8 @@
 #ifndef REQUEST_PRIVATE_H
 #define REQUEST_PRIVATE_H
 
-#include "ClientIODevice.h"
-#include "Request.h"
+#include "clientiodevice.h"
+#include "request.h"
 
 namespace Server
 {
@@ -72,7 +72,9 @@ namespace Server
              */
             ClientIODevice::HeaderMap serverData;
         private:
-            ClientIODevice::HeaderMap parseQueryString(const QByteArray& queryString);
+            void parsePostData();
+            void parseMultipart();
+            ClientIODevice::HeaderMap parseUrlEncoded(QByteArray data);
     };
 };
 #endif // REQUEST_PRIVATE_H

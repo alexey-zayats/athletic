@@ -34,7 +34,7 @@ namespace Server
              * This should really only be used for embedding, or if you provide your own configuration interface.
              * It reduces flexibility.
              *
-             * @param backend is the backend to use (eg 'HTTP', 'FCGI-UNIX', and so on).
+             * @param backend is the backend to use (eg 'HTTP', 'FCGI', and so on).
              * @param configuration is a key->QVariant mapping of configuration values that would be in the 'Server' section of the configuration file.
              * @param parent is the parent QObject.
              */

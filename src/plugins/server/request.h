@@ -6,6 +6,8 @@
 #include <QList>
 #include <QUrl>
 
+#include "server_global.h"
+
 class QNetworkCookie;
 
 namespace Server
@@ -27,7 +29,7 @@ namespace Server
     /** Object representing a request;
      * @ingroup core
      */
-    class Request : public QIODevice
+    class SERVER_EXPORT Request : public QIODevice
     {
         Q_OBJECT
         public:

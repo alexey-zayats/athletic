@@ -6,6 +6,8 @@ class QIODevice;
 
 #include <QString>
 
+#include "clientiodevice.h"
+
 namespace Server
 {
     class MimeMultipartStreamReader
@@ -14,18 +16,13 @@ namespace Server
             enum TokenType
             {
                 Invalid        = 0,
-                NoToken        = 1,
-                StartDocument  = 2,
-                DocumentHeader = 3,
-                IgnoredContent = 4,
+                StartDocument  = 1,
+                StartPart      = 2,
+                PartHeader     = 3,
+                PartContent    = 4,
                 EndPart        = 5,
-                StartPart      = 6,
-                PartHeader     = 7,
-                PartContent    = 8,
-                EndDocument    = 9
+                EndDocument    = 6
             };
-            /// Create a new MimeMultipartStreamReader, expecting document headers.
-            MimeMultipartStreamReader(QIODevice* device);
             /// Create a new MimeMultipartStreamReader, expecting the first (ignored) content blob
             MimeMultipartStreamReader(QIODevice* device, const QByteArray& boundary);
             ~MimeMultipartStreamReader();
@@ -55,6 +52,7 @@ namespace Server
         private:
             class Private;
             Private* d;
+            ClientIODevice::HeaderMap multipartData;
     };
 };
 #endif // MIMEMULTIPART_STREAM_READER_H

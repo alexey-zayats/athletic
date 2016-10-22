@@ -185,7 +185,7 @@ namespace FastCgi
 
 
         // actually start the response
-        newRequest(stream);
+        emit newRequest(stream);
     }
 
     bool SocketManager::processNewRecord()

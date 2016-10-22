@@ -202,13 +202,13 @@ namespace Server
         {
             cout << " - " << interface << endl;
         }
-        cout << "Interface [FCGI-TCP]: " << flush;
+        cout << "Interface [FCGI]: " << flush;
 
         QString interface;
         interface = cin.readLine().toUpper();
         if(interface.isEmpty())
         {
-            interface = QLatin1String("FCGI-TCP");
+            interface = QLatin1String("FCGI");
         }
         settings->setValue( QLatin1String("socketType"), interface);
         Q_FOREACH(CommunicationInterface* iface, m_interfaces)
