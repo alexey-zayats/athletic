@@ -2,6 +2,7 @@
 #define HELLO_SERVICE_H
 
 #include <server/service.h>
+#include <server/request.h>
 
 namespace Hello
 {
@@ -17,6 +18,8 @@ public slots:
                  );
 protected:
     Server::Service::UrlMap urlMap() const;
+private:
+    QString printData(Server::DataSource ds);
 };
 
 }
