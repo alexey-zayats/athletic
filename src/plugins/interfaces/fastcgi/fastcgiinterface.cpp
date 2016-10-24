@@ -80,9 +80,6 @@ namespace FastCgi
         if(backend == QLatin1String("FCGI-UNIX") )
         {
             socketType = SocketServer::UnixSocket;
-#ifdef WITH_SYSLOG_SUPPORT
-            new DebugHandler(this);
-#endif
         }
 
         QSettings *settings = ExtensionSystem::PluginManager::settings ();

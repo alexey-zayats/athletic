@@ -13,7 +13,7 @@ namespace FastCgi
         Q_ASSERT(header.type() == RecordHeader::ParametersRecord);
         Q_ASSERT(data.length() >= header.contentLength());
 
-        quint16 i = 0;
+        int i = 0;
         quint16 bytesToRead = header.contentLength();
 
         const quint8 highBitMask = 1 << 7;

@@ -1,4 +1,7 @@
 TEMPLATE = subdirs
 SUBDIRS = \
-	memcache \
 	ramcache \
+
+!win32 {
+    SUBDIRS += memcache
+}

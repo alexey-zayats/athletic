@@ -18,7 +18,6 @@ class TreeView;
 } // namespace Utils
 
 namespace ExtensionSystem {
-
 class PluginManager;
 class PluginSpec;
 }
@@ -57,7 +56,7 @@ private:
 
     friend class Internal::CollectionItem;
     friend class Internal::PluginItem;
-    friend class PluginSpec;
+    friend class ExtensionSystem::PluginSpec;
 };
 
 } // namespae Widgets

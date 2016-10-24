@@ -111,7 +111,7 @@ static void messageOutput(QtMsgType type, const QMessageLogContext &context, con
 int main(int argc, char **argv)
 {
     QLoggingCategory::setFilterRules( QLatin1String("athletic.*.debug=true\n"
-                                                    "athletic.*.info=true\n"
+                                                    "athletic.*.info=false\n"
                                                     "athletic.*.warning=true\n"
                                                     "athletic.*.critical=true") );
 

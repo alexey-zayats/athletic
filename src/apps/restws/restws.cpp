@@ -138,7 +138,11 @@ int main(int argc, char **argv)
     QCoreApplication app(argc, argv);
     app.setApplicationName( QLatin1String(appName) );
 
+#ifdef Q_OS_WIN
+    catchUnixSignals({SIGINT, SIGTERM});
+#else
     catchUnixSignals({SIGQUIT, SIGINT, SIGTERM, SIGHUP});
+#endif
 
     const int threadCount = QThreadPool::globalInstance()->maxThreadCount();
     QThreadPool::globalInstance()->setMaxThreadCount(qMax(4, 2 * threadCount));

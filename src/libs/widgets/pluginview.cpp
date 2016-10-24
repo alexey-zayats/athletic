@@ -50,6 +50,7 @@ Q_DECLARE_METATYPE(ExtensionSystem::PluginCollection*)
 
 using namespace Utils;
 using namespace ExtensionSystem;
+using namespace ExtensionSystem::Internal;
 using namespace Widgets;
 using namespace Widgets::Internal;
 
@@ -188,17 +189,17 @@ public:
     }
 
 public:
-    PluginSpec *m_spec; // Not owned.
+    ExtensionSystem::PluginSpec *m_spec; // Not owned.
     PluginView *m_view; // Not owned.
 };
 
 class CollectionItem : public TreeItem
 {
 public:
-    CollectionItem(const QString &name, QList<PluginSpec *> plugins, PluginView *view)
+    CollectionItem(const QString &name, QList<ExtensionSystem::PluginSpec *> plugins, PluginView *view)
         : m_name(name), m_plugins(plugins), m_view(view)
     {
-        foreach (PluginSpec *spec, plugins)
+        foreach (ExtensionSystem::PluginSpec *spec, plugins)
             appendChild(new PluginItem(spec, view));
     }
 

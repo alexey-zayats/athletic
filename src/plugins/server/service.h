@@ -89,7 +89,7 @@ namespace Server
              *
              * @see urlMap()
              */
-            class UrlMap : public QList<QPair<QString, const char*> >
+            class SERVER_EXPORT UrlMap : public QList<QPair<QString, const char*> >
             {
                 public:
                     void append(const QString& regexp, const char* slot);
