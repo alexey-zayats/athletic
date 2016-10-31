@@ -1,5 +1,6 @@
 #include "request_private.h"
-#include "mimemultipartstreamreader.h"
+#include "mimepartiodevice.h"
+#include "uploadedfile.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -28,6 +29,9 @@ namespace Server
 
     Request::Private::~Private()
     {
+        Q_FOREACH( QByteArray key, m_uploads.keys()) {
+            delete m_uploads.take(key);
+        }
         delete device;
     }
 
@@ -48,7 +52,8 @@ namespace Server
         postData = parseUrlEncoded(device->readAll());
     }
 
-    void Request::Private::parseMultipart() {
+    void Request::Private::parseMultipart()
+    {
         //TODO: entitie too large
 
         QString contentType( QLatin1String( serverData.value("CONTENT_TYPE") ) );
@@ -56,25 +61,27 @@ namespace Server
         QString boundary = contentType.split(QLatin1String("; "))[1];
         boundary.replace(QLatin1String("\""), QLatin1String(""));
         boundary.replace(QLatin1String("boundary="), QLatin1String(""));
+//        boundary.prepend( QLatin1String("--") );
 
         Q_ASSERT(!boundary.isNull());
 
         QByteArray cdKey("Content-Disposition");
+        MimePartIODevice *reader;
 
         while ( device->bytesAvailable() )
         {
             // we assume that every time at that poin we read boundary from device
             QByteArray line = device->readLine().trimmed();
+            qDebug() << line;
             // if boundary contains '--' at the and we are done
             int ep = line.indexOf("--", boundary.size() );
             if ( ep > -1 )
                 break;
 
-            Q_ASSERT( line != boundary.toLocal8Bit() );
-
             // read all headers for part of data
             QHash<QByteArray,QByteArray> headers;
             while ( !(line = device->readLine().trimmed()).isEmpty() ) {
+                qDebug() << line;
                 int colonPos = line.indexOf(':');
                 if (colonPos == -1 )
                     break;
@@ -103,23 +110,45 @@ namespace Server
                     int a = parts[1].indexOf('"');
                     int b = parts[1].indexOf('"', a+1);
                     name = parts[1].mid(a+1, (parts[1].size() - (a+1)) - (parts[1].size()-b));
-                }
-                if (parts[0] == QByteArray("filename")) {
+                    continue;
+                } else if (parts[0] == QByteArray("filename")) {
                     int a = parts[1].indexOf('"');
                     int b = parts[1].indexOf('"', a+1);
                     filename = parts[1].mid(a+1, (parts[1].size() - (a+1)) - (parts[1].size()-b));
-                }
-
-                if (filename.isNull()){
-                    value = device->readLine().trimmed();
-                    postData.insert(name, value);
                     continue;
                 }
 
-                postData.insert(name, filename);
-
-                //TODO: read as upload
             }
+
+            if (filename.isNull()){
+                reader = new MimePartIODevice(device, boundary.toLocal8Bit());
+                reader->open(QIODevice::ReadOnly);
+                value = reader->readAll();;
+                reader->close();
+                delete reader;
+                postData.insert(name, value);
+                continue;
+            }
+
+            postData.insert(name, filename);
+
+            //TODO: read as upload
+            UploadedFile *file = new UploadedFile();
+            file->setFilename(QLatin1String(filename));
+            file->setName(QLatin1String(name));
+            file->setInfo(headers);
+
+            reader = new MimePartIODevice(device, boundary.toLocal8Bit());
+            reader->open(QIODevice::ReadOnly);
+
+            QByteArray data = reader->readAll();;
+
+            file->fp()->write(data);
+            file->setSize(data.size());
+            reader->close();
+            delete reader;
+
+            m_uploads.insert(name, file);
         }
     }
 

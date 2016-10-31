@@ -1,5 +1,7 @@
 #include "helloservice.h"
 
+#include <server/uploadedfile.h>
+
 #include <QTextStream>
 
 namespace Hello
@@ -41,6 +43,19 @@ void Service::index()
 
     out << "<hr/><b>Post data</b><br/>\n";
     out << printData(Server::PostData);
+
+    if ( request()->value(Server::ServerData, "REQUEST_METHOD") == QLatin1String("POST") &&
+         request()->value(Server::ServerData, "CONTENT_TYPE").contains( QLatin1String("multipart/form-data") ) )
+    {
+        out << request()->value(Server::PostData, "somename") << "<br/>";
+        Server::UploadedFile *file = request()->fileUpload("somename");
+        if ( 0 != file ) {
+            out << file->tmpFilename() << "<br/>";
+            out << file->size() << "<br/>";
+            out << "<hr/>" <<  file->fp()->readAll() << "<hr/>";
+            out << file->headers().join(",") << "<br/>";
+        }
+    }
 
     out << "<hr/><b>Server data</b><br/>\n";
     out << printData(Server::ServerData);

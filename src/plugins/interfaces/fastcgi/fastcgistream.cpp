@@ -31,9 +31,28 @@ namespace FastCgi
         );
     }
 
+    bool Stream::isSequential() const
+    {
+        return false;
+    }
+
     Server::ClientIODevice::HeaderMap Stream::requestHeaders() const
     {
         return m_requestHeaders;
+    }
+
+    qint64 Stream::pos() const
+    {
+        qDebug() << Q_FUNC_INFO;
+        return m_requestBufferReadPosition;
+    }
+
+    bool Stream::seek(qint64 pos)
+    {
+        qDebug() << Q_FUNC_INFO << pos;
+        QIODevice::seek(pos);
+        m_requestBufferReadPosition = pos;
+        return true;
     }
 
     qint64 Stream::bytesAvailable() const
@@ -57,15 +76,15 @@ namespace FastCgi
     qint64 Stream::readData(char* data, qint64 maxSize)
     {
         // TODO: earase readed data from buffer
-//        const qint64 toRead = qMin(m_requestBuffer.length() - m_requestBufferReadPosition, maxSize);
-        const qint64 len = m_requestBuffer.length();
-        const qint64 toRead = qMin(len, maxSize);
+        const qint64 toRead = qMin(m_requestBuffer.length() - m_requestBufferReadPosition, maxSize);
+//        const qint64 len = m_requestBuffer.length();
+//        const qint64 toRead = qMin(len, maxSize);
 
-//        if(toRead >= 0 && ::memcpy_safe(data, maxSize, m_requestBuffer.mid(m_requestBufferReadPosition, toRead).constData(), toRead))
-        if(toRead >= 0 && ::memcpy_safe(data, maxSize, m_requestBuffer.constData(), toRead))
+        if(toRead >= 0 && ::memcpy_safe(data, maxSize, m_requestBuffer.mid(m_requestBufferReadPosition, toRead).constData(), toRead))
+//        if(toRead >= 0 && ::memcpy_safe(data, maxSize, m_requestBuffer.constData(), toRead))
         {
-//            m_requestBufferReadPosition += toRead;
-            m_requestBuffer.remove(0, toRead);
+            m_requestBufferReadPosition += toRead;
+//            m_requestBuffer.remove(0, toRead);
             return toRead;
         }
         else

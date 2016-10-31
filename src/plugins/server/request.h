@@ -26,6 +26,8 @@ namespace Server
         ServerData ///< CGI-compatible environment variable names
     };
 
+    class UploadedFile;
+
     /** Object representing a request;
      * @ingroup core
      */
@@ -44,6 +46,8 @@ namespace Server
             QHash<QByteArray, QByteArray> rawValues(DataSource) const;
             QByteArray rawValue(DataSource, const QByteArray& name) const;
             QString value(DataSource, const QByteArray& name) const;
+
+            UploadedFile *fileUpload(const QByteArray &name);
 
             /** Various parts of the URL for this request.
              *

@@ -16,6 +16,8 @@ namespace FastCgi
 
             bool waitForBytesWritten(int msec);
             qint64 bytesAvailable() const;
+            qint64 pos() const;
+            bool seek(qint64 pos);
 
             HeaderMap requestHeaders() const;
 
@@ -23,6 +25,9 @@ namespace FastCgi
              * as FastCGI supports multiplexing.
              */
             void appendData(const QByteArray& data);
+
+            bool isSequential() const;
+
         protected:
             /// Read data from buffer
             qint64 readData(char* data, qint64 maxSize);
