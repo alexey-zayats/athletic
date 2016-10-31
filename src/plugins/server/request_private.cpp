@@ -61,18 +61,17 @@ namespace Server
         QString boundary = contentType.split(QLatin1String("; "))[1];
         boundary.replace(QLatin1String("\""), QLatin1String(""));
         boundary.replace(QLatin1String("boundary="), QLatin1String(""));
-//        boundary.prepend( QLatin1String("--") );
 
         Q_ASSERT(!boundary.isNull());
 
         QByteArray cdKey("Content-Disposition");
         MimePartIODevice *reader;
 
-        while ( device->bytesAvailable() )
+        while ( device->bytesAvailable() > 0 )
         {
             // we assume that every time at that poin we read boundary from device
             QByteArray line = device->readLine().trimmed();
-            qDebug() << line;
+
             // if boundary contains '--' at the and we are done
             int ep = line.indexOf("--", boundary.size() );
             if ( ep > -1 )
@@ -81,7 +80,6 @@ namespace Server
             // read all headers for part of data
             QHash<QByteArray,QByteArray> headers;
             while ( !(line = device->readLine().trimmed()).isEmpty() ) {
-                qDebug() << line;
                 int colonPos = line.indexOf(':');
                 if (colonPos == -1 )
                     break;
@@ -132,20 +130,20 @@ namespace Server
 
             postData.insert(name, filename);
 
-            //TODO: read as upload
-            UploadedFile *file = new UploadedFile();
-            file->setFilename(QLatin1String(filename));
-            file->setName(QLatin1String(name));
-            file->setInfo(headers);
 
             reader = new MimePartIODevice(device, boundary.toLocal8Bit());
             reader->open(QIODevice::ReadOnly);
 
-            QByteArray data = reader->readAll();;
-
-            file->fp()->write(data);
-            file->setSize(data.size());
+            QByteArray data = reader->readAll();
             reader->close();
+
+            UploadedFile *file = new UploadedFile();
+            file->setFilename(filename);
+            file->setName(name);
+            file->setInfo(headers);
+            file->write(data, data.size());
+            file->seek(0);
+
             delete reader;
 
             m_uploads.insert(name, file);

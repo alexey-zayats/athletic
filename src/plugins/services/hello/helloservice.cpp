@@ -35,6 +35,7 @@ QString Service::printData(Server::DataSource ds)
 
 void Service::index()
 {
+
     QTextStream out(request());
     out << "<h1>Index goes here</h1>\n";
 
@@ -48,12 +49,18 @@ void Service::index()
          request()->value(Server::ServerData, "CONTENT_TYPE").contains( QLatin1String("multipart/form-data") ) )
     {
         out << request()->value(Server::PostData, "somename") << "<br/>";
-        Server::UploadedFile *file = request()->fileUpload("somename");
+        Server::UploadedFile *file = request()->fileUpload("file1");
         if ( 0 != file ) {
-            out << file->tmpFilename() << "<br/>";
+            out << file->tmpName() << "<br/>";
             out << file->size() << "<br/>";
-            out << "<hr/>" <<  file->fp()->readAll() << "<hr/>";
-            out << file->headers().join(",") << "<br/>";
+            qDebug() << QString::fromLocal8Bit(file->filename().constData());
+            QString fname = QString::fromLocal8Bit(file->filename().constData());
+            QFile f( QLatin1String("/Users/alexis/123/") + fname );
+            if ( f.open(QFile::ReadWrite) ) {
+                 QByteArray data = file->readAll();
+                 f.write(data.constData(), data.size());
+                 f.close();
+            }
         }
     }
 
