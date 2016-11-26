@@ -1,8 +1,8 @@
 #ifndef REQUEST_PRIVATE_H
 #define REQUEST_PRIVATE_H
 
-#include "ClientIODevice.h"
-#include "Request.h"
+#include "clientiodevice.h"
+#include "request.h"
 
 namespace Server
 {

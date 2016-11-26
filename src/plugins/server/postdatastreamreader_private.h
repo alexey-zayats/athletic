@@ -1,8 +1,8 @@
 #ifndef POSTDATASTREAMREADER_PRIVATE_H
 #define POSTDATASTREAMREADER_PRIVATE_H
 
-#include "PostDataStreamReader.h"
-#include "PostDataStreamReaderBackend.h"
+#include "postdatastreamreader.h"
+#include "postdatastreamreaderbackend.h"
 
 namespace Server
 {
