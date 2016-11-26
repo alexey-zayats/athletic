@@ -11,12 +11,8 @@ namespace Server
     class MimeMultipartStreamReader::Private
     {
         public:
-            Private(QIODevice* device);
             Private(QIODevice* device, const QByteArray& boundary);
             ~Private();
-
-            // Parse any special header, eg one specifying the boundary
-            void parseHeader();
 
             QIODevice* m_device;
             QByteArray m_boundary;

@@ -1,10 +1,13 @@
 #include "request.h"
 #include "request_private.h"
 
+#include "uploadedfile.h"
+
 #include <QDebug>
 #include <QNetworkCookie>
 #include <QRegExp>
 #include <QUrl>
+
 
 namespace Server
 {
@@ -179,6 +182,14 @@ namespace Server
     QString Request::value(DataSource source, const QByteArray& name) const
     {
         return QUrl::fromPercentEncoding(rawValue(source, name));
+    }
+
+    UploadedFile *Request::fileUpload(const QByteArray &name)
+    {
+        if ( d->m_uploads.contains(name) )
+            return d->m_uploads.value(name);
+        else
+            return 0;
     }
 
     Request::~Request()

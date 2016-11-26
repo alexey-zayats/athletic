@@ -6,6 +6,8 @@
 #include <QList>
 #include <QUrl>
 
+#include "server_global.h"
+
 class QNetworkCookie;
 
 namespace Server
@@ -24,10 +26,12 @@ namespace Server
         ServerData ///< CGI-compatible environment variable names
     };
 
+    class UploadedFile;
+
     /** Object representing a request;
      * @ingroup core
      */
-    class Request : public QIODevice
+    class SERVER_EXPORT Request : public QIODevice
     {
         Q_OBJECT
         public:
@@ -42,6 +46,8 @@ namespace Server
             QHash<QByteArray, QByteArray> rawValues(DataSource) const;
             QByteArray rawValue(DataSource, const QByteArray& name) const;
             QString value(DataSource, const QByteArray& name) const;
+
+            UploadedFile *fileUpload(const QByteArray &name);
 
             /** Various parts of the URL for this request.
              *

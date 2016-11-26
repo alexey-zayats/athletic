@@ -25,7 +25,7 @@ namespace Server
      * @see SpawnerBase
      * @see ThreadedResponder
      */
-    template<class T> class SERVER_EXPORT Spawner : public SpawnerBase
+    template<class T> class Spawner : public SpawnerBase
     {
         public:
             QObject* spawn(QObject* parent) const
@@ -43,7 +43,7 @@ namespace Server
      * @see BlockingResponder for a simple implementation, and @see ThreadedResponder
      * for a multi-threaded implementation.
      */
-    class AbstractResponder : public QObject
+    class SERVER_EXPORT AbstractResponder : public QObject
     {
         Q_OBJECT
         public:

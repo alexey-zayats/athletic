@@ -6,7 +6,7 @@ namespace Hello
 ServicePrefix::ServicePrefix() :
     m_spawner(0)
 {
-    m_spawner = new Server::Spawner<Service>();
+    m_spawner = new Server::Spawner<Hello::Service>();
 }
 
 ServicePrefix::~ServicePrefix()

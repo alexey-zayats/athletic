@@ -7,7 +7,6 @@ include(../../../athleticplugin.pri)
 
 SOURCES += \
 	beginrequestrecord.cpp \
-	debughandler.cpp \
 	endrequestrecord.cpp \
 	fastcgiinterface.cpp \
 	fastcgisocketmanager.cpp \
@@ -22,7 +21,6 @@ SOURCES += \
 
 HEADERS += \
 	beginrequestrecord.h \
-	debughandler.h \
 	endrequestrecord.h \
 	fastcgi.h \
 	fastcgiinterface.h \

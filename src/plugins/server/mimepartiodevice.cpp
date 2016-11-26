@@ -37,10 +37,10 @@ namespace Server
 
     qint64 MimePartIODevice::readData(char* data, qint64 maxSize)
     {
-        if(d->m_atEnd)
-        {
+        if(d->m_atEnd) {
             return -1;
         }
+        qDebug() << maxSize;
         Q_ASSERT(maxSize < std::numeric_limits<int>().max());
         const QByteArray peekedData = d->m_source->peek(maxSize);
         const int fullBoundaryIndex = d->m_matcher.indexIn(peekedData);
@@ -50,7 +50,11 @@ namespace Server
             Q_ASSERT(bytesRead == fullBoundaryIndex);
             if(bytesRead == fullBoundaryIndex)
             {
-                d->m_source->getChar(0);
+                qDebug() << d->m_source->peek(1);
+                qDebug() << d->m_source->pos();
+                d->m_source->seek( d->m_source->pos() + 2);
+                qDebug() << d->m_source->pos();
+                qDebug() << d->m_source->peek(1);
                 d->m_atEnd = true;
             }
             return bytesRead;

@@ -573,6 +573,8 @@ bool PluginSpecPrivate::readMetaData(const QJsonObject &metaData)
     if (value.toString() != PluginManager::pluginIID()) {
         qInfo(extentionSystemLog) << "Plugin ignored (IID does not match)" << filePath;
         return false;
+    } else {
+        qInfo(extentionSystemLog) << "Loading plugin" << filePath;
     }
 
 

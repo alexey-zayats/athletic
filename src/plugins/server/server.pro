@@ -49,7 +49,8 @@ SOURCES += \
 	threadpool_worker.cpp \
 	urlencodedpostdatastreamreader.cpp  \
 	serverplugin.cpp \
-    iserviceprefix.cpp
+    iserviceprefix.cpp \
+    uploadedfile.cpp
 
 HEADERS += \
 	abstractresponder.h \
@@ -102,5 +103,6 @@ HEADERS += \
 	threadpool_worker.h \
 	urlencodedpostdatastreamreader.h \
 	serverplugin.h \
-    iserviceprefix.h
+    iserviceprefix.h \
+    uploadedfile.h
 # abstractmapper.h \

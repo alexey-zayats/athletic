@@ -1,4 +1,6 @@
 #include "request_private.h"
+#include "mimepartiodevice.h"
+#include "uploadedfile.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -16,30 +18,138 @@ namespace Server
     , serverData(d->requestHeaders())
     {
         d->open(QIODevice::ReadWrite | QIODevice::Unbuffered);
-        getData = parseQueryString(serverData.value("QUERY_STRING"));
+        getData = parseUrlEncoded(serverData.value("QUERY_STRING"));
         // Default header values:
         responseHeaders.insert("STATUS", "200 OK");
         responseHeaders.insert("CONTENT-TYPE", "text/html; charset=UTF-8");
+
+        QByteArray uri = serverData["REQUEST_URI"];
+        serverData.insert("PATH_INFO", uri.mid(0, (uri.indexOf('?') + 1) - 1));
     }
 
     Request::Private::~Private()
     {
+        Q_FOREACH( QByteArray key, m_uploads.keys()) {
+            delete m_uploads.take(key);
+        }
         delete device;
     }
 
-    ClientIODevice::HeaderMap Request::Private::parseQueryString(const QByteArray& queryString)
+    ClientIODevice::HeaderMap Request::Private::parseUrlEncoded(QByteArray data)
     {
         ClientIODevice::HeaderMap out;
-
         QUrlQuery queryStringParser;
-        queryStringParser.setQuery( QLatin1String(queryString) );
+        queryStringParser.setQuery( QLatin1String(data) );
 
-        typedef QPair<QString, QString> HeaderPair;
-        Q_FOREACH(HeaderPair header, queryStringParser.queryItems())
-        {
+        typedef QPair<QString, QString> Pair;
+        Q_FOREACH( Pair header, queryStringParser.queryItems())
             out.insert(header.first.toLocal8Bit(), header.second.toLocal8Bit());
-        }
+
         return out;
+    }
+    void Request::Private::parsePostData()
+    {
+        postData = parseUrlEncoded(device->readAll());
+    }
+
+    void Request::Private::parseMultipart()
+    {
+        //TODO: entitie too large
+
+        QString contentType( QLatin1String( serverData.value("CONTENT_TYPE") ) );
+        Q_ASSERT (!contentType.isEmpty());
+        QString boundary = contentType.split(QLatin1String("; "))[1];
+        boundary.replace(QLatin1String("\""), QLatin1String(""));
+        boundary.replace(QLatin1String("boundary="), QLatin1String(""));
+//        boundary.prepend( QLatin1String("--") );
+
+        Q_ASSERT(!boundary.isNull());
+
+        QByteArray cdKey("Content-Disposition");
+        MimePartIODevice *reader;
+
+        while ( device->bytesAvailable() )
+        {
+            // we assume that every time at that poin we read boundary from device
+            QByteArray line = device->readLine().trimmed();
+            qDebug() << line;
+            // if boundary contains '--' at the and we are done
+            int ep = line.indexOf("--", boundary.size() );
+            if ( ep > -1 )
+                break;
+
+            // read all headers for part of data
+            QHash<QByteArray,QByteArray> headers;
+            while ( !(line = device->readLine().trimmed()).isEmpty() ) {
+                qDebug() << line;
+                int colonPos = line.indexOf(':');
+                if (colonPos == -1 )
+                    break;
+                QByteArray hkey = line.mid(0, colonPos);
+                QByteArray hvalue = line.mid(colonPos+2, line.size() - hkey.size() - 2 );
+                headers.insert(hkey, hvalue);
+            }
+
+            if ( !headers.contains(cdKey) )
+                continue;
+
+            QByteArray cd = headers.value(cdKey);
+
+            int s = 0;
+            int idx = 0;
+
+            QByteArray name, filename, value;
+
+            while ( (idx = cd.indexOf("; ", s)) > -1 )
+            {
+                s = idx + 2;
+                QByteArray pair = cd.mid( s, cd.size() - idx - 2);
+                QList<QByteArray> parts = pair.split('=');
+
+                if (parts[0] == QByteArray("name")) {
+                    int a = parts[1].indexOf('"');
+                    int b = parts[1].indexOf('"', a+1);
+                    name = parts[1].mid(a+1, (parts[1].size() - (a+1)) - (parts[1].size()-b));
+                    continue;
+                } else if (parts[0] == QByteArray("filename")) {
+                    int a = parts[1].indexOf('"');
+                    int b = parts[1].indexOf('"', a+1);
+                    filename = parts[1].mid(a+1, (parts[1].size() - (a+1)) - (parts[1].size()-b));
+                    continue;
+                }
+
+            }
+
+            if (filename.isNull()){
+                reader = new MimePartIODevice(device, boundary.toLocal8Bit());
+                reader->open(QIODevice::ReadOnly);
+                value = reader->readAll();;
+                reader->close();
+                delete reader;
+                postData.insert(name, value);
+                continue;
+            }
+
+            postData.insert(name, filename);
+
+            //TODO: read as upload
+            UploadedFile *file = new UploadedFile();
+            file->setFilename(QLatin1String(filename));
+            file->setName(QLatin1String(name));
+            file->setInfo(headers);
+
+            reader = new MimePartIODevice(device, boundary.toLocal8Bit());
+            reader->open(QIODevice::ReadOnly);
+
+            QByteArray data = reader->readAll();;
+
+            file->fp()->write(data);
+            file->setSize(data.size());
+            reader->close();
+            delete reader;
+
+            m_uploads.insert(name, file);
+        }
     }
 
     void Request::Private::loadPostVariables()
@@ -54,34 +164,12 @@ namespace Server
                 break;
             case UnknownPostData:
                 postDataMode = ValuesPostData;
-                if(serverData.values("CONTENT_TYPE").startsWith("application/x-www-form-urlencoded"))
-                {
-                    ///@todo pay attention if content-type includes "; charset=FOO" - at the moment, assume UTF8
-                    QByteArray data = device->readAll();
-                    const int expected = QString::fromLatin1(serverData.value("CONTENT_LENGTH")).toInt();
-                    if(data.length() < expected)
-                    {
-                        QTime timer;
-                        timer.start();
-                        Q_FOREVER
-                        {
-                            QCoreApplication::processEvents(QEventLoop::WaitForMoreEvents, 5000); // even if nothing new comes, on any connection, for 5 seconds, give poll
-                            data.append(device->readAll());
-                            if(data.length() >= expected)
-                            {
-                                break;
-                            }
-                            else if(timer.elapsed() > 1000 * 60 * 5) ///@fixme make the 5-minute POST data timeout configurable
-                            {
-                                qWarning("Timeout exceeded on post data upload, aborting.");
-                                return;
-                            }
-                        }
-                    }
-                    Q_ASSERT(data.length() == expected); // not >
-                    postData = parseQueryString(data);
-                }
+                 ///@todo pay attention if content-type includes "; charset=FOO" - at the moment, assume UTF8
+                 if(serverData.values("CONTENT_TYPE").startsWith("application/x-www-form-urlencoded"))
+                     parsePostData();
+                 else
+                     parseMultipart();
                 break;
         }
     }
-};
+}

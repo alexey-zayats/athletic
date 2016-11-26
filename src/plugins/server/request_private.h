@@ -6,6 +6,7 @@
 
 namespace Server
 {
+    class UploadedFile;
     /// @internal Backend data class for Request class.
     class Request::Private
     {
@@ -71,8 +72,12 @@ namespace Server
              * Cache of device->headers().
              */
             ClientIODevice::HeaderMap serverData;
+            QHash<QByteArray, UploadedFile*> m_uploads;
         private:
-            ClientIODevice::HeaderMap parseQueryString(const QByteArray& queryString);
+            void parsePostData();
+            void parseMultipart();
+            ClientIODevice::HeaderMap parseUrlEncoded(QByteArray data);
+
     };
 };
 #endif // REQUEST_PRIVATE_H

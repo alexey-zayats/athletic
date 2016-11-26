@@ -3,12 +3,12 @@
 
 #include "clientiodevice.h"
 #include "communicationinterface.h"
-
+#include "server_global.h"
 #include <QObject>
 
 namespace Server
 {
-    class CommunicationInterface::Worker : public QObject
+    class SERVER_EXPORT CommunicationInterface::Worker : public QObject
     {
         Q_OBJECT
         signals:

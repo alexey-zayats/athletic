@@ -33,7 +33,7 @@ namespace Server
             virtual QStringList backends() const = 0;
             /** Backends that appear to be appropriate, given the environment.
              *
-             * For example, FCGI-UNIX can be started iff the FCGI socket is open
+             * For example, FCGI can be started iff the FCGI socket is open
              * appropriately.
              *
              * This must only return backends where there is evidence that a given
@@ -42,7 +42,7 @@ namespace Server
             virtual QStringList detectedBackends() const;
             /** If a backend can be started, reasonably, with no configuration.
              *
-             * For example, FCGI-UNIX can be started iff the FCGI socket is open,
+             * For example, FCGI can be started iff the FCGI socket is open,
              * and the HTTP one is pretty much always available.
              *
              * If there is evidence that the specified backend *should* be active
