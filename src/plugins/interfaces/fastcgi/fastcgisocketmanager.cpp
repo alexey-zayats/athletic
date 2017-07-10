@@ -64,7 +64,14 @@ namespace FastCgi
             return false;
         }
 
-        QByteArray data = m_socket->read(header.payloadLength());
+        int expected = header.payloadLength();
+        QByteArray data;
+        while( data.size() <  expected ) {
+            data.append( m_socket->read( expected - data.length() ) );
+            if (m_socket->bytesAvailable() == 0 )
+                m_socket->waitForReadyRead(5000);
+        }
+
         qint64 bytesRead = data.length();
 
         if(bytesRead != header.payloadLength())

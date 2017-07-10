@@ -5,9 +5,9 @@ namespace Server {
 UploadedFile::UploadedFile() :
     m_file(0)
 {
-//    m_file = new QTemporaryFile();
-    m_file = new QFile(QLatin1String("/Users/alexis/tmp"));
-    m_file->open(QFile::ReadWrite);
+    m_file = new QTemporaryFile();
+    if ( m_file->open() )
+        open(QIODevice::ReadWrite);
 }
 
 UploadedFile::~UploadedFile()
@@ -16,12 +16,12 @@ UploadedFile::~UploadedFile()
     delete m_file;
 }
 
-void UploadedFile::setName(const QString &name)
+void UploadedFile::setName(const QByteArray &name)
 {
     m_name = name;
 }
 
-QString UploadedFile::name()
+QByteArray UploadedFile::name()
 {
     return m_name;
 }
@@ -31,24 +31,63 @@ void UploadedFile::setInfo(QHash<QByteArray,QByteArray> info)
     m_info = info;
 }
 
-void UploadedFile::setSize(int size)
+qint64 UploadedFile::size() const
 {
-    m_size = size;
+    Q_ASSERT(m_file);
+    return m_file->size();
 }
 
-int UploadedFile::size()
-{
-    return m_size;
-}
-
-void UploadedFile::setFilename(const QString &filename)
+void UploadedFile::setFilename(const QByteArray &filename)
 {
     m_filename = filename;
 }
 
-QString UploadedFile::filename()
+QByteArray UploadedFile::filename()
 {
     return m_filename;
+}
+
+qint64 UploadedFile::bytesAvailable() const
+{
+    Q_ASSERT(m_file);
+    return m_file->bytesAvailable();
+}
+
+qint64 UploadedFile::pos() const
+{
+    Q_ASSERT(m_file);
+    return m_file->pos();
+}
+
+bool UploadedFile::seek(qint64 pos)
+{
+    Q_ASSERT(m_file);
+    QIODevice::seek(pos);
+    return m_file->seek(pos);
+}
+
+bool UploadedFile::isSequential() const
+{
+    Q_ASSERT(m_file);
+    return m_file->isSequential();
+}
+
+qint64 UploadedFile::readData(char* data, qint64 maxSize)
+{
+    Q_ASSERT(m_file);
+    return m_file->read(data, maxSize);
+}
+
+qint64 UploadedFile::writeData(const char* data, qint64 maxSize)
+{
+    Q_ASSERT(m_file);
+    return m_file->write(data, maxSize);
+}
+
+QString UploadedFile::tmpName() const
+{
+    Q_ASSERT(m_file);
+    return m_file->fileName();
 }
 
 }
